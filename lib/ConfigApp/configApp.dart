@@ -1,0 +1,4 @@
+class ConfigApp{
+  ConfigApp._();
+  
+}
