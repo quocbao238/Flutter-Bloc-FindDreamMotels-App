@@ -19,12 +19,29 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
   cupertino_icons: ^0.1.2
-  flutter_svg: ^0.17.4
+  flutter_launcher_icons: "^0.7.3"
+
+   #Firebase
+  firebase_auth: ^0.15.3
+  google_sign_in: ^4.1.1
+
+  #bloc
+  equatable: ^1.1.0
+  flutter_bloc: ^3.2.0
+
+  #UI
   flutter_spinkit: ^4.1.2+1
+  flutter_svg: ^0.17.4
+  toast: ^0.1.5
+  google_fonts: ^0.3.9
+  font_awesome_flutter: ^8.7.0
+  cached_network_image: ^2.1.0+1
+  dots_indicator: ^1.1.0
+  flutter_zoom_drawer: ^1.0.1+1
   auto_size_text: ^2.1.0
   meta: ^1.1.8
-  flutter_launcher_icons: "^0.7.3"
 
 
  

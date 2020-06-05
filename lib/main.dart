@@ -1,6 +1,6 @@
+import 'package:findingmotels/screen_app/ui/logout/logout_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'Screen/ui/logout/logout_screen.dart';
 
 void main() {
   runApp(MaterialApp(
