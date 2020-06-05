@@ -1,5 +1,6 @@
 import 'package:findingmotels/ConfigApp/sizeScreen.dart';
-import 'package:findingmotels/Screen/ClipPathCustome/loginClipPath.dart';
+import 'package:findingmotels/Screen/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/Screen/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -23,7 +24,6 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         children: <Widget>[
           buildBackground(Size.getHeight),
-          buidImage(Size.getHeight),
           buildPageView(Size.getHeight, Size.getWidth)
         ],
       ),
@@ -32,32 +32,49 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildPageView(double height, double width) {
     return Positioned.fill(
-        child: Container(
-      margin: EdgeInsets.only(top: height * 0.42),
-      child: Column(
-        children: <Widget>[
-          buildIcon(height, width),
-          Expanded(
-            child: Container(
-                margin: EdgeInsets.only(bottom: height * 0.01),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    buildTitleLogin(),
-                    buildTitleEmail(width),
-                    buildTFFEmail(width),
-                    buildTitlePass(width),
-                    buildTFFPass(width),
-                    buildLoginForgot(width, height),
-                    buildLoginButton(height, width),
-                    buildForgetAccount(height),
-                  ],
-                )),
-          )
-        ],
+        child: GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            buidImage(height),
+            buildIcon(height, width),
+            buildTitleLogin(),
+            buildTitleEmail(width),
+            buildTFFEmail(width),
+            buildTitlePass(width),
+            buildTFFPass(width),
+            buildLoginForgot(width, height),
+            buildLoginButton(height, width),
+            buildSignUp(height),
+          ],
+        ),
       ),
     ));
+  }
+
+  Widget buidImage(double height) {
+    return Container(
+      color: Colors.transparent,
+      height: height * 0.35,
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      child: (Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          SizedBox(height: height * 0.06),
+          Expanded(
+            child: SvgPicture.asset(
+              imageUrl,
+              fit: BoxFit.fill,
+            ),
+          ),
+        ],
+      )),
+    );
   }
 
   Widget buildTitleLogin() {
@@ -84,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildTFFPass(double width) {
     return Container(
-        margin: EdgeInsets.only( left: width * 0.04, right: width * 0.04),
+        margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
         child: TextFormField(
           obscureText: true,
           decoration: InputDecoration(
@@ -115,11 +132,8 @@ class _LoginPageState extends State<LoginPage> {
       child: Container(
         margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
         width: width,
-        child: Text(
-          "Password",
-          textAlign: TextAlign.start,
-          style: StyleText.content14Black400
-        ),
+        child: Text("Password",
+            textAlign: TextAlign.start, style: StyleText.content14Black400),
       ),
     );
   }
@@ -152,8 +166,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildLoginForgot(double width, double height) {
     return Container(
-      margin:
-          EdgeInsets.only(top: 8.0, left: width * 0.08, right: width * 0.08),
+      margin: EdgeInsets.only(
+          top: 16.0, left: width * 0.08, right: width * 0.08, bottom: 16.0),
       height: height * 0.03,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -220,24 +234,17 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildLoginButton(double height, double width) {
     return Container(
-      height: height * 0.06,
-      width: width * 0.5,
+      height: height * 0.075,
+      width: width * 0.65,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30), color: Colors.red),
       child: Center(
-        child: Text(
-          "LOGIN",
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        child: Text("Login".toUpperCase(), style: StyleText.header20White),
       ),
     );
   }
 
-  Widget buildForgetAccount(double height) {
+  Widget buildSignUp(double height) {
     return InkWell(
       child: Container(
         margin: EdgeInsets.only(top: height * 0.03),
@@ -246,29 +253,25 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Text(
               "Don't have an account? ",
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
+              style: StyleText.subhead18Black500
             ),
             Text(
               "Sign Up",
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Color.fromRGBO(44, 156, 162, 1),
-              ),
+              style: StyleText.subhead18GreenMixBlue
             ),
           ],
         ),
       ),
       onTap: () {
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => RegisterPage()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => RegisterPage()));
       },
     );
   }
 
   Widget buildIcon(double height, double width) {
     return Container(
+      margin: EdgeInsets.only(top: height * 0.07),
       height: height * 0.06,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -301,48 +304,6 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
-  }
-
-  Widget buidImage(double height) {
-    return Positioned.fill(
-        child: SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Container(
-            color: Colors.transparent,
-            height: height * 0.35,
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: (Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                // SafeArea(
-                //   child: Container(
-                //     // margin: EdgeInsets.only(top: height * 0.),
-                //     child: Center(
-                //       child: Text(
-                //         "Login with Account",
-                //         style: TextStyle(
-                //             color: Colors.white,
-                //             fontSize: 30.0,
-                //             fontWeight: FontWeight.w500,
-                //             letterSpacing: 2.0),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                SizedBox(height: height * 0.06),
-                Expanded(
-                  child: SvgPicture.asset(
-                    imageUrl,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ],
-            )),
-          ),
-        ],
-      ),
-    ));
   }
 
   Widget buildBackground(double height) {

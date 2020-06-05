@@ -30,6 +30,18 @@ class StyleText {
     fontWeight: FontWeight.bold,
   );
 
+    static TextStyle subhead18Black500 = TextStyle(
+    color: Colors.black,
+    fontSize: 18.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
+
+    static TextStyle subhead18GreenMixBlue = TextStyle(
+    color: Color.fromRGBO(44, 156, 162, 1),
+    fontSize: 18.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
+
   static TextStyle subhead16White500 = TextStyle(
     color: Colors.white,
     fontSize: 16.0 * Size.scaleTxt,
@@ -38,6 +50,12 @@ class StyleText {
 
   static TextStyle subhead16Black500 = TextStyle(
     color: Colors.black,
+    fontSize: 16.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
+
+    static TextStyle subhead16GreenMixBlue = TextStyle(
+    color: Color.fromRGBO(44, 156, 162, 1),
     fontSize: 16.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
   );

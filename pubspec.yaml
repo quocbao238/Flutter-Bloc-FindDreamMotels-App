@@ -21,11 +21,21 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^0.1.2
   flutter_svg: ^0.17.4
+  flutter_spinkit: ^4.1.2+1
+  auto_size_text: ^2.1.0
+  meta: ^1.1.8
+  flutter_launcher_icons: "^0.7.3"
+
+
+ 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+flutter_icons:
+  android: "icon"
+  ios: true
+  image_path: "assets/logo/logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
