@@ -9,6 +9,13 @@ class Size {
   static double padding;
 }
 
+void getSizeApp(BuildContext context) {
+  Size.getHeight = MediaQuery.of(context).size.height;
+  Size.getWidth = MediaQuery.of(context).size.width;
+  Size.scaleTxt = MediaQuery.of(context).textScaleFactor;
+  Size.statusBar = MediaQuery.of(context).padding.top;
+}
+
 class AppColor {
   AppColor._();
   static Color backgroundColor = Color.fromRGBO(211, 220, 240, 1);
@@ -30,13 +37,13 @@ class StyleText {
     fontWeight: FontWeight.bold,
   );
 
-    static TextStyle subhead18Black500 = TextStyle(
+  static TextStyle subhead18Black500 = TextStyle(
     color: Colors.black,
     fontSize: 18.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
   );
 
-    static TextStyle subhead18GreenMixBlue = TextStyle(
+  static TextStyle subhead18GreenMixBlue = TextStyle(
     color: Color.fromRGBO(44, 156, 162, 1),
     fontSize: 18.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
@@ -54,7 +61,7 @@ class StyleText {
     fontWeight: FontWeight.w500,
   );
 
-    static TextStyle subhead16GreenMixBlue = TextStyle(
+  static TextStyle subhead16GreenMixBlue = TextStyle(
     color: Color.fromRGBO(44, 156, 162, 1),
     fontSize: 16.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,

@@ -1,6 +1,6 @@
 import 'package:findingmotels/ConfigApp/sizeScreen.dart';
-import 'package:findingmotels/Screen/clip_path_custom/registerClipPath.dart';
-import 'package:findingmotels/Screen/login/login_screen.dart';
+import 'package:findingmotels/Screen/custom_widget/clip_path_custom/registerClipPath.dart';
+import 'package:findingmotels/Screen/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -54,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Container buildTitleImage(double height) {
+  Container buildTitleImage(double height)  {
     return Container(
       color: Colors.transparent,
       height: height * 0.6,

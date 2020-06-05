@@ -1,6 +1,6 @@
 import 'package:findingmotels/ConfigApp/sizeScreen.dart';
-import 'package:findingmotels/Screen/clip_path_custom/loginClipPath.dart';
-import 'package:findingmotels/Screen/register/register_screen.dart';
+import 'package:findingmotels/Screen/custom_widget/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/Screen/ui/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,10 +15,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size.getHeight = MediaQuery.of(context).size.height;
-    Size.getWidth = MediaQuery.of(context).size.width;
-    Size.scaleTxt = MediaQuery.of(context).textScaleFactor;
-    Size.statusBar = MediaQuery.of(context).padding.top;
+    getSizeApp(context);
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: Stack(
