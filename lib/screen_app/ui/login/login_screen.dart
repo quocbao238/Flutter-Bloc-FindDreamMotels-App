@@ -244,7 +244,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildSignUp(double height) {
     return InkWell(
       child: Container(
-        margin: EdgeInsets.only(top: height * 0.03),
+        margin: EdgeInsets.only(top: height * 0.03, bottom: height * 0.04),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -301,7 +301,7 @@ class _LoginPageState extends State<LoginPage> {
     return Positioned.fill(
       child: ClipPath(
         child: Container(
-          color: Color.fromRGBO(9, 92, 113, 1),
+          color: AppColor.colorClipPath,
         ),
         clipper: LoginClipPath(),
       ),

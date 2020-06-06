@@ -20,10 +20,25 @@ class AppColor {
   AppColor._();
   static Color backgroundColor = Color.fromRGBO(211, 220, 240, 1);
   static Color whiteColor = Colors.white;
+  static Color colorClipPath = Color.fromRGBO(9, 92, 113, 1);
+  static Color colorBlue156 = Color.fromRGBO(44, 156, 162, 1);
 }
 
 class StyleText {
   StyleText._();
+
+  static TextStyle styleTitle = TextStyle(
+      color: Color(0xff3da4ab),
+      fontSize: 30.0,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'RobotoMono');
+
+  static TextStyle styleDescription = TextStyle(
+      color: Colors.white,
+      fontSize: 20.0 ,
+      fontStyle: FontStyle.italic,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Raleway');
 
   static TextStyle header20White = TextStyle(
     color: Colors.white,

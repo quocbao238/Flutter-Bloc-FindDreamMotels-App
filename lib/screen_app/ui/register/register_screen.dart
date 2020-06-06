@@ -121,15 +121,19 @@ class _RegisterPageState extends State<RegisterPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-              width: 30,
-              height: 30,
-              child: Icon(
-                Icons.email,
-                color: Colors.white,
-              )),
+          FittedBox(
+            child: Container(
+                width: 30,
+                height: 30,
+                child: Icon(
+                  Icons.email,
+                  color: Colors.white,
+                )),
+          ),
           SizedBox(width: 8.0),
-          Text("Register with Email", style: StyleText.header20White),
+          FittedBox(
+              child:
+                  Text("Register with Email", style: StyleText.header20White)),
         ],
       ),
     );
@@ -148,16 +152,22 @@ class _RegisterPageState extends State<RegisterPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-            width: 30,
-            height: 30,
-            child: Image.asset(
-              'assets/facebookIcon.png',
-              fit: BoxFit.fill,
+          FittedBox(
+            child: Container(
+              width: 25,
+              height: 25,
+              child: Image.asset(
+                'assets/facebookIcon.png',
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           SizedBox(width: 8.0),
-          Text("Register with Facebook", style: StyleText.header20Black)
+          Expanded(
+              child: FittedBox(
+                  fit: BoxFit.fill,
+                  child: Text("Register with Facebook",
+                      style: StyleText.header20Black)))
         ],
       ),
     );
@@ -176,16 +186,20 @@ class _RegisterPageState extends State<RegisterPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-            width: 25,
-            height: 25,
-            child: Image.asset(
-              'assets/googleIcon.png',
-              fit: BoxFit.fill,
+          FittedBox(
+            child: Container(
+              width: 25,
+              height: 25,
+              child: Image.asset(
+                'assets/googleIcon.png',
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           SizedBox(width: 13.0),
-          Text("Register with Google", style: StyleText.header20Black)
+          FittedBox(
+              child:
+                  Text("Register with Google", style: StyleText.header20Black))
         ],
       ),
     );

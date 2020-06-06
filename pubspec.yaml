@@ -25,13 +25,16 @@ dependencies:
 
    #Firebase
   firebase_auth: ^0.15.3
+  firebase_core: ^0.4.5
   google_sign_in: ^4.1.1
+  # cloud_firestore: ^0.13.6
 
   #bloc
-  equatable: ^1.1.0
-  flutter_bloc: ^3.2.0
+  equatable: ^1.1.1
+  flutter_bloc: ^4.0.0
 
   #UI
+  intro_slider: ^2.3.1
   flutter_spinkit: ^4.1.2+1
   flutter_svg: ^0.17.4
   toast: ^0.1.5
@@ -68,7 +71,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/
-  #  - images/a_dot_ham.jpeg
+   - assets/sliderApp/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
