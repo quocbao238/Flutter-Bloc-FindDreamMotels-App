@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "3663369339",
+    "firebase_url": "https://find-accommodation-b2e61.firebaseio.com",
+    "project_id": "find-accommodation-b2e61",
+    "storage_bucket": "find-accommodation-b2e61.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3663369339:android:4124010180d7cca2413ede",
+        "android_client_info": {
+          "package_name": "com.example.findingmotels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3663369339-5lssjsgqqlq63lu30s3p777mvc5evv4q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findingmotels",
+            "certificate_hash": "c53922761cdcf98ae426c8b3b05cfc33f9cbbdc8"
+          }
+        },
+        {
+          "client_id": "3663369339-m4s1i6u822u6q1gja0omvpusa9mu4o9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0_V23pU7dP52BkCKoO0an_xufE8ZJRhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3663369339-m4s1i6u822u6q1gja0omvpusa9mu4o9j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "3663369339-4p72bsetov1fi883749tgh5hjagq2gcu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.findingmotels"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

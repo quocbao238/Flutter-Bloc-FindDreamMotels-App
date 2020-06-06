@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>3663369339-4p72bsetov1fi883749tgh5hjagq2gcu.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.3663369339-4p72bsetov1fi883749tgh5hjagq2gcu</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>3663369339-5lssjsgqqlq63lu30s3p777mvc5evv4q.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBllDq0L3w6Iv6vSc2x8yVS16Nuk_gtukY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>3663369339</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.findingmotels</string>
+	<key>PROJECT_ID</key>
+	<string>find-accommodation-b2e61</string>
+	<key>STORAGE_BUCKET</key>
+	<string>find-accommodation-b2e61.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:3663369339:ios:8886ce2897ff8adb413ede</string>
+	<key>DATABASE_URL</key>
+	<string>https://find-accommodation-b2e61.firebaseio.com</string>
+</dict>
+</plist>

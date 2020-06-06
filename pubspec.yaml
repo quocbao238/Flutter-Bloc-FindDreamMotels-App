@@ -22,6 +22,7 @@ dependencies:
     
   cupertino_icons: ^0.1.2
   flutter_launcher_icons: "^0.7.3"
+  cloud_firestore: 0.13.6
 
    #Firebase
   firebase_auth: ^0.15.3
