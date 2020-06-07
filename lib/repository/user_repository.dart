@@ -17,7 +17,7 @@ class UserRepository {
     try {
       GoogleSignIn googleSignIn = GoogleSignIn();
       GoogleSignInAccount account = await googleSignIn.signIn();
-
+     
       if (account == null) return null;
       AuthResult res = await firebaseAuth
           .signInWithCredential(GoogleAuthProvider.getCredential(

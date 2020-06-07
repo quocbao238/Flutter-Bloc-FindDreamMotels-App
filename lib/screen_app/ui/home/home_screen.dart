@@ -1,4 +1,6 @@
+import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/main.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -12,37 +14,16 @@ class HomePageParent extends StatefulWidget {
 class _HomePageParentState extends State<HomePageParent> {
   GlobalKey homeGlobalKey = GlobalKey();
 
-  Future<bool> _onWillPop() async {
-    return (await showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Are you sure?'),
-            content: new Text('Do you want to exit an App'),
-            actions: <Widget>[
-              new FlatButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: new Text('No'),
-              ),
-              new FlatButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: new Text('Yes'),
-              ),
-            ],
-          ),
-        )) ??
-        false;
-  }
-
   @override
   Widget build(BuildContext context) {
     getSizeApp(context);
-    return pageView(context, Size.getWidth,Size.getHeight);
+    return pageView(context, Size.getWidth, Size.getHeight);
   }
 
   WillPopScope pageView(
       BuildContext context, double getHeight, double getWidth) {
     return new WillPopScope(
-      // onWillPop: _onWillPop,
+      onWillPop: _onWillPop,
       child: Scaffold(
         key: homeGlobalKey,
         body: Stack(
@@ -76,11 +57,12 @@ class _HomePageParentState extends State<HomePageParent> {
                   );
                 },
                 child: Container(
-                  height: getWidth * 0.1,
-                  width: getWidth * 0.1,
+                  width: 30,
+                  height: 30,
                   child: ClipOval(
                     child: Image.network(
-                      "https://avatars2.githubusercontent.com/u/51372227?s=460&u=10b00a76a16feb0edadd49f31c7d2805c2663239&v=4",
+                      // "https://avatars2.githubusercontent.com/u/51372227?s=460&u=10b00a76a16feb0edadd49f31c7d2805c2663239&v=4",
+                      ConfigApp.fbuser.photoUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -91,6 +73,27 @@ class _HomePageParentState extends State<HomePageParent> {
         ),
       ),
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('Are you sure?'),
+            content: new Text('Do you want to exit an App'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('No'),
+              ),
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: new Text('Yes'),
+              ),
+            ],
+          ),
+        )) ??
+        false;
   }
 
   void _onMenuPressed({BuildContext context, double getHeight}) {
@@ -193,11 +196,13 @@ class _HomePageParentState extends State<HomePageParent> {
                     ),
                     new FlatButton(
                       onPressed: () {
-                        // BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                        //     .add(LogOutEvent());
-                        widget.userRepository.signOut();
-
                         Navigator.pop(context);
+                        widget.userRepository.signOut().then((v) =>
+                            Navigator.of(homeGlobalKey.currentContext)
+                                .pushReplacement(
+                                    new MaterialPageRoute(builder: (context) {
+                              return App();
+                            })));
                       },
                       child: new Text('Yes'),
                     ),

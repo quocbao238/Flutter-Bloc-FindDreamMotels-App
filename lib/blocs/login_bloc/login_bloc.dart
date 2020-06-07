@@ -33,14 +33,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               yield LoginSuccessState(user: user);
             } else {
               yield LoginFailState(
-                  message:
-                      "Password is incorrect! Please check again");
+                  message: "Email & Password is incorrect! Please check again");
             }
           } catch (e) {
-            yield LoginFailState(message: "Có lỗi xảy ra vui lòng thử lại");
+            yield LoginFailState(
+                message: "An error occurred, please try again later");
           }
         } else {
-          yield LoginFailState(message: "Có lỗi xảy ra vui lòng thử lại");
+          yield LoginFailState(message: "Password format is incorrect");
         }
       } else {
         yield LoginFailState(
@@ -51,6 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (event is HideShowPasswordEvent) {
       yield HideShowPasswordState(isHide: event.isHide);
     } else if (event is GoogleOnClickEvent) {
+      yield LoginLoadingState();
       try {
         var user = await userRepository.loginWithGoogle();
         if (user != null) {
@@ -59,9 +60,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           yield LoginSuccessState(user: user);
         }
         yield LoginFailState(
-            message: "Email or password is incorrect! Please check again");
+            message: "An error occurred, please try again later");
       } catch (e) {
-        yield LoginFailState(message: "Có lỗi xảy ra vui lòng thử lại");
+        yield LoginFailState(
+            message: "An error occurred, please try again later");
       }
     }
     yield LoginInitial();
