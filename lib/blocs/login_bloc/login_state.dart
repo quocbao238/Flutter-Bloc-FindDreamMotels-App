@@ -16,7 +16,8 @@ class LoginLoadingState extends LoginState {
 
 class LoginSuccessState extends LoginState {
   final FirebaseUser user;
-  LoginSuccessState({this.user});
+  final UserRepository userRepository;
+  LoginSuccessState({this.user, this.userRepository});
   @override
   List<Object> get props => null;
 }
@@ -32,7 +33,6 @@ class GotoSignUpPageState extends LoginState {
   @override
   List<Object> get props => null;
 }
-
 
 class HideShowPasswordState extends LoginState {
   final bool isHide;

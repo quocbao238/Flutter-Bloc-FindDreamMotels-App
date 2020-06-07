@@ -2,7 +2,7 @@ import 'package:findingmotels/blocs/login_bloc/login_bloc.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/loginClipPath.dart';
-import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
+import 'package:findingmotels/screen_app/ui/home/home_screen.dart';
 import 'package:findingmotels/screen_app/ui/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,19 +43,28 @@ class _LoginPageState extends State<LoginPage> {
     return BlocProvider(
         create: (context) => LoginBloc(userRepository: widget.userRepository),
         child: BlocListener<LoginBloc, LoginState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              if (state is LoginSuccessState) {
+                showToast("Login Sucess");
+                Navigator.of(context)
+                    .pushReplacement(new MaterialPageRoute(builder: (context) {
+                  return HomePageParent(userRepository: state.userRepository);
+                }));
+              }
+            },
             child: BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) => buildBody(state))));
   }
 
   Widget buildBody(LoginState state) {
     return Scaffold(
+      key: loginGlobalKey,
       backgroundColor: AppColor.backgroundColor,
       body: Stack(
         children: <Widget>[
           buildBackground(Size.getHeight),
           buildPageView(Size.getHeight, Size.getWidth),
-          state is LoginLoadingState ? LoadingWidget() : SizedBox(),
+          // state is LoginLoadingState ? LoadingWidget() : SizedBox(),
         ],
       ),
     );
@@ -268,7 +277,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildLoginButton(double height, double width) {
     return InkWell(
       onTap: () {
-        showToast("OK Pressed");
+        BlocProvider.of<LoginBloc>(loginGlobalKey.currentContext).add(
+            LoginButtonPressedEvent(
+                email: controllerEmail.text.trim(),
+                password: controllerPassword.text.trim()));
       },
       child: Container(
         height: height * 0.075,
@@ -308,15 +320,21 @@ class _LoginPageState extends State<LoginPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
-            width: width * 0.30,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30), color: Colors.white),
-            child: Center(
-              child: Container(
-                width: 25,
-                height: 25,
-                child: Image.asset('assets/googleIcon.png', fit: BoxFit.fill),
+          InkWell(
+            onTap: () {
+              BlocProvider.of<LoginBloc>(loginGlobalKey.currentContext)
+                  .add(GoogleOnClickEvent());
+            },
+            child: Container(
+              width: width * 0.30,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30), color: Colors.white),
+              child: Center(
+                child: Container(
+                  width: 25,
+                  height: 25,
+                  child: Image.asset('assets/googleIcon.png', fit: BoxFit.fill),
+                ),
               ),
             ),
           ),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -14,12 +13,12 @@ class UserRepository {
     this.firebaseAuth = FirebaseAuth.instance;
   }
 
-  Future<bool> loginWithGoogle() async {
+  Future<FirebaseUser> loginWithGoogle() async {
     try {
       GoogleSignIn googleSignIn = GoogleSignIn();
       GoogleSignInAccount account = await googleSignIn.signIn();
 
-      if (account == null) return false;
+      if (account == null) return null;
       AuthResult res = await firebaseAuth
           .signInWithCredential(GoogleAuthProvider.getCredential(
         idToken: (await account.authentication).idToken,
@@ -30,15 +29,15 @@ class UserRepository {
         ConfigApp.googleSignIn = googleSignIn;
         ConfigApp.googleSignInAccount = account;
 
-        return true;
+        return res.user;
       } else {
         // print("Google signIn fail");
-        return false;
+        return null;
       }
     } catch (e) {
       print(e.message);
       print("Error logging with google");
-      return false;
+      return null;
     }
   }
 
@@ -198,6 +197,4 @@ class UserRepository {
   Future<FirebaseUser> getCurrentUser() async {
     return await FirebaseAuth.instance.currentUser();
   }
-
-  GoogleSignIn() {}
 }

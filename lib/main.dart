@@ -1,6 +1,7 @@
 import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
+import 'package:findingmotels/screen_app/ui/home/home_screen.dart';
 import 'package:findingmotels/screen_app/ui/introslider/intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,11 +43,10 @@ class _AppState extends State<App> {
         listener: (context, state) {
           if (state is AuthenticatedState) {
             debugPrint("AuthenticatedState");
-            // Navigator.of(context)
-            //     .pushReplacement(new MaterialPageRoute(builder: (context) {
-            //   return HomePageParent(
-            //       user: state.user, userRepository: userRepository);
-            // }));
+            Navigator.of(context)
+                .pushReplacement(new MaterialPageRoute(builder: (context) {
+              return HomePageParent(userRepository: userRepository);
+            }));
           } else if (state is UnauthenticatedState) {
             debugPrint("UnauthenticatedState");
             Navigator.of(context)

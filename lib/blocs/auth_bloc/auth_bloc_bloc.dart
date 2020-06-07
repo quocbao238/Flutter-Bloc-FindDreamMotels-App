@@ -19,7 +19,6 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         var isSignedIn = await event.userRepository.isSignedIn();
         if (isSignedIn) {
           var user = await event.userRepository.getCurrentUser();
-
           yield AuthenticatedState(user: user);
         } else {
           yield UnauthenticatedState();
