@@ -1,13 +1,13 @@
 import 'package:findingmotels/blocs/login_bloc/login_bloc.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
+import 'package:findingmotels/screen_app/Animation/fadedAnimation.dart';
 import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/loginClipPath.dart';
 import 'package:findingmotels/screen_app/ui/home/home_screen.dart';
 import 'package:findingmotels/screen_app/ui/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:oktoast/oktoast.dart';
 
 class LoginPage extends StatefulWidget {
   final UserRepository userRepository;
@@ -81,16 +81,16 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            buidImage(height),
-            buildIcon(height, width),
-            buildTitleLogin(),
-            buildTitleEmail(width),
-            buildTFFEmail(width),
-            buildTitlePass(width),
-            buildTFFPass(width),
-            buildLoginForgot(width, height),
-            buildLoginButton(height, width),
-            buildSignUp(height),
+            FadeAnimation(0.1, buidImage(height)),
+            FadeAnimation(0.2, buildIcon(height, width)),
+            FadeAnimation(0.3, buildTitleLogin()),
+            FadeAnimation(0.4, buildTitleEmail(width)),
+            FadeAnimation(0.5, buildTFFEmail(width)),
+            FadeAnimation(0.6, buildTitlePass(width)),
+            FadeAnimation(0.7, buildTFFPass(width)),
+            FadeAnimation(0.8, buildLoginForgot(width, height)),
+            FadeAnimation(0.9, buildLoginButton(height, width)),
+            FadeAnimation(1, buildSignUp(height)),
           ],
         ),
       ),
@@ -307,8 +307,17 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => RegisterPage()));
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => RegisterPage()));
+        Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(
+            builder: (context) {
+              return RegisterPage(
+                userRepository: widget.userRepository,
+              );
+            },
+          ),
+        );
       },
     );
   }

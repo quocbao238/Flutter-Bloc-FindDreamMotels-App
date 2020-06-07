@@ -1,16 +1,21 @@
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/repository/user_repository.dart';
+import 'package:findingmotels/screen_app/Animation/fadedAnimation.dart';
 import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/registerClipPath.dart';
 import 'package:findingmotels/screen_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class RegisterPage extends StatefulWidget {
+  final UserRepository userRepository;
+  RegisterPage({@required this.userRepository});
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
   String imageUrl = 'assets/registerSvg.svg';
+  GlobalKey registerGlobalKey;
   TextEditingController controllerEmail;
   TextEditingController controllerPassword;
 
@@ -18,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     controllerEmail = TextEditingController();
     controllerPassword = TextEditingController();
+    registerGlobalKey = GlobalKey();
     super.initState();
   }
 
@@ -30,15 +36,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
+    getSizeApp(context);
     return Scaffold(
+      key: registerGlobalKey,
       backgroundColor: Color.fromRGBO(211, 220, 240, 1),
       body: Stack(
         children: <Widget>[
-          buildBackground(height),
-          buildPageView(height, width),
+          buildBackground(Size.getHeight),
+          buildPageView(Size.getHeight, Size.getWidth),
         ],
       ),
     );
@@ -48,19 +53,20 @@ class _RegisterPageState extends State<RegisterPage> {
     return Positioned.fill(
       child: Column(
         children: <Widget>[
-          buildTitleImage(height),
+          FadeAnimation(0.1, buildTitleImage(height)),
           Expanded(
             child: Container(
               padding: EdgeInsets.only(bottom: height * 0.04),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  buildTitleEmail(width),
-                  buildTFFEmail(width),
-                  buildTitlePass(width),
-                  buildTFFPass(width),
-                  buildRegisterEmail(width, height),
-                  buildLoginText(height)
+                  FadeAnimation(0.2, buildTitleSignUp()),
+                  FadeAnimation(0.3, buildTitleEmail(width)),
+                  FadeAnimation(0.4, buildTFFEmail(width)),
+                  FadeAnimation(0.5, buildTitlePass(width)),
+                  FadeAnimation(0.8, buildTFFPass(width)),
+                  FadeAnimation(0.9, buildRegisterEmail(width, height)),
+                  FadeAnimation(1.1, buildLoginText(height))
                 ],
               ),
             ),
@@ -70,8 +76,20 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget buildTitleEmail(double width) {
+  Widget buildTitleSignUp() {
     return Container(
+      margin: EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8.0, left: 8.0),
+      child: Center(
+        child: Text("Sign Up with email and phone number",
+            style: StyleText.subhead18GreenMixBlue),
+      ),
+    );
+  }
+
+  Widget buildTitleEmail(double width) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 3000),
+      curve: Curves.easeIn,
       padding: EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
@@ -149,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ));
   }
 
-  Container buildTitleImage(double height) {
+  Widget buildTitleImage(double height) {
     return Container(
       color: Colors.transparent,
       height: height * 0.5,
@@ -186,8 +204,15 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget buildLoginText(double height) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+        Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(
+            builder: (context) {
+              return LoginPage(
+                userRepository: widget.userRepository,
+              );
+            },
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.only(top: height * 0.03),
@@ -291,16 +316,16 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget buildBackground(double height) {
     return Positioned.fill(
-      child: AnimatedContainer(
+      child: Container(
         height: height * 0.8,
-        duration: Duration(milliseconds: 10000),
-        curve: Curves.ease,
-        child: ClipPath(
-          child: Container(
-            color: Color.fromRGBO(9, 92, 113, 1),
-          ),
-          clipper: RegisterClipPath(),
-        ),
+        child: FadeAnimation(
+            0.1,
+            ClipPath(
+              child: Container(
+                color: Color.fromRGBO(9, 92, 113, 1),
+              ),
+              clipper: RegisterClipPath(),
+            )),
       ),
     );
   }
