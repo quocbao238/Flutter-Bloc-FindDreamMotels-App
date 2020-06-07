@@ -32,7 +32,7 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   void onDonePress() {
-  //   this.goToTab(0);
+    //   this.goToTab(0);
     Navigator.of(context)
         .pushReplacement(new MaterialPageRoute(builder: (context) {
       return LoginPage(userRepository: widget.userRepository);

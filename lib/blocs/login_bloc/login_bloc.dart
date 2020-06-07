@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/repository/user_repository.dart';
+import 'package:findingmotels/validator/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 part 'login_event.dart';
 part 'login_state.dart';
@@ -20,10 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async* {
     if (event is LoginButtonPressedEvent) {
       yield LoginLoadingState();
-
-      if (event.email.contains("@") &&
-          event.email.contains(".") &&
-          event.email != "") {
+      if (Valid.isEmail(event.email) || Valid.isPhoneNumber(event.email)) {
         if (event.password != "") {
           try {
             var user = await userRepository.signInEmailAndPassword(
@@ -32,18 +30,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               print(user);
               yield LoginSuccessState(user: user);
             } else {
-              yield LoginFailState(
-                  message:
-                      "Email or password is incorrect! Please check again");
+              yield LoginFailState(message:"Email or password is incorrect! Please check again");
             }
           } catch (e) {
-            yield LoginFailState(message: e.toString());
+            yield LoginFailState(message: "Có lỗi xảy ra vui lòng thử lại");
           }
         } else {
-          yield LoginFailState(message: "Password must not be blank");
+          yield LoginFailState(message: "Có lỗi xảy ra vui lòng thử lại");
         }
       } else {
-        yield LoginFailState(message: "Email format is incorrect");
+        yield LoginFailState(message: "Email or phonenumber format is incorrect");
       }
     } else if (event is GotoSignUpPageEvent) {
       yield GotoSignUpPageState();

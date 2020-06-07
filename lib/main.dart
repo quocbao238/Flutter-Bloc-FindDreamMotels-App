@@ -4,14 +4,25 @@ import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
 import 'package:findingmotels/screen_app/ui/introslider/intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:oktoast/oktoast.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'Find Accommodation',
-    theme: ThemeData(primarySwatch: Colors.blue),
-    home: App(),
+  runApp(OKToast(
+    textStyle: TextStyle(fontSize: 19.0, color: Colors.white),
+    textPadding: EdgeInsets.symmetric(horizontal: 8.0),
+    backgroundColor: Colors.black54,
+    radius: 10.0,
+    animationCurve: Curves.easeIn,
+    position: ToastPosition.bottom,
+    animationBuilder: Miui10AnimBuilder(),
+    animationDuration: Duration(milliseconds: 200),
+    duration: Duration(seconds: 3),
+    child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Find Accommodation',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: App(),
+    ),
   ));
 }
 

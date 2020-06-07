@@ -1,9 +1,13 @@
+import 'package:findingmotels/blocs/login_bloc/login_bloc.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
 import 'package:findingmotels/screen_app/ui/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
 
 class LoginPage extends StatefulWidget {
   final UserRepository userRepository;
@@ -15,16 +19,43 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String imageUrl = 'assets/loginSvg.svg';
   bool isSelect = true;
+  GlobalKey loginGlobalKey = GlobalKey();
+  TextEditingController controllerEmail;
+  TextEditingController controllerPassword;
+
+  @override
+  void initState() {
+    controllerEmail = TextEditingController();
+    controllerPassword = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controllerEmail.dispose();
+    controllerPassword.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     getSizeApp(context);
+    return BlocProvider(
+        create: (context) => LoginBloc(userRepository: widget.userRepository),
+        child: BlocListener<LoginBloc, LoginState>(
+            listener: (context, state) {},
+            child: BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) => buildBody(state))));
+  }
+
+  Widget buildBody(LoginState state) {
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: Stack(
         children: <Widget>[
           buildBackground(Size.getHeight),
-          buildPageView(Size.getHeight, Size.getWidth)
+          buildPageView(Size.getHeight, Size.getWidth),
+          state is LoginLoadingState ? LoadingWidget() : SizedBox(),
         ],
       ),
     );
@@ -104,6 +135,7 @@ class _LoginPageState extends State<LoginPage> {
         margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
         child: TextFormField(
           obscureText: true,
+          controller: controllerPassword,
           decoration: InputDecoration(
             fillColor: Colors.white,
             filled: true,
@@ -142,6 +174,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
         margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
         child: TextFormField(
+          controller: controllerEmail,
           decoration: InputDecoration(
             fillColor: Colors.white,
             filled: true,
@@ -233,13 +266,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget buildLoginButton(double height, double width) {
-    return Container(
-      height: height * 0.075,
-      width: width * 0.65,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30), color: Colors.red),
-      child: Center(
-        child: Text("Login".toUpperCase(), style: StyleText.header20White),
+    return InkWell(
+      onTap: () {
+        showToast("OK Pressed");
+      },
+      child: Container(
+        height: height * 0.075,
+        width: width * 0.65,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30), color: Colors.red),
+        child: Center(
+          child: Text("Login".toUpperCase(), style: StyleText.header20White),
+        ),
       ),
     );
   }
