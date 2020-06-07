@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/repository/user_repository.dart';
+import 'package:findingmotels/validator/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 part 'userreg_event.dart';
@@ -23,42 +25,30 @@ class UserregBloc extends Bloc<UserregEvent, UserregState> {
     if (event is SignUpButtonPressed) {
       yield UserRegLoading();
       try {
-        if (event.isCheckin) {
-          if (event.userName != null && event.userName.length > 2) {
-            if (event.email.contains("@") &&
-                event.email.contains(".") &&
-                event.email != null) {
-              if (event.password != null && event.password.length > 5) {
-                var user = await userRepository.signUpUserWithEmailPass(
-                    event.email, event.password);
-                if (user != null) {
-                  UserUpdateInfo updateInfo = UserUpdateInfo();
-                  updateInfo.displayName = event.userName;
-                  updateInfo.photoUrl = avatarImageUrl;
-                  await user.updateProfile(updateInfo);
-                  await user.reload();
-                  var userSend = await userRepository.getCurrentUser();
-                  print('USERNAME IS: ${userSend.displayName}');
-                  yield UserRegSuccessful(userSend, userRepository);
-                } else {
-                  yield UserRegFailure(
-                      message: "Login failed! please check again");
-                }
+        if (Valid.isUserNamee(event.userName)) {
+          if (Valid.isEmail(event.email)) {
+            if (Valid.isPassword(event.password)) {
+              var user = await userRepository.signUpUserWithEmailPass(
+                  event.email, event.password);
+              if (user != null) {
+                FirebaseUser userSend = await updateUser(event, user);
+                ConfigApp.fbuser = user;
+                ConfigApp.userRepository = userRepository;
+                yield UserRegSuccessful(userSend, userRepository);
               } else {
                 yield UserRegFailure(
-                    message: "Password must be greater than 5 characters");
+                    message: "Login failed! please check again");
               }
             } else {
               yield UserRegFailure(
-                  message: "Invalid Email! Please check again!");
+                  message: "Password must be greater than 8 characters");
             }
           } else {
-            yield UserRegFailure(
-                message: "UserName must be greater than 2 characters");
+            yield UserRegFailure(message: "Invalid Email! Please check again!");
           }
         } else {
           yield UserRegFailure(
-              message: "You have not agreed to the terms and privacy policy");
+              message: "UserName must be greater than 3 characters");
         }
       } catch (e) {
         yield UserRegFailure(message: e.toString());
@@ -67,5 +57,17 @@ class UserregBloc extends Bloc<UserregEvent, UserregState> {
       yield HideShowPasswordState(isHide: event.isHide);
     }
     yield UserregInitial();
+  }
+
+  Future<FirebaseUser> updateUser(
+      SignUpButtonPressed event, FirebaseUser user) async {
+    UserUpdateInfo updateInfo = UserUpdateInfo();
+    updateInfo.displayName = event.userName;
+    updateInfo.photoUrl = avatarImageUrl;
+    await user.updateProfile(updateInfo);
+    await user.reload();
+    var userSend = await userRepository.getCurrentUser();
+    print('USERNAME IS: ${userSend.displayName}');
+    return userSend;
   }
 }

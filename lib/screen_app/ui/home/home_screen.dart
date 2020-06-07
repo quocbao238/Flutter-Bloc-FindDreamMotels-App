@@ -53,21 +53,24 @@ class _HomePageParentState extends State<HomePageParent> {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  customDialog(
+                  _onMenuPressed(
                       context: homeGlobalKey.currentContext,
-                      title: "Are you sure you want to Loggout?",
-                      avgImage: "assets/logoutSvg.svg",
-                      function: (v) {
-                        if (v) {
-                          showToast("Logout");
-                          widget.userRepository.signOut().then((v) =>
-                              Navigator.of(homeGlobalKey.currentContext)
-                                  .pushReplacement(
-                                      new MaterialPageRoute(builder: (context) {
-                                return App();
-                              })));
-                        }
-                      });
+                      getHeight: getHeight);
+                  // customDialog(
+                  //     context: homeGlobalKey.currentContext,
+                  //     title: "Are you sure you want to Loggout?",
+                  //     avgImage: "assets/logoutSvg.svg",
+                  //     function: (v) {
+                  //       if (v) {
+                  //         showToast("Logout");
+                  //         widget.userRepository.signOut().then((v) =>
+                  //             Navigator.of(homeGlobalKey.currentContext)
+                  //                 .pushReplacement(
+                  //                     new MaterialPageRoute(builder: (context) {
+                  //               return App();
+                  //             })));
+                  //       }
+                  //     });
                 },
                 child: Container(
                   width: 30,
@@ -197,34 +200,18 @@ class _HomePageParentState extends State<HomePageParent> {
               customDialog(
                   context: homeGlobalKey.currentContext,
                   title: "Are you sure you want to Loggout?",
-                  avgImage: "assets/logoutSvg.svg");
-              // showDialog(
-              //   context: context,
-              //   builder: (context) => AlertDialog(
-              //     title: new Text('Are you sure?'),
-              //     content: new Text('Do you want to Log out?'),
-              //     actions: <Widget>[
-              //       new FlatButton(
-              //         onPressed: () {
-              //           Navigator.pop(context);
-              //         },
-              //         child: new Text('No'),
-              //       ),
-              //       new FlatButton(
-              //         onPressed: () {
-              //           Navigator.pop(context);
-              //           widget.userRepository.signOut().then((v) =>
-              //               Navigator.of(homeGlobalKey.currentContext)
-              //                   .pushReplacement(
-              //                       new MaterialPageRoute(builder: (context) {
-              //                 return App();
-              //               })));
-              //         },
-              //         child: new Text('Yes'),
-              //       ),
-              //     ],
-              //   ),
-              // );
+                  avgImage: "assets/logoutSvg.svg",
+                  function: (v) {
+                    if (v) {
+                      showToast("Logout");
+                      widget.userRepository.signOut().then((v) =>
+                          Navigator.of(homeGlobalKey.currentContext)
+                              .pushReplacement(
+                                  new MaterialPageRoute(builder: (context) {
+                            return App();
+                          })));
+                    }
+                  });
             },
           ),
         ),

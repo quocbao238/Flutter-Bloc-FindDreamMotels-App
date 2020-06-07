@@ -3,6 +3,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/screen_app/Animation/fadedAnimation.dart';
 import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
 import 'package:findingmotels/screen_app/ui/home/home_screen.dart';
 import 'package:findingmotels/screen_app/ui/register/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -57,16 +58,24 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget buildBody(LoginState state) {
-    return Scaffold(
-      key: loginGlobalKey,
-      backgroundColor: AppColor.backgroundColor,
-      body: Stack(
-        children: <Widget>[
-          buildBackground(Size.getHeight),
-          buildPageView(Size.getHeight, Size.getWidth),
-          // state is LoginLoadingState ? LoadingWidget() : SizedBox(),
-        ],
-      ),
+    return Stack(
+      children: <Widget>[
+        Scaffold(
+          key: loginGlobalKey,
+          backgroundColor: AppColor.backgroundColor,
+          body: Stack(
+            children: <Widget>[
+              buildBackground(Size.getHeight),
+              buildPageView(Size.getHeight, Size.getWidth),
+            ],
+          ),
+        ),
+        state is LoginLoadingState
+            ? LoadingWidget()
+            : const SizedBox(
+                width: 1,
+              ),
+      ],
     );
   }
 

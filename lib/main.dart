@@ -3,7 +3,6 @@ import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
 import 'package:findingmotels/screen_app/ui/home/home_screen.dart';
 import 'package:findingmotels/screen_app/ui/introslider/intro_screen.dart';
-import 'package:findingmotels/screen_app/ui/logout/logout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';

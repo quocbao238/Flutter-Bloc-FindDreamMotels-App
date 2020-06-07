@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'error_codes.dart';
-import "package:http/http.dart" as http;
 
 class UserRepository {
   FirebaseAuth firebaseAuth;
@@ -41,51 +39,51 @@ class UserRepository {
     }
   }
 
-  Future<bool> handleGetContact() async {
-    try {
-      print("Loading contact info...");
-      // });
-      final http.Response response = await http.get(
-        'https://people.googleapis.com/v1/people/me/connections'
-        '?requestMask.includeField=person.names',
-        headers: await ConfigApp.googleSignInAccount.authHeaders,
-      );
-      if (response.statusCode != 200) {
-        print("People API gave a ${response.statusCode} "
-            "response. Check logs for details.");
-        print('People API ${response.statusCode} response: ${response.body}');
-        return true;
-      }
-      final Map<String, dynamic> data = json.decode(response.body);
-      ConfigApp.namedContact = _pickFirstNamedContact(data);
-      if (ConfigApp.namedContact != null) {
-        print("I see you know ${ConfigApp.namedContact}!");
-      } else {
-        print("No contacts to display.");
-      }
-    } catch (e) {
-      print(e.message);
-      return false;
-    }
-  }
+  // Future<bool> handleGetContact() async {
+  //   try {
+  //     print("Loading contact info...");
+  //     // });
+  //     final http.Response response = await http.get(
+  //       'https://people.googleapis.com/v1/people/me/connections'
+  //       '?requestMask.includeField=person.names',
+  //       headers: await ConfigApp.googleSignInAccount.authHeaders,
+  //     );
+  //     if (response.statusCode != 200) {
+  //       print("People API gave a ${response.statusCode} "
+  //           "response. Check logs for details.");
+  //       print('People API ${response.statusCode} response: ${response.body}');
+  //       return true;
+  //     }
+  //     final Map<String, dynamic> data = json.decode(response.body);
+  //     ConfigApp.namedContact = _pickFirstNamedContact(data);
+  //     if (ConfigApp.namedContact != null) {
+  //       print("I see you know ${ConfigApp.namedContact}!");
+  //     } else {
+  //       print("No contacts to display.");
+  //     }
+  //   } catch (e) {
+  //     print(e.message);
+  //     return false;
+  //   }
+  // }
 
-  String _pickFirstNamedContact(Map<String, dynamic> data) {
-    final List<dynamic> connections = data['connections'];
-    final Map<String, dynamic> contact = connections?.firstWhere(
-      (dynamic contact) => contact['names'] != null,
-      orElse: () => null,
-    );
-    if (contact != null) {
-      final Map<String, dynamic> name = contact['names'].firstWhere(
-        (dynamic name) => name['displayName'] != null,
-        orElse: () => null,
-      );
-      if (name != null) {
-        return name['displayName'];
-      }
-    }
-    return null;
-  }
+  // String _pickFirstNamedContact(Map<String, dynamic> data) {
+  //   final List<dynamic> connections = data['connections'];
+  //   final Map<String, dynamic> contact = connections?.firstWhere(
+  //     (dynamic contact) => contact['names'] != null,
+  //     orElse: () => null,
+  //   );
+  //   if (contact != null) {
+  //     final Map<String, dynamic> name = contact['names'].firstWhere(
+  //       (dynamic name) => name['displayName'] != null,
+  //       orElse: () => null,
+  //     );
+  //     if (name != null) {
+  //       return name['displayName'];
+  //     }
+  //   }
+  //   return null;
+  // }
 
   // sign up with email
   Future<FirebaseUser> signUpUserWithEmailPass(

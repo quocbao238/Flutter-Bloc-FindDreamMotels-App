@@ -5,7 +5,6 @@ import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/validator/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -23,13 +22,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async* {
     if (event is LoginButtonPressedEvent) {
       yield LoginLoadingState();
-      if (Valid.isEmail(event.email) || Valid.isPhoneNumber(event.email)) {
-        if (event.password != "") {
+      if (Valid.isEmail(event.email)) {
+        if (Valid.isPassword(event.password)) {
           try {
             var user = await userRepository.signInEmailAndPassword(
                 event.email, event.password);
             if (user != null) {
               ConfigApp.fbuser = user;
+              ConfigApp.userRepository = userRepository;
               yield LoginSuccessState(user: user);
             } else {
               yield LoginFailState(
@@ -43,8 +43,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           yield LoginFailState(message: "Password format is incorrect");
         }
       } else {
-        yield LoginFailState(
-            message: "Email or phonenumber format is incorrect");
+        yield LoginFailState(message: "Email format is incorrect");
       }
     } else if (event is GotoSignUpPageEvent) {
       yield GotoSignUpPageState();

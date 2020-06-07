@@ -6,11 +6,15 @@ class Valid {
     return RegexValidation.hasMatch(email, RegexPattern.email);
   }
 
+  static bool isUserNamee(String userName){
+    return RegexValidation.hasMatch(userName, RegexPattern.username);
+  }
+
   static bool isPhoneNumber(String email) {
     return RegexValidation.hasMatch(email, RegexPattern.phone);
   }
 
-  static bool password(String email) {
+  static bool isPassword(String email) {
     return RegexValidation.hasMatch(email, RegexPattern.passwordEasy);
   }
 }
