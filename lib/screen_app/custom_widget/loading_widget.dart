@@ -20,6 +20,7 @@ class LoadingWidget extends StatelessWidget {
         ),
         Center(
           child: SpinKitFoldingCube(
+            duration: Duration(milliseconds: 100),
             itemBuilder: (BuildContext context, int index) {
               return DecoratedBox(
                 decoration: BoxDecoration(

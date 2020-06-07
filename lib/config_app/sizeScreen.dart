@@ -22,7 +22,9 @@ class AppColor {
   static Color whiteColor = Colors.white;
   static Color colorClipPath = Color.fromRGBO(9, 92, 113, 1);
   static Color colorBlue156 = Color.fromRGBO(44, 156, 162, 1);
+  static Color alerBtnColor = Color(0xff00bfa5);
 }
+
 
 class StyleText {
   StyleText._();

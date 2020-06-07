@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocListener<LoginBloc, LoginState>(
             listener: (context, state) {
               if (state is LoginSuccessState) {
-                showToast("Login Sucess");
+                // showToast("Login Sucess");
                 Navigator.of(context)
                     .pushReplacement(new MaterialPageRoute(builder: (context) {
                   return HomePageParent(userRepository: state.userRepository);

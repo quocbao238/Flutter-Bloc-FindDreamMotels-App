@@ -2,7 +2,9 @@ import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/main.dart';
 import 'package:findingmotels/repository/user_repository.dart';
+import 'package:findingmotels/screen_app/ui/home/show_Alert_custome.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 
 class HomePageParent extends StatefulWidget {
   final UserRepository userRepository;
@@ -51,17 +53,27 @@ class _HomePageParentState extends State<HomePageParent> {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  _onMenuPressed(
-                    context: homeGlobalKey.currentContext,
-                    getHeight: getHeight,
-                  );
+                  customDialog(
+                      context: homeGlobalKey.currentContext,
+                      title: "Are you sure you want to Loggout?",
+                      avgImage: "assets/logoutSvg.svg",
+                      function: (v) {
+                        if (v) {
+                          showToast("Logout");
+                          widget.userRepository.signOut().then((v) =>
+                              Navigator.of(homeGlobalKey.currentContext)
+                                  .pushReplacement(
+                                      new MaterialPageRoute(builder: (context) {
+                                return App();
+                              })));
+                        }
+                      });
                 },
                 child: Container(
                   width: 30,
                   height: 30,
                   child: ClipOval(
                     child: Image.network(
-                      // "https://avatars2.githubusercontent.com/u/51372227?s=460&u=10b00a76a16feb0edadd49f31c7d2805c2663239&v=4",
                       ConfigApp.fbuser.photoUrl,
                       fit: BoxFit.cover,
                     ),
@@ -182,33 +194,37 @@ class _HomePageParentState extends State<HomePageParent> {
             ),
             onTap: () {
               Navigator.pop(context);
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: new Text('Are you sure?'),
-                  content: new Text('Do you want to Log out?'),
-                  actions: <Widget>[
-                    new FlatButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: new Text('No'),
-                    ),
-                    new FlatButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        widget.userRepository.signOut().then((v) =>
-                            Navigator.of(homeGlobalKey.currentContext)
-                                .pushReplacement(
-                                    new MaterialPageRoute(builder: (context) {
-                              return App();
-                            })));
-                      },
-                      child: new Text('Yes'),
-                    ),
-                  ],
-                ),
-              );
+              customDialog(
+                  context: homeGlobalKey.currentContext,
+                  title: "Are you sure you want to Loggout?",
+                  avgImage: "assets/logoutSvg.svg");
+              // showDialog(
+              //   context: context,
+              //   builder: (context) => AlertDialog(
+              //     title: new Text('Are you sure?'),
+              //     content: new Text('Do you want to Log out?'),
+              //     actions: <Widget>[
+              //       new FlatButton(
+              //         onPressed: () {
+              //           Navigator.pop(context);
+              //         },
+              //         child: new Text('No'),
+              //       ),
+              //       new FlatButton(
+              //         onPressed: () {
+              //           Navigator.pop(context);
+              //           widget.userRepository.signOut().then((v) =>
+              //               Navigator.of(homeGlobalKey.currentContext)
+              //                   .pushReplacement(
+              //                       new MaterialPageRoute(builder: (context) {
+              //                 return App();
+              //               })));
+              //         },
+              //         child: new Text('Yes'),
+              //       ),
+              //     ],
+              //   ),
+              // );
             },
           ),
         ),

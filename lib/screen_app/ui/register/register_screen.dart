@@ -11,6 +11,22 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   String imageUrl = 'assets/registerSvg.svg';
+  TextEditingController controllerEmail;
+  TextEditingController controllerPassword;
+
+  @override
+  void initState() {
+    controllerEmail = TextEditingController();
+    controllerPassword = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controllerEmail.dispose();
+    controllerPassword.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +55,10 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  buildLoginGoogle(width, height),
-                  SizedBox(height: 16.0),
-                  buildLoginFacebook(width, height),
-                  Spacer(),
+                  buildTitleEmail(width),
+                  buildTFFEmail(width),
+                  buildTitlePass(width),
+                  buildTFFPass(width),
                   buildRegisterEmail(width, height),
                   buildLoginText(height)
                 ],
@@ -54,10 +70,89 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  Widget buildTitleEmail(double width) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Container(
+        margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+        width: width,
+        child: Text("Email/PhoneNumber",
+            textAlign: TextAlign.start, style: StyleText.content14Black400),
+      ),
+    );
+  }
+
+  Widget buildTFFPass(double width) {
+    return Container(
+        margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+        child: TextFormField(
+          obscureText: true,
+          controller: controllerPassword,
+          decoration: InputDecoration(
+            fillColor: Colors.white,
+            filled: true,
+            contentPadding:
+                const EdgeInsets.only(left: 16.0, bottom: 16.0, top: 16.0),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+          keyboardType: TextInputType.emailAddress,
+          style: new TextStyle(
+            fontSize: 16.0 * Size.scaleTxt,
+            fontFamily: "Poppins",
+          ),
+        ));
+  }
+
+  Widget buildTitlePass(double width) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Container(
+        margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+        width: width,
+        child: Text("Password",
+            textAlign: TextAlign.start, style: StyleText.content14Black400),
+      ),
+    );
+  }
+
+  Widget buildTFFEmail(double width) {
+    return Container(
+        margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+        child: TextFormField(
+          controller: controllerEmail,
+          decoration: InputDecoration(
+            fillColor: Colors.white,
+            filled: true,
+            contentPadding:
+                const EdgeInsets.only(left: 16.0, bottom: 16.0, top: 16.0),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+          keyboardType: TextInputType.emailAddress,
+          style: new TextStyle(
+            fontSize: 16.0 * Size.scaleTxt,
+            fontFamily: "Poppins",
+          ),
+        ));
+  }
+
   Container buildTitleImage(double height) {
     return Container(
       color: Colors.transparent,
-      height: height * 0.6,
+      height: height * 0.5,
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: (Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -67,10 +162,10 @@ class _RegisterPageState extends State<RegisterPage> {
               margin: EdgeInsets.only(top: 16),
               child: Center(
                 child: Text(
-                  "Welcome to Join!",
+                  "Welcome!",
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 30.0,
+                      fontSize: 30.0 * Size.scaleTxt,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 2.0),
                 ),
@@ -80,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Expanded(
             child: SvgPicture.asset(
               imageUrl,
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.fill,
             ),
           ),
         ],
@@ -112,6 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Container(
       width: width * 0.75,
       height: height * 0.08,
+      margin: EdgeInsets.only(top: height * 0.035),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         color: Colors.red,
@@ -121,19 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          FittedBox(
-            child: Container(
-                width: 30,
-                height: 30,
-                child: Icon(
-                  Icons.email,
-                  color: Colors.white,
-                )),
-          ),
-          SizedBox(width: 8.0),
-          FittedBox(
-              child:
-                  Text("Register with Email", style: StyleText.header20White)),
+          FittedBox(child: Text("Register", style: StyleText.header20White)),
         ],
       ),
     );
