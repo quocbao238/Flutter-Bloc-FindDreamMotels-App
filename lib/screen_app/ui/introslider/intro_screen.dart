@@ -1,11 +1,16 @@
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/slider_model.dart';
+import 'package:findingmotels/repository/user_repository.dart';
+import 'package:findingmotels/screen_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
 
 class IntroPage extends StatefulWidget {
+  final UserRepository userRepository;
+  IntroPage({@required this.userRepository});
+
   @override
   _IntroPageState createState() => _IntroPageState();
 }
@@ -27,10 +32,19 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   void onDonePress() {
-    this.goToTab(0);
+  //   this.goToTab(0);
+    Navigator.of(context)
+        .pushReplacement(new MaterialPageRoute(builder: (context) {
+      return LoginPage(userRepository: widget.userRepository);
+    }));
   }
 
-  void onTabChangeCompleted(index) {}
+  void onTabChangeCompleted(index) {
+    // Navigator.of(context)
+    //     .pushReplacement(new MaterialPageRoute(builder: (context) {
+    //   return LoginPage(userRepository: widget.userRepository);
+    // }));
+  }
 
   Widget renderNextBtn() {
     return Icon(
@@ -41,7 +55,7 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   Widget renderDoneBtn() {
-    return Icon(Icons.done, color: Colors.red);
+    return Icon(Icons.done, color: AppColor.colorBlue156);
   }
 
   Widget renderSkipBtn() {

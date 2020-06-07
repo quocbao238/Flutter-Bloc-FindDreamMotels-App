@@ -24,7 +24,11 @@ dependencies:
   flutter_launcher_icons: "^0.7.3"
   cloud_firestore: 0.13.6
 
-   #Firebase
+  #Shared Preferences
+  shared_preferences: ^0.5.7+3
+
+
+  #Firebase
   firebase_auth: ^0.15.3
   firebase_core: ^0.4.5
   google_sign_in: ^4.1.1
@@ -46,6 +50,9 @@ dependencies:
   flutter_zoom_drawer: ^1.0.1+1
   auto_size_text: ^2.1.0
   meta: ^1.1.8
+
+  #Check email phonenumber
+  regexpattern: ^0.2.3
 
 
  
