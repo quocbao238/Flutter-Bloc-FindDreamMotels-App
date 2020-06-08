@@ -286,6 +286,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildLoginButton(double height, double width) {
     return InkWell(
       onTap: () {
+        FocusScope.of(context).unfocus();
+
         BlocProvider.of<LoginBloc>(loginGlobalKey.currentContext).add(
             LoginButtonPressedEvent(
                 email: controllerEmail.text.trim(),

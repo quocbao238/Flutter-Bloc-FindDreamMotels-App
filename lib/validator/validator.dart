@@ -6,8 +6,9 @@ class Valid {
     return RegexValidation.hasMatch(email, RegexPattern.email);
   }
 
-  static bool isUserNamee(String userName){
-    return RegexValidation.hasMatch(userName, RegexPattern.username);
+  static bool isUserNamee(String userName) {
+    // return RegexValidation.hasMatch(userName, RegexPattern.username);
+    return (userName.length >= 3 && userName.length <= 15);
   }
 
   static bool isPhoneNumber(String email) {

@@ -3,10 +3,12 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/screen_app/Animation/fadedAnimation.dart';
 import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/registerClipPath.dart';
+import 'package:findingmotels/screen_app/ui/home/home_screen.dart';
 import 'package:findingmotels/screen_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
 
 class RegisterPage extends StatefulWidget {
   final UserRepository userRepository;
@@ -47,12 +49,15 @@ class _RegisterPageState extends State<RegisterPage> {
       create: (context) => UserregBloc(userRepository: widget.userRepository),
       child: BlocListener<UserregBloc, UserregState>(
         listener: (context, state) {
-          // if (state is LoginSuccessState) {
-          //   Navigator.of(context)
-          //       .pushReplacement(new MaterialPageRoute(builder: (context) {
-          //     return HomePageParent(userRepository: state.userRepository);
-          //   }));
-          // }
+          if (state is UserRegSuccessful) {
+            Navigator.of(context)
+                .pushReplacement(new MaterialPageRoute(builder: (context) {
+              return HomePageParent(userRepository: state.userRepository);
+            }));
+          }else if(state is UserRegFailure){
+            showToast(state.message);
+          }
+          
         },
         child: BlocBuilder<UserregBloc, UserregState>(
           builder: (context, state) => Scaffold(

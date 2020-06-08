@@ -2,6 +2,7 @@ import 'package:findingmotels/config_app/configApp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:oktoast/oktoast.dart';
 import 'error_codes.dart';
 
 class UserRepository {
@@ -96,6 +97,7 @@ class UserRepository {
       print("REPO : ${authResult.user.email}");
       return authResult.user;
     } on PlatformException catch (e) {
+      showToast(e.message);
       String authError = "";
       switch (e.code) {
         case ErrorCodes.ERROR_C0DE_NETWORK_ERROR:

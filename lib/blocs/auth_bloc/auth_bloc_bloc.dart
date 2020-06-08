@@ -21,6 +21,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         if (isSignedIn) {
           var user = await event.userRepository.getCurrentUser();
           ConfigApp.fbuser = user;
+          ConfigApp.userRepository = event.userRepository;
           yield AuthenticatedState(user: user);
         } else {
           yield UnauthenticatedState();

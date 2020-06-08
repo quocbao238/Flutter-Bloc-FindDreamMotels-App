@@ -32,7 +32,7 @@ class UserregBloc extends Bloc<UserregEvent, UserregState> {
                   event.email, event.password);
               if (user != null) {
                 FirebaseUser userSend = await updateUser(event, user);
-                ConfigApp.fbuser = user;
+                ConfigApp.fbuser = userSend;
                 ConfigApp.userRepository = userRepository;
                 yield UserRegSuccessful(userSend, userRepository);
               } else {
@@ -51,7 +51,8 @@ class UserregBloc extends Bloc<UserregEvent, UserregState> {
               message: "UserName must be greater than 3 characters");
         }
       } catch (e) {
-        yield UserRegFailure(message: e.toString());
+        yield UserregInitial();
+        // yield UserRegFailure(message: e.toString());
       }
     } else if (event is HideShowPasswordEvent) {
       yield HideShowPasswordState(isHide: event.isHide);

@@ -195,23 +195,27 @@ class _HomePageParentState extends State<HomePageParent> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
             ),
-            onTap: () {
+            onTap: () async {
               Navigator.pop(context);
-              customDialog(
-                  context: homeGlobalKey.currentContext,
-                  title: "Are you sure you want to Loggout?",
-                  avgImage: "assets/logoutSvg.svg",
-                  function: (v) {
-                    if (v) {
-                      showToast("Logout");
-                      widget.userRepository.signOut().then((v) =>
-                          Navigator.of(homeGlobalKey.currentContext)
-                              .pushReplacement(
-                                  new MaterialPageRoute(builder: (context) {
-                            return App();
-                          })));
-                    }
-                  });
+              await customDialog(
+                context: homeGlobalKey.currentContext,
+                title: "Are you sure you want to Loggout?",
+                avgImage: "assets/logoutSvg.svg",
+              ).then((v) {
+                try {
+                  if (v) {
+                    // showToast("Logout");
+                    ConfigApp.userRepository.signOut().then((v) =>
+                        Navigator.of(homeGlobalKey.currentContext)
+                            .pushReplacement(
+                                new MaterialPageRoute(builder: (context) {
+                          return App();
+                        })));
+                  }
+                } catch (e) {
+                  showToast(e.toString());
+                }
+              });
             },
           ),
         ),

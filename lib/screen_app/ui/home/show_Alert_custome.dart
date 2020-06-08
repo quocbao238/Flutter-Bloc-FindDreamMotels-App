@@ -2,8 +2,8 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-customDialog(
-    {BuildContext context, String title, String avgImage, Function function}) {
+Future customDialog(
+    {BuildContext context, String title, String avgImage}) {
   String titleStr = title != null ? title : "";
   String avgImageStr = avgImage != null ? avgImage : "";
   return showDialog(
@@ -99,8 +99,7 @@ customDialog(
                       Expanded(
                         child: InkWell(
                           onTap: () {
-                            Navigator.pop(context); 
-                            function(true);
+                            Navigator.pop(context,true); 
                           },
                           child: Container(
                             padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
