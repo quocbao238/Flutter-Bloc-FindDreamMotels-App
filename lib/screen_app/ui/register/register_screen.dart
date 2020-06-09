@@ -44,7 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     getSizeApp(context);
-
     return BlocProvider(
       create: (context) => UserregBloc(userRepository: widget.userRepository),
       child: BlocListener<UserregBloc, UserregState>(
@@ -54,10 +53,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
               return HomePageParent(userRepository: state.userRepository);
             }));
-          }else if(state is UserRegFailure){
+          } else if (state is UserRegFailure) {
             showToast(state.message);
           }
-          
         },
         child: BlocBuilder<UserregBloc, UserregState>(
           builder: (context, state) => Scaffold(
@@ -123,7 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
             fillColor: Colors.white,
             filled: true,
             contentPadding:
-                const EdgeInsets.only(left: 16.0, bottom: 16.0, top: 16.0),
+                const EdgeInsets.only(left: 16.0, right: 16.0, top: 12.0),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.blue),
               borderRadius: BorderRadius.circular(15),
@@ -164,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
             fillColor: Colors.white,
             filled: true,
             contentPadding:
-                const EdgeInsets.only(left: 16.0, bottom: 16.0, top: 16.0),
+                const EdgeInsets.only(left: 16.0, right: 16.0, top: 12.0),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.blue),
               borderRadius: BorderRadius.circular(15),
@@ -204,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
             fillColor: Colors.white,
             filled: true,
             contentPadding:
-                const EdgeInsets.only(left: 16.0, bottom: 16.0, top: 16.0),
+                const EdgeInsets.only(left: 16.0, right: 16.0, top: 12.0),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.blue),
               borderRadius: BorderRadius.circular(15),
@@ -233,7 +231,7 @@ class _RegisterPageState extends State<RegisterPage> {
       },
       child: Container(
         width: width * 0.75,
-        height: height * 0.08,
+        height: height * 0.07,
         margin: EdgeInsets.only(top: height * 0.035),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
@@ -265,7 +263,7 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(top: height * 0.03),
+        margin: EdgeInsets.only(top: height * 0.03, bottom: height * 0.03),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -297,7 +295,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget buildTitleImage(double height) {
     return Container(
       color: Colors.transparent,
-      height: height * 0.45,
+      height: height * 0.4,
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: (Column(
         mainAxisAlignment: MainAxisAlignment.end,

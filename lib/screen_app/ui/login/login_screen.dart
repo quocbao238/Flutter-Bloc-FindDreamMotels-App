@@ -131,14 +131,14 @@ class _LoginPageState extends State<LoginPage> {
       margin: EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8.0, left: 8.0),
       child: Center(
         child: Text("Or login with email and phone number",
-            style: StyleText.subhead16Black500),
+            style: StyleText.content14Black400),
       ),
     );
   }
 
   Widget buildTitleEmail(double width) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 4.0),
       child: Container(
         margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
         width: width,
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
             fillColor: Colors.white,
             filled: true,
             contentPadding:
-                const EdgeInsets.only(left: 16.0, bottom: 16.0, top: 16.0),
+                const EdgeInsets.only(left: 16.0, bottom: 16.0, top: 12.0),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.blue),
               borderRadius: BorderRadius.circular(15),
@@ -178,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildTitlePass(double width) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 4.0),
       child: Container(
         margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
         width: width,
@@ -197,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
             fillColor: Colors.white,
             filled: true,
             contentPadding:
-                const EdgeInsets.only(left: 16.0, bottom: 16.0, top: 16.0),
+                const EdgeInsets.only(left: 16.0, right: 16.0, top: 12.0),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.blue),
               borderRadius: BorderRadius.circular(15),
@@ -218,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildLoginForgot(double width, double height) {
     return Container(
       margin: EdgeInsets.only(
-          top: 16.0, left: width * 0.08, right: width * 0.08, bottom: 16.0),
+          top: 12.0, left: width * 0.08, right: width * 0.08, bottom: 12.0),
       height: height * 0.03,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -294,7 +294,7 @@ class _LoginPageState extends State<LoginPage> {
                 password: controllerPassword.text.trim()));
       },
       child: Container(
-        height: height * 0.075,
+        height: height * 0.065,
         width: width * 0.65,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30), color: Colors.red),
@@ -308,7 +308,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildSignUp(double height) {
     return InkWell(
       child: Container(
-        margin: EdgeInsets.only(top: height * 0.03, bottom: height * 0.04),
+        margin: EdgeInsets.only(top: height * 0.02, bottom: height * 0.03),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
