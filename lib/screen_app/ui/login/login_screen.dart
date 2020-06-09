@@ -4,7 +4,7 @@ import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/screen_app/Animation/fadedAnimation.dart';
 import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/loginClipPath.dart';
 import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
-import 'package:findingmotels/screen_app/ui/home/home_screen.dart';
+import 'package:findingmotels/screen_app/ui/dashboard/dashboard_screen.dart';
 import 'package:findingmotels/screen_app/ui/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                 // showToast("Login Sucess");
                 Navigator.of(context)
                     .pushReplacement(new MaterialPageRoute(builder: (context) {
-                  return HomePageParent(userRepository: state.userRepository);
+                  return DashboardPage(userRepository: state.userRepository);
                 }));
               }
             },

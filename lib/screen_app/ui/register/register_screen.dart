@@ -3,7 +3,8 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/screen_app/Animation/fadedAnimation.dart';
 import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/registerClipPath.dart';
-import 'package:findingmotels/screen_app/ui/home/home_screen.dart';
+import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
+import 'package:findingmotels/screen_app/ui/dashboard/dashboard_screen.dart';
 import 'package:findingmotels/screen_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -51,22 +52,27 @@ class _RegisterPageState extends State<RegisterPage> {
           if (state is UserRegSuccessful) {
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return HomePageParent(userRepository: state.userRepository);
+              return DashboardPage(userRepository: state.userRepository);
             }));
           } else if (state is UserRegFailure) {
             showToast(state.message);
           }
         },
         child: BlocBuilder<UserregBloc, UserregState>(
-          builder: (context, state) => Scaffold(
-            key: registerGlobalKey,
-            backgroundColor: Color.fromRGBO(211, 220, 240, 1),
-            body: Stack(
-              children: <Widget>[
-                buildBackground(Size.getHeight),
-                buildPageView(Size.getHeight, Size.getWidth),
-              ],
-            ),
+          builder: (context, state) => Stack(
+            children: <Widget>[
+              Scaffold(
+                key: registerGlobalKey,
+                backgroundColor: Color.fromRGBO(211, 220, 240, 1),
+                body: Stack(
+                  children: <Widget>[
+                    buildBackground(Size.getHeight),
+                    buildPageView(Size.getHeight, Size.getWidth),
+                  ],
+                ),
+              ),
+              state is UserRegLoading ? LoadingWidget() : SizedBox()
+            ],
           ),
         ),
       ),
