@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+final imageTest =
+    "https://vinhomecity.vn/wp-content/uploads/2019/07/kinh-doanh-phong-tro-cho-thue-tai-binh-thanh.jpg";
+
 class Size {
   Size._();
   static double getHeight;
@@ -29,6 +32,18 @@ class AppColor {
 
 class StyleText {
   StyleText._();
+
+  static TextStyle header24Black = TextStyle(
+    color: Colors.black,
+    fontSize: 24.0 * Size.scaleTxt,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle header24BlackW400 = TextStyle(
+    color: Colors.black,
+    fontSize: 24.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w400,
+  );
 
   static TextStyle styleTitle = TextStyle(
       color: Color(0xff3da4ab),
@@ -61,6 +76,12 @@ class StyleText {
     fontWeight: FontWeight.bold,
   );
 
+    static TextStyle header20BlackW500 = TextStyle(
+    color: Colors.black,
+    fontSize: 20.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
+
   static TextStyle subhead18Black500 = TextStyle(
     color: Colors.black,
     fontSize: 18.0 * Size.scaleTxt,
@@ -87,6 +108,12 @@ class StyleText {
 
   static TextStyle subhead16Black500 = TextStyle(
     color: Colors.black,
+    fontSize: 16.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle subhead16Red500 = TextStyle(
+    color: Colors.red,
     fontSize: 16.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
   );

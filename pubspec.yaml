@@ -55,6 +55,10 @@ dependencies:
   #Animation
   simple_animations: 1.3.3
 
+  #Rating
+  smooth_star_rating: 1.1.1
+
+
   #Check email phonenumber
   regexpattern: 0.2.3
 
@@ -80,6 +84,7 @@ flutter:
   assets:
     - assets/
     - assets/sliderApp/
+    - assets/icon/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
