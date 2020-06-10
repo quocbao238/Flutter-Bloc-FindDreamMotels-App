@@ -3,7 +3,9 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/main.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/screen_app/ui/dashboard/show_Alert_custome.dart';
+import 'package:findingmotels/screen_app/ui/favorite/favorite_screen.dart';
 import 'package:findingmotels/screen_app/ui/home/home_screen.dart';
+import 'package:findingmotels/screen_app/ui/notify/notify_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -24,18 +26,8 @@ class _DashboardPageState extends State<DashboardPage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    // Text(
-    //   'Index 0: Home',
-    //   style: optionStyle,
-    // ),
-    Text(
-      'Index 1: Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Notify',
-      style: optionStyle,
-    ),
+    FavoritePage(),
+    NotifyPage(),
   ];
 
   @override

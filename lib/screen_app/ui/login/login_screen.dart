@@ -9,6 +9,7 @@ import 'package:findingmotels/screen_app/ui/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
 
 class LoginPage extends StatefulWidget {
   final UserRepository userRepository;
@@ -51,6 +52,8 @@ class _LoginPageState extends State<LoginPage> {
                     .pushReplacement(new MaterialPageRoute(builder: (context) {
                   return DashboardPage(userRepository: state.userRepository);
                 }));
+              } else if (state is LoginFailState) {
+                showToast(state.message);
               }
             },
             child: BlocBuilder<LoginBloc, LoginState>(

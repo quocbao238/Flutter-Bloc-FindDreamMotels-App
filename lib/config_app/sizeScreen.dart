@@ -23,7 +23,8 @@ class AppColor {
   static Color colorClipPath = Color.fromRGBO(9, 92, 113, 1);
   static Color colorBlue156 = Color.fromRGBO(44, 156, 162, 1);
   static Color alerBtnColor = Color(0xff00bfa5);
-  static Color selectContainerColor = Color.fromRGBO(255, 79, 76, 1).withOpacity(0.6);
+  static Color selectContainerColor =
+      Color.fromRGBO(255, 79, 76, 1).withOpacity(0.6);
 }
 
 class StyleText {
@@ -48,6 +49,12 @@ class StyleText {
     fontWeight: FontWeight.bold,
   );
 
+  static TextStyle header20Whitew500 = TextStyle(
+    color: Colors.white,
+    fontSize: 20.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
+
   static TextStyle header20Black = TextStyle(
     color: Colors.black,
     fontSize: 20.0 * Size.scaleTxt,
@@ -56,6 +63,12 @@ class StyleText {
 
   static TextStyle subhead18Black500 = TextStyle(
     color: Colors.black,
+    fontSize: 18.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle subhead18Grey400 = TextStyle(
+    color: Colors.grey,
     fontSize: 18.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
   );
@@ -98,6 +111,12 @@ class StyleText {
 
   static TextStyle content14Black400 = TextStyle(
     color: Colors.black,
+    fontSize: 14.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle content14White60w400 = TextStyle(
+    color: Colors.white60,
     fontSize: 14.0 * Size.scaleTxt,
     fontWeight: FontWeight.w400,
   );
