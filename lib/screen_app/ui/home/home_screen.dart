@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     getSizeApp(context);
     return BlocProvider(
-        create: (context) => HomeBloc()..add(FetchDataEvent()),
+        create: (context) => HomeBloc(),
         child: BlocListener<HomeBloc, HomeState>(
             listener: (context, state) {
               if (state is OnClickListDistrictsState) {
