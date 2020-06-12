@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -204,31 +205,32 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildFindDistricts() {
     return Container(
-      margin: EdgeInsets.only(top: Size.getHeight * 0.00),
-      height: Size.getHeight * 0.07,
+      height: Size.getHeight * 0.08,
+      padding: EdgeInsets.only(left: 32.0, right: 32.0),
       child: Center(
-        child: Container(
-          padding:
-              EdgeInsets.only(left: 32.0, top: 4.0, bottom: 4.0, right: 32.0),
-          child: TextFormField(
-            style: StyleText.subhead18Grey400,
-            cursorColor: AppColor.colorBlue156,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25.0),
-              ),
-              hintText: 'Find Districts',
-              prefix: Container(
-                width: 36,
-                height: 36,
-                margin: const EdgeInsets.only(right: 8.0),
-                padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          style: StyleText.subhead18GreenMixBlue,
+          cursorColor: AppColor.colorBlue156,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+            prefixIcon: Icon(
+              Icons.home,
+              color: AppColor.colorBlue156,
+            ),
+            hintText: 'Search Districts',
+            suffixIcon: InkWell(
+              onTap: () {
+                showToast("Search");
+              },
+              child: Padding(
+                padding: EdgeInsets.only(right: 16),
                 child: Icon(
-                  LineIcons.search,
-                  color: AppColor.colorBlue156,
-                  size: 24.0 * Size.scaleTxt,
+                  Icons.search,
+                  size: 30,
                 ),
               ),
             ),
@@ -241,7 +243,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildTopView() {
     return Container(
       padding: EdgeInsets.only(left: 8.0),
-      height: Size.getHeight * 0.27,
+      height: Size.getHeight * 0.285,
       child: Stack(
         children: <Widget>[
           Row(
@@ -249,7 +251,7 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Container(
                 width: Size.getWidth * 0.6,
-                height: Size.getHeight * 0.28,
+                height: Size.getHeight * 0.27,
                 child: SvgPicture.asset(imageUrl, fit: BoxFit.fill),
               ),
             ],
