@@ -64,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
     return Stack(
       children: <Widget>[
         Scaffold(
+          resizeToAvoidBottomInset: false,
           key: loginGlobalKey,
           backgroundColor: AppColor.backgroundColor,
           body: Stack(

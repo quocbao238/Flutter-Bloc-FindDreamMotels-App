@@ -76,7 +76,7 @@ class StyleText {
     fontWeight: FontWeight.bold,
   );
 
-    static TextStyle header20BlackW500 = TextStyle(
+  static TextStyle header20BlackW500 = TextStyle(
     color: Colors.black,
     fontSize: 20.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
@@ -110,6 +110,11 @@ class StyleText {
     color: Colors.black,
     fontSize: 16.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
+  );
+  static TextStyle subhead16Black = TextStyle(
+    color: Colors.black,
+    fontSize: 16.0 * Size.scaleTxt,
+    fontWeight: FontWeight.normal,
   );
 
   static TextStyle subhead16Red500 = TextStyle(

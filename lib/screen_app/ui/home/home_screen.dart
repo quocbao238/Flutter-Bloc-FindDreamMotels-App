@@ -18,34 +18,34 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   GlobalKey homeGlobalKey;
   String imageUrl = 'assets/logoutSvg.svg';
-  String districSelect = "Quận 1";
+  String districSelect = "District 1";
   var rating = 3.0;
 
   List<String> districList = [
-    "Quận 1",
-    "Quận 2",
-    "Quận 3",
-    "Quận 4",
-    "Quận 5",
-    "Quận 6",
-    "Quận 7",
-    "Quận 8",
-    "Quận 9",
-    "Quận 10",
-    "Quận 11",
-    "Quận 12",
-    "Quận Bình Tân",
-    "Quận Bình Thạnh",
-    "Quận Gò Vấp",
-    "Quận Phú Nhuận",
-    "Quận Tân Bình",
-    "Quận Tân Phú",
-    "Quận Thủ Đức",
-    "Huyện Bình Chánh",
-    "Huyện Cần Giờ",
-    "Huyện Củ Chi",
-    "Huyện Hóc Môn",
-    "Huyện Nhà Bè"
+    "District 1",
+    "District 2",
+    "District 3",
+    "District 4",
+    "District 5",
+    "District 6",
+    "District 7",
+    "District 8",
+    "District 9",
+    "District 10",
+    "District 11",
+    "District 12",
+    "Binh Tan District",
+    "Binh Thanh District",
+    "Go Vap District",
+    "Phu Nhuan District",
+    "Tan Binh District",
+    "Tan Phu District",
+    "Thu Duc District",
+    "Binh Chanh District",
+    "Can Gio District",
+    "Cu Chi District",
+    "Hoc Mon District",
+    "Nha Be District"
   ];
 
   @override
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     getSizeApp(context);
     return BlocProvider(
-        create: (context) => HomeBloc(),
+        create: (context) => HomeBloc()..add(FetchDataEvent()),
         child: BlocListener<HomeBloc, HomeState>(
             listener: (context, state) {
               if (state is OnClickListDistrictsState) {
@@ -124,22 +124,20 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25.0),
                   image: DecorationImage(
-                      image: NetworkImage(
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSNbw9uLTPex9mX7-Z5A9GGiM2hS6GIxBlyS-Rxrf9Qu0Z_OuvW&usqp=CAU"),
-                      fit: BoxFit.cover),
+                      image: NetworkImage(imageTest), fit: BoxFit.cover),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Text(
-                      "Nhà trọ giá rẻ ",
+                      "Cheap motel room",
                       maxLines: 1,
                       style: StyleText.header20Whitew500,
                     ),
                     SizedBox(height: 8.0),
                     Text(
-                      "Hẻm 60 - Cách Mạng Tháng Tám, phường 6, Quận 3, Hồ Chí Minh ",
+                      "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh",
                       maxLines: 1,
                       style: StyleText.content14White60w400,
                     ),
@@ -211,8 +209,7 @@ class _HomePageState extends State<HomePage> {
       child: Center(
         child: Container(
           padding:
-              EdgeInsets.only(left: 16.0, top: 4.0, bottom: 4.0, right: 16.0),
-          // color: Colors.red,
+              EdgeInsets.only(left: 32.0, top: 4.0, bottom: 4.0, right: 32.0),
           child: TextFormField(
             style: StyleText.subhead18Grey400,
             cursorColor: AppColor.colorBlue156,
@@ -222,7 +219,7 @@ class _HomePageState extends State<HomePage> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25.0),
               ),
-              hintText: 'Find districts',
+              hintText: 'Find Districts',
               prefix: Container(
                 width: 36,
                 height: 36,

@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await innitDB();
+
   runApp(OKToast(
     textStyle: TextStyle(fontSize: 19.0, color: Colors.white),
     textPadding: EdgeInsets.symmetric(horizontal: 8.0),

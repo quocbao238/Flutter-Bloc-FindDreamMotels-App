@@ -53,123 +53,30 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(left: 4.0),
-                                  child: Text(
-                                    "Kos Tirto 2",
-                                    style: StyleText.header24Black,
-                                  ),
-                                ),
-                                SizedBox(height: Size.getHeight * 0.01),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.location_on,
-                                          color: Colors.red,
-                                          size: 24.0,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(width: 4.0),
-                                    Text(
-                                      "Ho Chi Minh , Vietnam",
-                                      style: StyleText.subhead16Red500,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  "750.000",
-                                  maxLines: 1,
-                                  style: StyleText.header24BlackW400,
-                                ),
-                                Text(
-                                  "VND",
-                                  maxLines: 1,
-                                  style: StyleText.subhead16Red500,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      buildTitile(),
                       SizedBox(height: Size.getHeight * 0.01),
-                      SmoothStarRating(
-                        rating: 4.5,
-                        isReadOnly: false,
-                        size: 24.0,
-                        filledIconData: Icons.star,
-                        halfFilledIconData: Icons.star_half,
-                        defaultIconData: Icons.star_border,
-                        starCount: 5,
-                        allowHalfRating: true,
-                        spacing: 2.0,
-                        onRated: (value) {},
-                        color: Colors.yellow,
-                        borderColor: Colors.yellow[100],
-                      ),
+                      buildRating(),
                       SizedBox(height: Size.getHeight * 0.02),
+                      buildTextAmentites(),
+                      SizedBox(height: Size.getHeight * 0.01),
+                      buildAmentitesList(),
+                      SizedBox(height: Size.getHeight * 0.02),
+                      buildTextDescription(),
+                      SizedBox(height: Size.getHeight * 0.01),
                       Text(
-                        "Amenities",
-                        style: StyleText.header20BlackW500,
+                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa",
+                        style: StyleText.subhead16Black,
                       ),
                       SizedBox(height: Size.getHeight * 0.02),
-                      Container(
-                        height: Size.getHeight * 0.10,
-                        width: Size.getWidth,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: listAmenities.length,
-                          itemBuilder: (context, index) => Container(
-                            width: Size.getWidth * 0.20,
-                            margin:
-                                EdgeInsets.only(right: Size.getWidth * 0.025),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  width: Size.getWidth * 0.1,
-                                  height: Size.getWidth * 0.1,
-                                  child: Center(
-                                    child: Image.asset(
-                                        listAmenities[index].urlIcon),
-                                  ),
-                                ),
-                                SizedBox(height: Size.getHeight * 0.01),
-                                FittedBox(
-                                  child: Text(
-                                    listAmenities[index].name,
-                                    textAlign: TextAlign.center,
-                                    style: StyleText.subhead16Black500,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      buildTextLocation(),
+                      SizedBox(height: Size.getHeight * 0.01),
+                      // Container(
+                      //   height: Size.getHeight * 0.3,
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(25),
+                      //       color: Colors.white),
+                      //   // child: Placeholder(),
+                      // )
                     ],
                   ),
                 ),
@@ -182,7 +89,148 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
     );
   }
 
-  Container buildBottomCallandBooking() {
+  Widget buildAmentitesList() {
+    return Container(
+      height: Size.getHeight * 0.10,
+      width: Size.getWidth,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: listAmenities.length,
+        itemBuilder: (context, index) => Container(
+          width: Size.getWidth * 0.20,
+          margin: EdgeInsets.only(right: Size.getWidth * 0.025),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: Size.getWidth * 0.1,
+                height: Size.getWidth * 0.1,
+                child: Center(
+                  child: Image.asset(listAmenities[index].urlIcon),
+                ),
+              ),
+              SizedBox(height: Size.getHeight * 0.01),
+              FittedBox(
+                child: Text(
+                  listAmenities[index].name,
+                  textAlign: TextAlign.center,
+                  style: StyleText.subhead16Black500,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextAmentites() {
+    return Text(
+      "Amenities",
+      style: StyleText.header20BlackW500,
+    );
+  }
+
+  Widget buildTextLocation() {
+    return Text(
+      "Location",
+      style: StyleText.header20BlackW500,
+    );
+  }
+
+  Widget buildTextDescription() {
+    return Text(
+      "Description",
+      style: StyleText.header20BlackW500,
+    );
+  }
+
+  Widget buildRating() {
+    return SmoothStarRating(
+      rating: 3.5,
+      isReadOnly: false,
+      size: 24.0,
+      filledIconData: Icons.star,
+      halfFilledIconData: Icons.star_half,
+      defaultIconData: Icons.star_border,
+      starCount: 5,
+      allowHalfRating: true,
+      spacing: 2.0,
+      onRated: (value) {},
+      color: Colors.yellow,
+      borderColor: Colors.yellow[100],
+    );
+  }
+
+  Widget buildTitile() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Expanded(
+          flex: 2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(left: 4.0),
+                child: Text(
+                  "Cheap motel room",
+                  style: StyleText.header24Black,
+                ),
+              ),
+              SizedBox(height: Size.getHeight * 0.01),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                        size: 24.0,
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 4.0),
+                  Flexible(
+                    child: Text(
+                      "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh",
+                      maxLines: 3,
+                      style: StyleText.subhead16Red500,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Text(
+                "3Tr5",
+                maxLines: 1,
+                style: StyleText.header24BlackW400,
+              ),
+              Text(
+                "VND",
+                maxLines: 1,
+                style: StyleText.subhead16Red500,
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget buildBottomCallandBooking() {
     return Container(
       height: Size.getHeight * 0.15,
       decoration: BoxDecoration(
