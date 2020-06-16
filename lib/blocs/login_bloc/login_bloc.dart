@@ -57,10 +57,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           ConfigApp.fbuser = user;
           ConfigApp.userRepository = userRepository;
           yield LoginSuccessState(user: user);
-        } else {
-          yield LoginFailState(
-              message: "An error occurred, please try again later");
         }
+        yield LoginFailState(
+            message: "An error occurred, please try again later");
       } catch (e) {
         yield LoginFailState(
             message: "An error occurred, please try again later");

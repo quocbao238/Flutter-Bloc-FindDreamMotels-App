@@ -1,6 +1,7 @@
 import 'package:findingmotels/blocs/home_bloc/home_bloc.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/database/fbdatabase.dart';
 import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/loginClipPath.dart';
 import 'package:findingmotels/screen_app/ui/desmotel/description_screen.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    homeGlobalKey = GlobalKey();
     super.initState();
+    homeGlobalKey = GlobalKey();
+    innitDB();
   }
 
   @override

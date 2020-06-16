@@ -20,28 +20,28 @@ List<SlideData> slideData = [
   SlideData(
       title: "",
       description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa",
+          "Greet, register, and assign rooms to guests of hotels or motel",
       pathImage: "assets/sliderApp/introSlider1.png",
       styleTitle: StyleText.styleTitle,
       styleDescription: StyleText.styleDescription),
   SlideData(
       title: "",
       description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa",
+          "Keep records of room availability and guests' accounts, manually or using computers",
       pathImage: "assets/sliderApp/introSlider2.png",
       styleTitle: StyleText.styleTitle,
       styleDescription: StyleText.styleDescription),
   SlideData(
       title:
           "",
-      description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa...",
+      description: "Review accounts and charges with guests during the check out process",
       pathImage: "assets/sliderApp/introSlider3.png",
       styleTitle: StyleText.styleTitle,
       styleDescription: StyleText.styleDescription),
   SlideData(
       title:
           "",
-      description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa...",
+      description: "Arrange tours, taxis, and restaurants for customers",
       pathImage: "assets/sliderApp/introSlider4.png",
       styleTitle: StyleText.styleTitle,
       styleDescription: StyleText.styleDescription),

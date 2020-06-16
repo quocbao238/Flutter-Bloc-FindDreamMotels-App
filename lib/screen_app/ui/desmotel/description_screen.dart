@@ -91,7 +91,7 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
 
   Widget buildAmentitesList() {
     return Container(
-      height: Size.getHeight * 0.10,
+      height: Size.getHeight * 0.12,
       width: Size.getWidth,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -110,9 +110,10 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
                 ),
               ),
               SizedBox(height: Size.getHeight * 0.01),
-              FittedBox(
+              Flexible(
                 child: Text(
                   listAmenities[index].name,
+                  maxLines: 2,
                   textAlign: TextAlign.center,
                   style: StyleText.subhead16Black500,
                 ),

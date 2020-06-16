@@ -26,6 +26,7 @@ Future<void> main() async {
       title: 'Find Accommodation',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: App(),
+      // home: ListViewStudent(),
     ),
   ));
 }
