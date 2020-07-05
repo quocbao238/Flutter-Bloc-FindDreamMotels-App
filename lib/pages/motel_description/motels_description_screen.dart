@@ -1,3 +1,4 @@
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -312,7 +313,7 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
       child: Container(
         height: Size.getHeight * 0.4,
         child: Image.network(
-          imageTest,
+          AppSetting.imageTest,
           fit: BoxFit.cover,
         ),
       ),

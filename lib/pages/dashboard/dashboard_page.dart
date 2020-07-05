@@ -1,7 +1,7 @@
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
-import 'package:findingmotels/pages/favorite/favorite_screen.dart';
-import 'package:findingmotels/pages/home/view/home_screen.dart';
+import 'package:findingmotels/pages/favorite/view/favorite_page.dart';
+import 'package:findingmotels/pages/home/view/home_page.dart';
 import 'package:findingmotels/pages/notifycation/view/notify_screen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,4 @@
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/login/view/login_screen.dart';
@@ -19,7 +20,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  String imageUrl = 'assets/registerSvg.svg';
+  String imageUrl = AppSetting.registerImg;
   GlobalKey registerGlobalKey;
   TextEditingController controllerEmail;
   TextEditingController controllerPassword;

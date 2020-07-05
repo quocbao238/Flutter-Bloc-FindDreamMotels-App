@@ -63,7 +63,7 @@ dependencies:
   regexpattern: 0.2.3
 
   #Rating App
-  flutter_rating_bar: ^1.1.0
+  flutter_rating_bar: 1.1.0
 
 
 dev_dependencies:
@@ -89,6 +89,7 @@ flutter:
     - assets/
     - assets/sliderApp/
     - assets/icon/
+    - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

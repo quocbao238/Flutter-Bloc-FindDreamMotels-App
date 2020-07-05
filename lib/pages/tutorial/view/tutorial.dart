@@ -1,3 +1,4 @@
+import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/tutorial/bloc/tutorial_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,13 @@ class TutorialPage extends StatefulWidget {
 }
 
 class _TutorialPageState extends State<TutorialPage> {
+  GlobalKey globalKey;
+
+  @override
+  void initState() {
+    globalKey = GlobalKey();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,5 +29,8 @@ class _TutorialPageState extends State<TutorialPage> {
 
   void blocListener(TutorialState state, BuildContext context) {}
 
-  Widget _scaffold() => Scaffold();
+  Widget _scaffold() => Scaffold(
+        key: globalKey,
+        backgroundColor: AppColor.backgroundColor,
+      );
 }

@@ -1,3 +1,5 @@
+import 'package:findingmotels/config_app/setting.dart';
+
 class Amenities {
   final String name;
   final String urlIcon;
@@ -7,8 +9,8 @@ class Amenities {
 }
 
 List<Amenities> listAmenities = [
-  Amenities(name: "Free Wifi", urlIcon: 'assets/icon/wifiIcon.png', isHave: true),
-  Amenities(name: "Bed", urlIcon: 'assets/icon/bedIcon.png', isHave: true),
-  Amenities(name: "Air\nCondition", urlIcon: 'assets/icon/airIcon.png', isHave: true),
-  Amenities(name: "BathRoom", urlIcon: 'assets/icon/bathIcon.png', isHave: true),
+  Amenities(name: "Free Wifi", urlIcon: AppSetting.wifiIcon, isHave: true),
+  Amenities(name: "Bed", urlIcon: AppSetting.bedIcon, isHave: true),
+  Amenities(name: "Air\nCondition", urlIcon: AppSetting.airIcon, isHave: true),
+  Amenities(name: "BathRoom", urlIcon: AppSetting.bathIcon, isHave: true),
 ];

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-final imageTest =
-    "https://vinhomecity.vn/wp-content/uploads/2019/07/kinh-doanh-phong-tro-cho-thue-tai-binh-thanh.jpg";
-
 class Size {
   Size._();
   static double getHeight;

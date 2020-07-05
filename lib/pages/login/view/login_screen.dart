@@ -1,3 +1,4 @@
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/login/bloc/login_bloc.dart';
@@ -19,7 +20,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String imageUrl = 'assets/loginSvg.svg';
+  String imageUrl = AppSetting.loginImg;
   bool isSelect = true;
   GlobalKey loginGlobalKey = GlobalKey();
   TextEditingController controllerEmail;
@@ -336,7 +337,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: 25,
                     height: 25,
                     child:
-                        Image.asset('assets/googleIcon.png', fit: BoxFit.fill),
+                        Image.asset(AppSetting.googleIcon, fit: BoxFit.fill),
                   ),
                 ),
               ),
@@ -351,7 +352,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 25,
                   height: 25,
                   child:
-                      Image.asset('assets/facebookIcon.png', fit: BoxFit.fill),
+                      Image.asset(AppSetting.facebookIcon, fit: BoxFit.fill),
                 ),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/dashboard/dashboard_page.dart';
 import 'package:findingmotels/pages/drawer/bloc/drawer_bloc.dart';
@@ -43,6 +44,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
     _controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     getSizeApp(context);
@@ -146,7 +148,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
         await logoutDialog(
           context: _globalKey.currentContext,
           title: "Are you sure you want to Sign Out?",
-          avgImage: "assets/logoutSvg.svg",
+          avgImage: AppSetting.logoutImg,
         ).then((v) {
           try {
             if (v) {
@@ -324,16 +326,18 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
       child: Center(
         child: CachedNetworkImage(
           imageUrl: ConfigApp?.fbuser?.photoUrl ?? "",
-          imageBuilder: (context, imageProvider) => _dataAvatar(imageProvider),
+          imageBuilder: (context, imageProvider) =>
+              _dataAvatar(imageProvider, null),
           placeholder: (context, url) =>
               Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => _dataAvatar(null),
+          errorWidget: (context, url, error) =>
+              _dataAvatar(null, AppSetting.defaultAvatarImg),
         ),
       ),
     );
   }
 
-  Widget _dataAvatar(ImageProvider imageProvider) => Container(
+  Widget _dataAvatar(ImageProvider imageProvider, String errorImg) => Container(
         width: Size.getWidth / 4.1,
         height: Size.getWidth / 4.1,
         decoration: BoxDecoration(
@@ -341,8 +345,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
           image: DecorationImage(
               image: imageProvider != null
                   ? imageProvider
-                  : NetworkImage(
-                      'https://tuyendung.vnpt.vn/Images/no-avatar.png'),
+                  : NetworkImage(errorImg),
               fit: BoxFit.cover),
         ),
         child: Stack(

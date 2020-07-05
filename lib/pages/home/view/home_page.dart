@@ -1,4 +1,5 @@
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/database/fbdatabase.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
@@ -18,7 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   GlobalKey homeGlobalKey;
-  String imageUrl = 'assets/logoutSvg.svg';
+  String imageUrl = AppSetting.logoutImg;
   String districSelect = "District 1";
   var rating = 3.0;
 
@@ -127,7 +128,8 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25.0),
                   image: DecorationImage(
-                      image: NetworkImage(imageTest), fit: BoxFit.cover),
+                      image: NetworkImage(AppSetting.imageTest),
+                      fit: BoxFit.cover),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
