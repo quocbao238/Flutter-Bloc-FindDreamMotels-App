@@ -1,11 +1,11 @@
-import 'package:findingmotels/blocs/reg_bloc/userreg_bloc.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
+import 'package:findingmotels/pages/login/view/login_screen.dart';
+import 'package:findingmotels/pages/register/bloc/userreg_bloc.dart';
 import 'package:findingmotels/repository/user_repository.dart';
-import 'package:findingmotels/screen_app/Animation/fadedAnimation.dart';
-import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/registerClipPath.dart';
-import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
-import 'package:findingmotels/screen_app/ui/dashboard/dashboard_screen.dart';
-import 'package:findingmotels/screen_app/ui/login/login_screen.dart';
+import 'package:findingmotels/widgets/Animation/fadedAnimation.dart';
+import 'package:findingmotels/widgets/clip_path_custom/registerClipPath.dart';
+import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    getSizeApp(context);
     return BlocProvider(
       create: (context) => UserregBloc(userRepository: widget.userRepository),
       child: BlocListener<UserregBloc, UserregState>(
@@ -52,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
           if (state is UserRegSuccessful) {
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return DashboardPage(userRepository: state.userRepository);
+              return DrawerDashBoard(userRepository: state.userRepository);
             }));
           } else if (state is UserRegFailure) {
             showToast(state.message);

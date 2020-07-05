@@ -37,7 +37,6 @@ class _ListViewStudentState extends State<ListViewStudent> {
 
   @override
   Widget build(BuildContext context) {
-    getSizeApp(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Demo Firebase"),

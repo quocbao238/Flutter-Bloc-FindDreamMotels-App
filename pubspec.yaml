@@ -62,6 +62,10 @@ dependencies:
   #Check email phonenumber
   regexpattern: 0.2.3
 
+  #Rating App
+  flutter_rating_bar: ^1.1.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

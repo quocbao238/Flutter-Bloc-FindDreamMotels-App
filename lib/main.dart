@@ -1,11 +1,12 @@
 import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
+import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
-import 'package:findingmotels/screen_app/custom_widget/loading_widget.dart';
-import 'package:findingmotels/screen_app/ui/dashboard/dashboard_screen.dart';
-import 'package:findingmotels/screen_app/ui/introslider/intro_screen.dart';
+import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
+import 'pages/drawer/view/drawer_page.dart';
+import 'pages/intro/view/intro_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,7 @@ class _AppState extends State<App> {
   UserRepository userRepository = UserRepository();
   @override
   Widget build(BuildContext context) {
+    getSizeApp(context);
     return BlocProvider(
       create: (context) =>
           AuthBloc()..add(AppStartedEvent(userRepository: userRepository)),
@@ -49,7 +51,8 @@ class _AppState extends State<App> {
             debugPrint("AuthenticatedState");
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return DashboardPage(userRepository: userRepository);
+              // return DashboardPage(userRepository: userRepository);
+              return DrawerDashBoard(userRepository: userRepository);
             }));
           } else if (state is UnauthenticatedState) {
             debugPrint("UnauthenticatedState");

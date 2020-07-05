@@ -1,13 +1,12 @@
-import 'package:findingmotels/blocs/home_bloc/home_bloc.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/database/fbdatabase.dart';
-import 'package:findingmotels/screen_app/custom_widget/clip_path_custom/loginClipPath.dart';
-import 'package:findingmotels/screen_app/ui/desmotel/description_screen.dart';
+import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
+import 'package:findingmotels/pages/motel_description/motels_description_screen.dart';
+import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +58,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    getSizeApp(context);
     return BlocProvider(
         create: (context) => HomeBloc(),
         child: BlocListener<HomeBloc, HomeState>(
@@ -117,8 +115,10 @@ class _HomePageState extends State<HomePage> {
         scrollDirection: Axis.horizontal,
         itemBuilder: ((context, index) => InkWell(
               onTap: () {
-                BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                    .add(OnClickListMotelssEvent(index));
+                if (!ConfigApp.drawerShow) {
+                  BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                      .add(OnClickListMotelssEvent(index));
+                }
               },
               child: Container(
                 margin: EdgeInsets.only(right: 16.0),
@@ -177,8 +177,10 @@ class _HomePageState extends State<HomePage> {
         itemCount: districList.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
-            BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                .add(OnClickListDistrictsEvent(index));
+            if (!ConfigApp.drawerShow) {
+              BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                  .add(OnClickListDistrictsEvent(index));
+            }
           },
           child: Container(
             margin: EdgeInsets.only(right: 12.0),
@@ -252,7 +254,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Container(
-                width: Size.getWidth * 0.6,
+                width: Size.getWidth * 0.60,
                 height: Size.getHeight * 0.27,
                 child: SvgPicture.asset(imageUrl, fit: BoxFit.fill),
               ),

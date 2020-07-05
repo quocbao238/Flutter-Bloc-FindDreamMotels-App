@@ -1,7 +1,7 @@
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/slider_model.dart';
+import 'package:findingmotels/pages/login/view/login_screen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
-import 'package:findingmotels/screen_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
@@ -32,7 +32,6 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   void onDonePress() {
-    //   this.goToTab(0);
     Navigator.of(context)
         .pushReplacement(new MaterialPageRoute(builder: (context) {
       return LoginPage(userRepository: widget.userRepository);
@@ -40,10 +39,6 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   void onTabChangeCompleted(index) {
-    // Navigator.of(context)
-    //     .pushReplacement(new MaterialPageRoute(builder: (context) {
-    //   return LoginPage(userRepository: widget.userRepository);
-    // }));
   }
 
   Widget renderNextBtn() {
@@ -88,7 +83,7 @@ class _IntroPageState extends State<IntroPage> {
                 style: currentSlide.styleTitle,
                 textAlign: TextAlign.center,
               ),
-              margin: EdgeInsets.only(top: 20.0),
+              margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
             ),
             Container(
               child: Text(
@@ -98,7 +93,7 @@ class _IntroPageState extends State<IntroPage> {
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
               ),
-              margin: EdgeInsets.only(top: 20.0),
+              margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
             ),
           ],
         ),
@@ -109,7 +104,6 @@ class _IntroPageState extends State<IntroPage> {
 
   @override
   Widget build(BuildContext context) {
-    getSizeApp(context);
     return Scaffold(
       body: Container(
         // margin: EdgeInsets.only(top: 16.0),

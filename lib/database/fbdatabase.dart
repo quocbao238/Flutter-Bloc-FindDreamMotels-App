@@ -10,7 +10,7 @@ class RealTimeDB {
 
 void innitDB() {
   // RealTimeDB.firebaseApp = FirebaseApp.configure(name: null, options: null)
-  RealTimeDB.firebaseDatabase = FirebaseDatabase(app: RealTimeDB.firebaseApp);
-  RealTimeDB.districtsReference =
-      RealTimeDB.firebaseDatabase.reference().child("Districts");
+  // RealTimeDB.firebaseDatabase = FirebaseDatabase(app: RealTimeDB.firebaseApp);
+  // RealTimeDB.districtsReference =
+  //     RealTimeDB.firebaseDatabase.reference().child("Districts");
 }

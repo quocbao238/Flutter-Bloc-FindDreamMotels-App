@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class ConfigApp {
   ConfigApp._();
+  static bool drawerShow = false;
   static FirebaseAuth authen;
   static FirebaseUser fbuser;
   static UserRepository userRepository;

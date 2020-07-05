@@ -1,7 +1,8 @@
-import 'package:findingmotels/screen_app/ui/desmotel/descripLocalData.dart';
 import 'package:flutter/material.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+
+import 'descripLocalData.dart';
 
 class MotelDescriptionPage extends StatefulWidget {
   final int index;
