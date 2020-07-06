@@ -79,6 +79,12 @@ class StyleText {
     fontWeight: FontWeight.w500,
   );
 
+  static TextStyle price24Red = TextStyle(
+    color: Colors.red,
+    fontSize: 24.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
+
   static TextStyle subhead18Black500 = TextStyle(
     color: Colors.black,
     fontSize: 18.0 * Size.scaleTxt,

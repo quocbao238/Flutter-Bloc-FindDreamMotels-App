@@ -120,6 +120,10 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                       icon: Icons.view_carousel,
                       title: 'Dashboard',
                       onTap: () => showToast('Dashboard')),
+                  _item(
+                      icon: Icons.chat,
+                      title: 'Chat',
+                      onTap: () => showToast('Chat')),
                   Spacer(),
                   _rateApp(),
                   _communicate(),

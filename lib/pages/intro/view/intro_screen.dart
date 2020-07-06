@@ -91,7 +91,7 @@ class _IntroPageState extends State<IntroPage> {
                 style: currentSlide.styleDescription,
                 textAlign: TextAlign.center,
                 maxLines: 5,
-                // overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.ellipsis,
               ),
               margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
             ),
