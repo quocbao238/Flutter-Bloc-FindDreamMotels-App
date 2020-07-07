@@ -32,6 +32,18 @@ class AppColor {
 class StyleText {
   StyleText._();
 
+  static TextStyle header24BWhite = TextStyle(
+    color: Colors.white,
+    fontSize: 24.0 * Size.scaleTxt,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle header24BWhitew400 = TextStyle(
+    color: Colors.white,
+    fontSize: 24.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w400,
+  );
+
   static TextStyle header24Black = TextStyle(
     color: Colors.black,
     fontSize: 24.0 * Size.scaleTxt,
@@ -87,10 +99,21 @@ class StyleText {
     fontWeight: FontWeight.w500,
   );
 
+  static TextStyle subhead18White500 = TextStyle(
+    color: Colors.white,
+    fontSize: 18.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
   static TextStyle subhead18Black500 = TextStyle(
     color: Colors.black,
     fontSize: 18.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle subhead18Black87w400 = TextStyle(
+    color: Colors.black87,
+    fontSize: 18.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle subhead18Grey400 = TextStyle(
