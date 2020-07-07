@@ -43,39 +43,20 @@ class _UserEditPageState extends State<UserEditPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  width: double.maxFinite,
-                  child: Column(
-                    children: <Widget>[
-                      _item(
-                          title: 'First Name',
-                          controller: _controller,
-                          isEdit: false),
-                      _item(
-                          title: 'Last Name',
-                          controller: _controller,
-                          isEdit: false),
-                      _item(
-                          title: 'BirthDay',
-                          controller: _controller,
-                          isEdit: false),
-                      _item(
-                          title: 'Email',
-                          controller: _controller,
-                          isEdit: false),
-                      _item(
-                          title: 'Location',
-                          controller: _controller,
-                          isEdit: true),
-                      Expanded(
-                        child: Container(
-                          color: Colors.red
-                        ),
-                      ),
-                      SizedBox(height: 16.0)
-                    ],
-                  ),
-                )
+                Expanded(
+                  child: Container(color: Colors.red),
+                ),
+                _item(
+                    title: 'First Name',
+                    controller: _controller,
+                    isEdit: false),
+                _item(
+                    title: 'Last Name', controller: _controller, isEdit: false),
+                _item(
+                    title: 'BirthDay', controller: _controller, isEdit: false),
+                _item(title: 'Email', controller: _controller, isEdit: false),
+                _item(title: 'Location', controller: _controller, isEdit: true),
+                SizedBox(height: 16.0)
               ],
             ),
           ),
