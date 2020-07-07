@@ -1,10 +1,10 @@
 part of 'tutorial_bloc.dart';
 
-abstract class TutorialState extends Equatable {
-  const TutorialState();
+abstract class UserEditlState extends Equatable {
+  const UserEditlState();
 }
 
-class TutorialInitial extends TutorialState {
+class TutorialInitial extends UserEditlState {
   @override
   List<Object> get props => [];
 }

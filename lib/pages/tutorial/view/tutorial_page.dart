@@ -20,14 +20,14 @@ class _TutorialPageState extends State<TutorialPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => TutorialBloc(),
-        child: BlocListener<TutorialBloc, TutorialState>(
+        create: (context) => UserEditlBloc(),
+        child: BlocListener<UserEditlBloc, UserEditlState>(
             listener: (context, state) => blocListener(state, context),
-            child: BlocBuilder<TutorialBloc, TutorialState>(
+            child: BlocBuilder<UserEditlBloc, UserEditlState>(
                 builder: (context, state) => _scaffold())));
   }
 
-  void blocListener(TutorialState state, BuildContext context) {}
+  void blocListener(UserEditlState state, BuildContext context) {}
 
   Widget _scaffold() => Scaffold(
         key: globalKey,

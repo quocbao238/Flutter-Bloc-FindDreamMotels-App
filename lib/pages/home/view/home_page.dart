@@ -3,7 +3,7 @@ import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/database/fbdatabase.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
-import 'package:findingmotels/pages/motel_description/motels_description_screen.dart';
+import 'package:findingmotels/pages/motel_detail/motels_description_screen.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

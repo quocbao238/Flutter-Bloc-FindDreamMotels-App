@@ -6,12 +6,12 @@ import 'package:equatable/equatable.dart';
 part 'tutorial_event.dart';
 part 'tutorial_state.dart';
 
-class TutorialBloc extends Bloc<TutorialEvent, TutorialState> {
+class UserEditlBloc extends Bloc<TutorialEvent, UserEditlState> {
   @override
-  TutorialState get initialState => TutorialInitial();
+  UserEditlState get initialState => TutorialInitial();
 
   @override
-  Stream<TutorialState> mapEventToState(
+  Stream<UserEditlState> mapEventToState(
     TutorialEvent event,
   ) async* {
   }

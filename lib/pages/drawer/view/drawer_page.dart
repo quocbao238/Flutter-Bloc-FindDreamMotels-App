@@ -5,6 +5,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/dashboard/dashboard_page.dart';
 import 'package:findingmotels/pages/drawer/bloc/drawer_bloc.dart';
 import 'package:findingmotels/pages/drawer/view/mydrawer.dart';
+import 'package:findingmotels/pages/user_edit/view/user_edit_page.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/widgets/dialog_custom/logout_dialog.dart';
 import 'package:flutter/material.dart';
@@ -115,7 +116,12 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                   _item(
                       icon: Icons.account_circle,
                       title: 'Profile',
-                      onTap: () => showToast('Profile')),
+                      onTap: () => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserEditPage()))
+                          }),
                   _item(
                       icon: Icons.view_carousel,
                       title: 'Dashboard',
