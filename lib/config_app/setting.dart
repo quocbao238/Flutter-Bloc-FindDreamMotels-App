@@ -28,4 +28,8 @@ class AppSetting {
   static const facebookWhiteIcon = 'assets/icon/facebookWhiteIcon.png';
   static const googleIcon = 'assets/icon/googleIcon.png';
   static const wifiIcon = 'assets/icon/wifiIcon.png';
+
+  //svg icon
+  static const messageIconSvg = 'assets/icon/messageSvg.svg';
+  static const favoriteIconSvg = 'assets/icon/favoriteSvg.svg';
 }

@@ -14,6 +14,8 @@ void getSizeApp(BuildContext context) {
   Size.getWidth = MediaQuery.of(context).size.width;
   Size.scaleTxt = MediaQuery.of(context).textScaleFactor;
   Size.statusBar = MediaQuery.of(context).padding.top;
+  print("width: " + Size.getWidth.toString());
+  print("height: " + Size.getWidth.toString());
 }
 
 class AppColor {
