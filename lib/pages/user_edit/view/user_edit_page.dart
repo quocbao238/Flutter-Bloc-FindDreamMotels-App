@@ -1,8 +1,9 @@
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart' as app;
-import 'package:findingmotels/pages/tutorial/bloc/tutorial_bloc.dart';
+import 'package:findingmotels/pages/user_edit/bloc/user_edit_bloc.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:findingmotels/widgets/customcatch_image/customcatch_image.dart';
+import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,21 +27,21 @@ class _UserEditPageState extends State<UserEditPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => UserEditlBloc(),
-        child: BlocListener<UserEditlBloc, UserEditlState>(
+        create: (context) => UserEditBloc(),
+        child: BlocListener<UserEditBloc, UserEditState>(
             listener: (context, state) => blocListener(state, context),
-            child: BlocBuilder<UserEditlBloc, UserEditlState>(
-                builder: (context, state) => _scaffold())));
+            child: BlocBuilder<UserEditBloc, UserEditState>(
+                builder: (context, state) => _scaffold(state))));
   }
 
-  void blocListener(UserEditlState state, BuildContext context) {}
+  void blocListener(UserEditState state, BuildContext context) {}
 
-  Widget _scaffold() => Scaffold(
+  Widget _scaffold(UserEditState state) => Scaffold(
       key: globalKey,
-      body: _body(),
+      body: _body(state),
       backgroundColor: app.AppColor.backgroundColor);
 
-  Widget _body() => Stack(
+  Widget _body(UserEditState state) => Stack(
         children: <Widget>[
           buildBackground(0.32),
           Column(
@@ -48,6 +49,7 @@ class _UserEditPageState extends State<UserEditPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[_appBar(), content()],
           ),
+          state is LoadingState ? LoadingWidget() : const SizedBox(),
         ],
       );
 
@@ -148,49 +150,55 @@ class _UserEditPageState extends State<UserEditPage> {
         ),
       );
 
-  Widget _avatar() => Container(
-        // margin: EdgeInsets.only(top: 16.0),
-        height: app.Size.getHeight * 0.15,
-        width: app.Size.getHeight * 0.15,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: app.Size.getHeight * 0.15,
-              width: app.Size.getHeight * 0.15,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: Colors.grey[400]),
-            ),
-            Container(
-              padding: EdgeInsets.all(4.0),
-              width: app.Size.getHeight * 0.15,
-              height: app.Size.getHeight * 0.15,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(90.0),
-                child: ImageCacheNetwork(
-                  url: ConfigApp?.fbuser?.photoUrl ?? "",
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 4,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.only(bottom: 2.0),
-                height: 30,
-                width: 30,
+  Widget _avatar() => GestureDetector(
+        onTap: () {
+          print('Demo');
+          BlocProvider.of<UserEditBloc>(globalKey.currentContext)
+              .add(UpdateAvatarEvent());
+        },
+        child: Container(
+          height: app.Size.getHeight * 0.15,
+          width: app.Size.getHeight * 0.15,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: app.Size.getHeight * 0.15,
+                width: app.Size.getHeight * 0.15,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    color: Colors.grey[400],
-                    border: Border.all(color: Colors.white, width: 1.0)),
-                child: Center(
-                  child: Icon(
-                    Icons.camera_enhance,
-                    color: Colors.black87,
+                    shape: BoxShape.circle, color: Colors.grey[400]),
+              ),
+              Container(
+                padding: EdgeInsets.all(4.0),
+                width: app.Size.getHeight * 0.15,
+                height: app.Size.getHeight * 0.15,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(90.0),
+                  child: ImageCacheNetwork(
+                    url: ConfigApp?.fbuser?.photoUrl ?? "",
                   ),
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                bottom: 4,
+                right: 0,
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 2.0),
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      color: Colors.grey[400],
+                      border: Border.all(color: Colors.white, width: 1.0)),
+                  child: Center(
+                    child: Icon(
+                      Icons.camera_enhance,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
 }

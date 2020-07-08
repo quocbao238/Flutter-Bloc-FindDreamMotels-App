@@ -1,5 +1,6 @@
 import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/services/firebase_service.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,7 @@ import 'pages/intro/view/intro_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  FirebaseService.setupFirebase();
   runApp(
     OKToast(
       textStyle: TextStyle(fontSize: 19.0, color: Colors.white),

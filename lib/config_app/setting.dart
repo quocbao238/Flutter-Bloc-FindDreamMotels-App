@@ -1,6 +1,13 @@
 class AppSetting {
   AppSetting._();
 
+  // Firebase Android
+  static const googleAppID = '1:3663369339:android:4124010180d7cca2413ede';
+  static const gcmSenderID = '3663369339';
+  static const apiKey = 'AIzaSyDOd_bLI0b3UGQ-tk41ePuVJVVezN3QGKw';
+  static const projectID = 'find-accommodation-b2e61';
+  //Firebase IOS
+
   //Image test app
   static const imageTest =
       "https://vinhomecity.vn/wp-content/uploads/2019/07/kinh-doanh-phong-tro-cho-thue-tai-binh-thanh.jpg";

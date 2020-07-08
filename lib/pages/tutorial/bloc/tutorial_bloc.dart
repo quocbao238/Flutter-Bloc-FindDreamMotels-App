@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 part 'tutorial_event.dart';
 part 'tutorial_state.dart';
 
-class UserEditlBloc extends Bloc<TutorialEvent, UserEditlState> {
+class TutorialBloc extends Bloc<TutorialEvent, UserEditlState> {
   @override
   UserEditlState get initialState => TutorialInitial();
 
