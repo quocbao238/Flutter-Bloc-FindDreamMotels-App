@@ -27,7 +27,6 @@ class UserRepository {
         ConfigApp.fbuser = await firebaseAuth.currentUser();
         ConfigApp.googleSignIn = googleSignIn;
         ConfigApp.googleSignInAccount = account;
-
         return res.user;
       } else {
         // print("Google signIn fail");

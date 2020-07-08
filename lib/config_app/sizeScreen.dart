@@ -93,9 +93,9 @@ class StyleText {
     fontWeight: FontWeight.w500,
   );
 
-  static TextStyle price24Red = TextStyle(
+  static TextStyle price20Red = TextStyle(
     color: Colors.red,
-    fontSize: 24.0 * Size.scaleTxt,
+    fontSize: 20.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
   );
 

@@ -38,8 +38,7 @@ class _IntroPageState extends State<IntroPage> {
     }));
   }
 
-  void onTabChangeCompleted(index) {
-  }
+  void onTabChangeCompleted(index) {}
 
   Widget renderNextBtn() {
     return Icon(
@@ -104,47 +103,54 @@ class _IntroPageState extends State<IntroPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        // margin: EdgeInsets.only(top: 16.0),
-        child: IntroSlider(
-          slides: this.slides,
+    return Stack(
+      children: <Widget>[
+        Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Stack(
+            children: <Widget>[
+              Positioned.fill(
+                  child: IntroSlider(
+                slides: this.slides,
 
-          // Skip button
-          renderSkipBtn: this.renderSkipBtn(),
-          colorSkipBtn: AppColor.backgroundColor,
-          highlightColorSkipBtn: AppColor.colorBlue156,
+                // Skip button
+                renderSkipBtn: this.renderSkipBtn(),
+                colorSkipBtn: AppColor.backgroundColor,
+                highlightColorSkipBtn: AppColor.colorBlue156,
 
-          // Next button
-          renderNextBtn: this.renderNextBtn(),
+                // Next button
+                renderNextBtn: this.renderNextBtn(),
 
-          // Done button
-          renderDoneBtn: this.renderDoneBtn(),
-          onDonePress: this.onDonePress,
-          colorDoneBtn: AppColor.backgroundColor,
-          highlightColorDoneBtn: Color(0xffffcc5c),
+                // Done button
+                renderDoneBtn: this.renderDoneBtn(),
+                onDonePress: this.onDonePress,
+                colorDoneBtn: AppColor.backgroundColor,
+                highlightColorDoneBtn: Color(0xffffcc5c),
 
-          // Dot indicator
-          colorDot: AppColor.colorBlue156,
-          colorActiveDot: AppColor.backgroundColor,
+                // Dot indicator
+                colorDot: AppColor.colorBlue156,
+                colorActiveDot: AppColor.backgroundColor,
 
-          sizeDot: 13.0,
-          typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
+                sizeDot: 13.0,
+                typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
 
-          // Tabs
-          listCustomTabs: this.renderListCustomTabs(),
-          backgroundColorAllSlides: AppColor.colorClipPath,
-          refFuncGoToTab: (refFunc) {
-            this.goToTab = refFunc;
-          },
+                // Tabs
+                listCustomTabs: this.renderListCustomTabs(),
+                backgroundColorAllSlides: AppColor.colorClipPath,
+                refFuncGoToTab: (refFunc) {
+                  this.goToTab = refFunc;
+                },
 
-          // Show or hide status bar
-          shouldHideStatusBar: true,
+                // Show or hide status bar
+                shouldHideStatusBar: true,
 
-          // On tab change completed
-          onTabChangeCompleted: this.onTabChangeCompleted,
+                // On tab change completed
+                onTabChangeCompleted: this.onTabChangeCompleted,
+              ))
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

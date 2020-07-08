@@ -54,7 +54,7 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+            padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
             child: FittedBox(
               child: GNav(
                   gap: 12,

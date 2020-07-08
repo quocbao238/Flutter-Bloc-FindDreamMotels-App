@@ -3,6 +3,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'pages/drawer/view/drawer_page.dart';
@@ -11,6 +12,15 @@ import 'pages/intro/view/intro_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await innitDB();
+
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   statusBarColor: Colors.transparent,
+  //   statusBarBrightness: Brightness.dark,
+  //   // systemNavigationBarColor: Colors.black,
+  //   // systemNavigationBarIconBrightness: Brightness.light
+  // ));
+
+  SystemChrome.setEnabledSystemUIOverlays([]);
 
   runApp(OKToast(
     textStyle: TextStyle(fontSize: 19.0, color: Colors.white),
@@ -25,7 +35,7 @@ Future<void> main() async {
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Find Accommodation',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      // theme: ThemeData(primarySwatch: Colors.blue),
       home: App(),
       // home: ListViewStudent(),
     ),

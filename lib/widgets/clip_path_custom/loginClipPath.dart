@@ -23,7 +23,8 @@ class LoginClipPath extends CustomClipper<Path> {
 
 class HomeClipPath extends CustomClipper<Path> {
   var radius = 10.0;
-  double heightNeed = 0.35;
+  final double heightNeed;
+  HomeClipPath(this.heightNeed);
   @override
   Path getClip(Size size) {
     Path path = Path();

@@ -6,10 +6,10 @@ class AppSetting {
       "https://vinhomecity.vn/wp-content/uploads/2019/07/kinh-doanh-phong-tro-cho-thue-tai-binh-thanh.jpg";
 
   // Slider
-  static const slider1 = 'assets/sliderApp/introSlider1';
-  static const slider2 = 'assets/sliderApp/introSlider2';
-  static const slider3 = 'assets/sliderApp/introSlider3';
-  static const slider4 = 'assets/sliderApp/introSlider4';
+  static const slider1 = 'assets/sliderApp/introSlider1.png';
+  static const slider2 = 'assets/sliderApp/introSlider2.png';
+  static const slider3 = 'assets/sliderApp/introSlider3.png';
+  static const slider4 = 'assets/sliderApp/introSlider4.png';
 
   //background image
   static const defaultAvatarImg =

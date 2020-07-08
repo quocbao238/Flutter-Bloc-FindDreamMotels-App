@@ -34,10 +34,10 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
     super.initState();
     _globalKey = GlobalKey();
     _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 100));
-    _scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(_controller);
-    _scaleAnimation2 = Tween<double>(begin: 1, end: 0.825).animate(_controller);
-    _scaleAnimation3 = Tween<double>(begin: 1, end: 0.85).animate(_controller);
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _scaleAnimation = Tween<double>(begin: 1, end: 0.7).animate(_controller);
+    _scaleAnimation2 = Tween<double>(begin: 1, end: 0.725).animate(_controller);
+    _scaleAnimation3 = Tween<double>(begin: 1, end: 0.75).animate(_controller);
   }
 
   @override
@@ -70,16 +70,17 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
   Widget _scaffold() {
     return Scaffold(
       key: _globalKey,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
           _menuBar(),
           _dashboard(
               scaleAnimation: _scaleAnimation3,
-              screenWidth: Size.getWidth / 1.1,
+              screenWidth: Size.getWidth / 1.04,
               color: AppColor.backgroundColor),
           _dashboard(
               scaleAnimation: _scaleAnimation2,
-              screenWidth: Size.getWidth / 1.05,
+              screenWidth: Size.getWidth / 1.02,
               color: AppColor.whiteColor),
           _dashboard(
               scaleAnimation: _scaleAnimation,
@@ -99,54 +100,52 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
           width: Size.getWidth,
           height: Size.getHeight,
           color: AppColor.colorClipPath,
-          child: SafeArea(
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _avatar(),
-                  _titleName(
-                      text: ConfigApp.fbuser.displayName ?? "",
-                      textStyle: StyleText.header20White),
-                  _titleName(
-                      text: ConfigApp.fbuser.email ?? "",
-                      textStyle: StyleText.content14White400),
-                  _signout(),
-                  SizedBox(height: 10.0),
-                  _item(
-                      icon: Icons.account_circle,
-                      title: 'Profile',
-                      onTap: () => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => UserEditPage()))
-                          }),
-                  _item(
-                      icon: Icons.view_carousel,
-                      title: 'Dashboard',
-                      onTap: () => showToast('Dashboard')),
-                  _item(
-                      icon: Icons.chat,
-                      title: 'Chat',
-                      onTap: () => showToast('Chat')),
-                  Spacer(),
-                  _rateApp(),
-                  _communicate(),
-                  _item(
-                      icon: Icons.lock,
-                      title: 'Privacy Policy',
-                      onTap: () => showToast('Privacy Policy')),
-                  _item(
-                      icon: Icons.call,
-                      title: 'Contact Us',
-                      onTap: () => showToast('Contact Us')),
-                  _item(
-                      icon: Icons.error,
-                      title: 'About App',
-                      onTap: () => showToast('About App')),
-                ],
-              ),
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _avatar(),
+                _titleName(
+                    text: ConfigApp.fbuser.displayName ?? "",
+                    textStyle: StyleText.header20White),
+                _titleName(
+                    text: ConfigApp.fbuser.email ?? "",
+                    textStyle: StyleText.content14White400),
+                _signout(),
+                SizedBox(height: 10.0),
+                _item(
+                    icon: Icons.account_circle,
+                    title: 'Profile',
+                    onTap: () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserEditPage()))
+                        }),
+                _item(
+                    icon: Icons.view_carousel,
+                    title: 'Dashboard',
+                    onTap: () => showToast('Dashboard')),
+                _item(
+                    icon: Icons.chat,
+                    title: 'Chat',
+                    onTap: () => showToast('Chat')),
+                Spacer(),
+                _rateApp(),
+                _communicate(),
+                _item(
+                    icon: Icons.lock,
+                    title: 'Privacy Policy',
+                    onTap: () => showToast('Privacy Policy')),
+                _item(
+                    icon: Icons.call,
+                    title: 'Contact Us',
+                    onTap: () => showToast('Contact Us')),
+                _item(
+                    icon: Icons.error,
+                    title: 'About App',
+                    onTap: () => showToast('About App')),
+              ],
             ),
           ),
         ),
@@ -200,13 +199,11 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(bottom: 10),
             height: 1,
-            width: Size.getWidth * 0.5,
             color: Colors.white,
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               'Communicate',
               style: StyleText.subhead16White500,
@@ -219,22 +216,19 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(bottom: 10),
             height: 1,
-            width: Size.getWidth * 0.5,
             color: Colors.white,
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               'Rate App',
               style: StyleText.subhead16White500,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.only(bottom: 8.0),
             child: Container(
-              width: Size.getWidth * 0.4,
               child: FlutterRatingBar(
                 initialRating: 3.5,
                 itemSize: 30.0,
@@ -254,9 +248,11 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
         margin: EdgeInsets.only(top: 8.0, left: 8.0),
         width: Size.getWidth * 0.42,
         child: Center(
-          child: Text(
-            text,
-            style: textStyle,
+          child: FittedBox(
+            child: Text(
+              text,
+              style: textStyle,
+            ),
           ),
         ),
       );
@@ -270,7 +266,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
           }
         },
         child: Container(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(8.0),
           width: Size.getWidth * 0.5,
           // color: Colors.red,
           child: Column(
@@ -293,7 +289,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
   Widget _dashboard(
       {Animation<double> scaleAnimation, double screenWidth, Color color}) {
     return MyDrawer(
-      duration: Duration(milliseconds: 100),
+      duration: Duration(milliseconds: 200),
       onMenuTap: () {
         BlocProvider.of<DrawerBloc>(_globalKey.currentContext)
             .add(MenuEvent(true));
@@ -309,7 +305,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(30.0),
+                  Radius.circular(ConfigApp.drawerShow ? 30.0 : 0.0),
                 ),
                 child: DashboardPage(
                   userRepository: widget.userRepository,

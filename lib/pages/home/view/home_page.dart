@@ -82,22 +82,21 @@ class _HomePageState extends State<HomePage> {
     return Stack(
       children: <Widget>[
         Scaffold(
+          resizeToAvoidBottomInset: false,
           key: homeGlobalKey,
           backgroundColor: AppColor.backgroundColor,
           body: Stack(
             children: <Widget>[
               buildBackground(Size.getHeight),
               Positioned.fill(
-                  child: SafeArea(
-                child: Column(
-                  children: <Widget>[
-                    buildTopView(),
-                    buildFindDistricts(),
-                    buildListDistric(),
-                    Spacer(),
-                    buildViewMotels()
-                  ],
-                ),
+                  child: Column(
+                children: <Widget>[
+                  buildTopView(),
+                  buildFindDistricts(),
+                  buildListDistric(),
+                  // Spacer(),
+                  buildViewMotels()
+                ],
               ))
             ],
           ),
@@ -107,71 +106,73 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildViewMotels() {
-    return Container(
-      margin: EdgeInsets.only(bottom: Size.getHeight * 0.02),
-      height: Size.getHeight * 0.35,
-      padding: EdgeInsets.all(8.0),
-      child: ListView.builder(
-        itemCount: districSelect.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: ((context, index) => InkWell(
-              onTap: () {
-                if (!ConfigApp.drawerShow) {
-                  BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                      .add(OnClickListMotelssEvent(index));
-                }
-              },
-              child: Container(
-                margin: EdgeInsets.only(right: 16.0),
-                padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
-                width: Size.getWidth * 0.7,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25.0),
-                  image: DecorationImage(
-                      image: NetworkImage(AppSetting.imageTest),
-                      fit: BoxFit.cover),
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.only(bottom: Size.getHeight * 0.02),
+        // height: Size.getHeight * 0.35,
+        padding: EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: districSelect.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: ((context, index) => InkWell(
+                onTap: () {
+                  if (!ConfigApp.drawerShow) {
+                    BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                        .add(OnClickListMotelssEvent(index));
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 16.0),
+                  padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
+                  width: Size.getWidth * 0.7,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    image: DecorationImage(
+                        image: NetworkImage(AppSetting.imageTest),
+                        fit: BoxFit.cover),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        "Cheap motel room",
+                        maxLines: 1,
+                        style: StyleText.header20Whitew500,
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh",
+                        maxLines: 1,
+                        style: StyleText.content14White60w400,
+                      ),
+                      SizedBox(height: 8.0),
+                      SmoothStarRating(
+                        rating: rating,
+                        isReadOnly: false,
+                        size: 24.0,
+                        filledIconData: Icons.star,
+                        halfFilledIconData: Icons.star_half,
+                        defaultIconData: Icons.star_border,
+                        starCount: 5,
+                        allowHalfRating: true,
+                        spacing: 2.0,
+                        onRated: (value) {},
+                        color: Colors.yellow,
+                        borderColor: Colors.yellow[100],
+                      )
+                    ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      "Cheap motel room",
-                      maxLines: 1,
-                      style: StyleText.header20Whitew500,
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh",
-                      maxLines: 1,
-                      style: StyleText.content14White60w400,
-                    ),
-                    SizedBox(height: 8.0),
-                    SmoothStarRating(
-                      rating: rating,
-                      isReadOnly: false,
-                      size: 24.0,
-                      filledIconData: Icons.star,
-                      halfFilledIconData: Icons.star_half,
-                      defaultIconData: Icons.star_border,
-                      starCount: 5,
-                      allowHalfRating: true,
-                      spacing: 2.0,
-                      onRated: (value) {},
-                      color: Colors.yellow,
-                      borderColor: Colors.yellow[100],
-                    )
-                  ],
-                ),
-              ),
-            )),
+              )),
+        ),
       ),
     );
   }
 
   Widget buildListDistric() {
     return Container(
-      margin: EdgeInsets.only(top: Size.getHeight * 0.04, left: 16.0),
+      margin: EdgeInsets.only(top: 16.0, left: 16.0),
       height: Size.getHeight * 0.06,
       width: Size.getWidth,
       child: ListView.builder(
@@ -211,33 +212,34 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildFindDistricts() {
     return Container(
-      height: Size.getHeight * 0.08,
-      padding: EdgeInsets.only(left: 32.0, right: 32.0),
-      child: Center(
-        child: TextFormField(
-          style: StyleText.subhead18GreenMixBlue,
-          cursorColor: AppColor.colorBlue156,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-            prefixIcon: Icon(
-              Icons.home,
-              color: AppColor.colorBlue156,
-            ),
-            hintText: 'Search Districts',
-            suffixIcon: InkWell(
-              onTap: () {
-                showToast("Search");
-              },
-              child: Padding(
-                padding: EdgeInsets.only(right: 16),
-                child: Icon(
-                  Icons.search,
-                  size: 30,
-                ),
+      height: 40.0,
+      padding: EdgeInsets.symmetric(horizontal: 32.0),
+      // child: Placeholder(),
+      child: TextFormField(
+        style: StyleText.subhead18GreenMixBlue,
+        cursorColor: AppColor.colorBlue156,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(8.0),
+          filled: true,
+          enabled: false,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+          ),
+          prefixIcon: Icon(
+            Icons.home,
+            color: AppColor.colorBlue156,
+          ),
+          hintText: 'Search Districts',
+          suffixIcon: InkWell(
+            onTap: () {
+              showToast("Search");
+            },
+            child: Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: Icon(
+                Icons.search,
+                size: 24,
               ),
             ),
           ),
@@ -246,82 +248,80 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildTopView() {
-    return Container(
-      padding: EdgeInsets.only(left: 8.0),
-      height: Size.getHeight * 0.285,
-      child: Stack(
+  Widget buildTopView() => Container(
+        padding: EdgeInsets.only(left: 8.0),
+        height: Size.getHeight * 0.245,
+        child: Stack(
+          children: <Widget>[
+            _topImage(),
+            _topContent(),
+          ],
+        ),
+      );
+
+  Widget _topContent() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Container(
-                width: Size.getWidth * 0.60,
-                height: Size.getHeight * 0.27,
-                child: SvgPicture.asset(imageUrl, fit: BoxFit.fill),
-              ),
-            ],
+          Container(
+            // color: Colors.red,
+            margin: EdgeInsets.only(top: Size.statusBar),
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.location_on,
+                  color: Colors.red[300],
+                ),
+                SizedBox(width: 8),
+                Text(
+                  "Ho Chi Minh, Viet Nam",
+                  style: StyleText.content14White400,
+                )
+              ],
+            ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(top: Size.getHeight * 0.02),
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.location_on,
-                      color: Colors.red[300],
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      "Ho Chi Minh, Viet Nam",
-                      style: StyleText.content14White400,
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: Size.getHeight * 0.03, left: 8.0),
-                child: Text(
-                  "Hello, ${ConfigApp.fbuser.displayName}",
-                  style: StyleText.content14White60w400,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: Size.getHeight * 0.03, left: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("Find Your Dream",
-                        style: GoogleFonts.vidaloka(
-                            color: Colors.white, fontSize: 24 * Size.scaleTxt)),
-                    SizedBox(height: Size.getHeight * 0.01),
-                    Text("Boarding",
-                        style: GoogleFonts.vidaloka(
-                            color: Colors.white, fontSize: 24 * Size.scaleTxt)),
-                    SizedBox(height: Size.getHeight * 0.01),
-                    Text("Motel",
-                        style: GoogleFonts.vidaloka(
-                            color: Colors.white, fontSize: 24 * Size.scaleTxt)),
-                  ],
-                ),
-              )
-            ],
+          Container(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Hello, ${ConfigApp.fbuser.displayName}",
+              style: StyleText.content14White60w400,
+            ),
+          ),
+          Container(
+            // margin: EdgeInsets.only(top: Size.getHeight * 0.03, left: 8.0),
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("Find Your Dream",
+                    style: GoogleFonts.vidaloka(
+                        color: Colors.white, fontSize: 20 * Size.scaleTxt)),
+                SizedBox(height: Size.getHeight * 0.01),
+                Text("Boarding Motel",
+                    style: GoogleFonts.vidaloka(
+                        color: Colors.white, fontSize: 20 * Size.scaleTxt)),
+              ],
+            ),
+          )
+        ],
+      );
+
+  Widget _topImage() => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Container(
+            width: Size.getWidth * 0.60,
+            height: Size.getHeight * 0.25,
+            child: SvgPicture.asset(imageUrl, fit: BoxFit.fill),
           ),
         ],
-      ),
-    );
-  }
+      );
 
-  Widget buildBackground(double height) {
-    return Positioned.fill(
-      child: ClipPath(
-        child: Container(
-          color: AppColor.colorClipPath,
+  Widget buildBackground(double height) => Positioned.fill(
+        child: ClipPath(
+          child: Container(
+            color: AppColor.colorClipPath,
+          ),
+          clipper: HomeClipPath(0.25),
         ),
-        clipper: HomeClipPath(),
-      ),
-    );
-  }
+      );
 }
