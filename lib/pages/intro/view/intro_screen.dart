@@ -1,15 +1,12 @@
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/slider_model.dart';
 import 'package:findingmotels/pages/login/view/login_screen.dart';
-import 'package:findingmotels/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
 
 class IntroPage extends StatefulWidget {
-  final UserRepository userRepository;
-  IntroPage({@required this.userRepository});
 
   @override
   _IntroPageState createState() => _IntroPageState();
@@ -34,7 +31,7 @@ class _IntroPageState extends State<IntroPage> {
   void onDonePress() {
     Navigator.of(context)
         .pushReplacement(new MaterialPageRoute(builder: (context) {
-      return LoginPage(userRepository: widget.userRepository);
+      return LoginPage();
     }));
   }
 

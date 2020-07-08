@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
-import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/validator/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,8 +9,6 @@ part 'userreg_event.dart';
 part 'userreg_state.dart';
 
 class UserregBloc extends Bloc<UserregEvent, UserregState> {
-  UserRepository userRepository;
-  UserregBloc({this.userRepository});
   @override
   UserregState get initialState => UserregInitial();
 
@@ -28,13 +25,12 @@ class UserregBloc extends Bloc<UserregEvent, UserregState> {
         if (Valid.isUserNamee(event.userName)) {
           if (Valid.isEmail(event.email)) {
             if (Valid.isPassword(event.password)) {
-              var user = await userRepository.signUpUserWithEmailPass(
+              var user = await ConfigApp.firebaseAuth.signUpUserWithEmailPass(
                   event.email, event.password);
               if (user != null) {
                 FirebaseUser userSend = await updateUser(event, user);
                 ConfigApp.fbuser = userSend;
-                ConfigApp.userRepository = userRepository;
-                yield UserRegSuccessful(userSend, userRepository);
+                yield UserRegSuccessful(userSend);
               } else {
                 yield UserRegFailure(
                     message: "Login failed! please check again");
@@ -67,7 +63,7 @@ class UserregBloc extends Bloc<UserregEvent, UserregState> {
     updateInfo.photoUrl = avatarImageUrl;
     await user.updateProfile(updateInfo);
     await user.reload();
-    var userSend = await userRepository.getCurrentUser();
+    var userSend = await ConfigApp.firebaseAuth.getCurrentUser();
     print('USERNAME IS: ${userSend.displayName}');
     return userSend;
   }

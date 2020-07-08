@@ -3,7 +3,6 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/login/view/login_screen.dart';
 import 'package:findingmotels/pages/register/bloc/userreg_bloc.dart';
-import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/widgets/Animation/fadedAnimation.dart';
 import 'package:findingmotels/widgets/clip_path_custom/registerClipPath.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
@@ -13,8 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 
 class RegisterPage extends StatefulWidget {
-  final UserRepository userRepository;
-  RegisterPage({@required this.userRepository});
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -46,13 +43,13 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UserregBloc(userRepository: widget.userRepository),
+      create: (context) => UserregBloc(),
       child: BlocListener<UserregBloc, UserregState>(
         listener: (context, state) {
           if (state is UserRegSuccessful) {
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return DrawerDashBoard(userRepository: state.userRepository);
+              return DrawerDashBoard();
             }));
           } else if (state is UserRegFailure) {
             showToast(state.message);
@@ -261,9 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.of(context).pushReplacement(
           new MaterialPageRoute(
             builder: (context) {
-              return LoginPage(
-                userRepository: widget.userRepository,
-              );
+              return LoginPage();
             },
           ),
         );

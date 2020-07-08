@@ -3,15 +3,13 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/favorite/view/favorite_page.dart';
 import 'package:findingmotels/pages/home/view/home_page.dart';
 import 'package:findingmotels/pages/notifycation/view/notify_screen.dart';
-import 'package:findingmotels/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 class DashboardPage extends StatefulWidget {
-  final UserRepository userRepository;
   final Function onUserTap;
-  DashboardPage({@required this.userRepository, this.onUserTap});
+  DashboardPage({@required  this.onUserTap});
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }

@@ -2,17 +2,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
-import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/validator/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  UserRepository userRepository;
-
-  LoginBloc({this.userRepository});
-
   @override
   LoginState get initialState => LoginInitial();
 
@@ -25,11 +20,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (Valid.isEmail(event.email)) {
         if (Valid.isPassword(event.password)) {
           try {
-            var user = await userRepository.signInEmailAndPassword(
+            var user = await ConfigApp.firebaseAuth.signInEmailAndPassword(
                 event.email, event.password);
             if (user != null) {
               ConfigApp.fbuser = user;
-              ConfigApp.userRepository = userRepository;
               yield LoginSuccessState(user: user);
             } else {
               yield LoginFailState(
@@ -52,10 +46,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (event is GoogleOnClickEvent) {
       yield LoginLoadingState();
       try {
-        var user = await userRepository.loginWithGoogle();
+        var user = await ConfigApp.firebaseAuth.loginWithGoogle();
         if (user != null) {
           ConfigApp.fbuser = user;
-          ConfigApp.userRepository = userRepository;
           yield LoginSuccessState(user: user);
         } else {
           yield LoginFailState(

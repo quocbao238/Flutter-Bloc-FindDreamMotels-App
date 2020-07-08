@@ -6,7 +6,6 @@ import 'package:findingmotels/pages/dashboard/dashboard_page.dart';
 import 'package:findingmotels/pages/drawer/bloc/drawer_bloc.dart';
 import 'package:findingmotels/pages/drawer/view/mydrawer.dart';
 import 'package:findingmotels/pages/user_edit/view/user_edit_page.dart';
-import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/widgets/dialog_custom/logout_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +16,6 @@ import '../../../main.dart';
 final Color backgroundColor = Color(0xFF4A4A58);
 
 class DrawerDashBoard extends StatefulWidget {
-  final UserRepository userRepository;
-  DrawerDashBoard({@required this.userRepository});
   @override
   _DrawerDashBoardState createState() => _DrawerDashBoardState();
 }
@@ -116,12 +113,10 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                 _item(
                     icon: Icons.account_circle,
                     title: 'Profile',
-                    onTap: () => {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => UserEditPage()))
-                        }),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UserEditPage()))),
                 _item(
                     icon: Icons.view_carousel,
                     title: 'Dashboard',
@@ -161,7 +156,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
         ).then((v) {
           try {
             if (v) {
-              ConfigApp.userRepository.signOut().then((_) {
+              ConfigApp.firebaseAuth.signOut().then((_) {
                 ConfigApp.drawerShow = false;
                 Navigator.of(_globalKey.currentContext)
                     .pushReplacement(new MaterialPageRoute(builder: (context) {
@@ -308,7 +303,6 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                   Radius.circular(ConfigApp.drawerShow ? 30.0 : 0.0),
                 ),
                 child: DashboardPage(
-                  userRepository: widget.userRepository,
                   onUserTap: () {
                     BlocProvider.of<DrawerBloc>(_globalKey.currentContext)
                         .add(MenuEvent(true));

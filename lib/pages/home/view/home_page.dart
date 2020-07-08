@@ -1,7 +1,6 @@
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
-import 'package:findingmotels/database/fbdatabase.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
 import 'package:findingmotels/pages/motel_detail/motels_description_screen.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
@@ -54,7 +53,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     homeGlobalKey = GlobalKey();
-    innitDB();
   }
 
   @override

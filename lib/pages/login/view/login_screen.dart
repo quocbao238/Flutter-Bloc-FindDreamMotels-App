@@ -3,7 +3,6 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/login/bloc/login_bloc.dart';
 import 'package:findingmotels/pages/register/view/register_screen.dart';
-import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/widgets/Animation/fadedAnimation.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
@@ -13,8 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 
 class LoginPage extends StatefulWidget {
-  final UserRepository userRepository;
-  LoginPage({@required this.userRepository});
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -43,13 +40,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => LoginBloc(userRepository: widget.userRepository),
+        create: (context) => LoginBloc(),
         child: BlocListener<LoginBloc, LoginState>(
             listener: (context, state) {
               if (state is LoginSuccessState) {
                 Navigator.of(context)
                     .pushReplacement(new MaterialPageRoute(builder: (context) {
-                  return DrawerDashBoard(userRepository: state.userRepository);
+                  return DrawerDashBoard();
                 }));
               } else if (state is LoginFailState) {
                 showToast(state.message);
@@ -63,7 +60,6 @@ class _LoginPageState extends State<LoginPage> {
     return Stack(
       children: <Widget>[
         Scaffold(
-          // resizeToAvoidBottomInset: false,
           key: loginGlobalKey,
           backgroundColor: AppColor.backgroundColor,
           body: Stack(
@@ -308,7 +304,6 @@ class _LoginPageState extends State<LoginPage> {
             new MaterialPageRoute(
               builder: (context) {
                 return RegisterPage(
-                  userRepository: widget.userRepository,
                 );
               },
             ),
@@ -317,7 +312,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   Widget _btnGoogleFacebook(double height, double width) => Container(
-        margin: EdgeInsets.only(top: height * 0.07),
+        margin: EdgeInsets.only(top: height * 0.045),
         height: height * 0.06,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

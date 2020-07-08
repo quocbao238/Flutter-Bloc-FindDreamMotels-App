@@ -1,6 +1,5 @@
 import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
-import 'package:findingmotels/repository/user_repository.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,9 +28,8 @@ Future<void> main() async {
         // theme: ThemeData(primarySwatch: Colors.blue),
         home: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarBrightness: Brightness.light
-          ),
+              statusBarColor: Colors.transparent,
+              statusBarBrightness: Brightness.light),
           child: App(),
         ),
       ),
@@ -45,27 +43,24 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  UserRepository userRepository = UserRepository();
   @override
   Widget build(BuildContext context) {
     getSizeApp(context);
     return BlocProvider(
-      create: (context) =>
-          AuthBloc()..add(AppStartedEvent(userRepository: userRepository)),
+      create: (context) => AuthBloc()..add(AppStartedEvent()),
       child: BlocListener<AuthBloc, AuthBlocState>(
         listener: (context, state) {
           if (state is AuthenticatedState) {
             debugPrint("AuthenticatedState");
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              // return DashboardPage(userRepository: userRepository);
-              return DrawerDashBoard(userRepository: userRepository);
+              return DrawerDashBoard();
             }));
           } else if (state is UnauthenticatedState) {
             debugPrint("UnauthenticatedState");
             Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return IntroPage(userRepository: userRepository);
+              return IntroPage();
             }));
           }
         },

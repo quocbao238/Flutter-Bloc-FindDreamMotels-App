@@ -16,8 +16,7 @@ class UserRegLoading extends UserregState {
 
 class UserRegSuccessful extends UserregState {
   final FirebaseUser user;
-  final UserRepository userRepository;
-  UserRegSuccessful(this.user, this.userRepository);
+  UserRegSuccessful(this.user);
   @override
   List<Object> get props => null;
 }

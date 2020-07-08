@@ -1,12 +1,10 @@
-import 'package:findingmotels/config_app/setting.dart';
+
 import 'package:findingmotels/config_app/sizeScreen.dart';
-import 'package:findingmotels/main.dart';
 import 'package:findingmotels/pages/notifycation/bloc/notify_bloc.dart';
 import 'package:findingmotels/pages/widgets/notify_item.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NotifyPage extends StatefulWidget {

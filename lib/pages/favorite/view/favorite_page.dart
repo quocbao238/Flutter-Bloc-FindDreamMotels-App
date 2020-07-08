@@ -1,10 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/favorite/bloc/favorite_bloc.dart';
 import 'package:findingmotels/pages/widgets/favorite_item.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
-import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';

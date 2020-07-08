@@ -14,8 +14,7 @@ class LoginLoadingState extends LoginState {}
 
 class LoginSuccessState extends LoginState {
   final FirebaseUser user;
-  final UserRepository userRepository;
-  LoginSuccessState({this.user, this.userRepository});
+  LoginSuccessState({this.user});
 }
 
 class LoginFailState extends LoginState {
