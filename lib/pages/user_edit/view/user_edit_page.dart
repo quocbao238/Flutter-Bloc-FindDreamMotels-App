@@ -1,9 +1,11 @@
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart' as app;
 import 'package:findingmotels/pages/tutorial/bloc/tutorial_bloc.dart';
+import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:findingmotels/widgets/customcatch_image/customcatch_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UserEditPage extends StatefulWidget {
   @override
@@ -34,34 +36,89 @@ class _UserEditPageState extends State<UserEditPage> {
   void blocListener(UserEditlState state, BuildContext context) {}
 
   Widget _scaffold() => Scaffold(
-        key: globalKey,
-        appBar: _appBar(),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Container(color: Colors.red),
-                ),
-                _item(
-                    title: 'First Name',
-                    controller: _controller,
-                    isEdit: false),
-                _item(
-                    title: 'Last Name', controller: _controller, isEdit: false),
-                _item(
-                    title: 'BirthDay', controller: _controller, isEdit: false),
-                _item(title: 'Email', controller: _controller, isEdit: false),
-                _item(title: 'Location', controller: _controller, isEdit: true),
-                SizedBox(height: 16.0)
-              ],
-            ),
+      key: globalKey,
+      body: _body(),
+      backgroundColor: app.AppColor.backgroundColor);
+
+  Widget _body() => Stack(
+        children: <Widget>[
+          buildBackground(0.32),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[_appBar(), content()],
+          ),
+        ],
+      );
+
+  Widget content() => Expanded(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 16.0),
+              _item(title: 'First Name', controller: _controller, isEdit: true),
+              _item(title: 'Last Name', controller: _controller, isEdit: true),
+              _item(title: 'BirthDay', controller: _controller, isEdit: true),
+              _item(title: 'Email', controller: _controller, isEdit: true),
+              _item(title: 'Location', controller: _controller, isEdit: true),
+              SizedBox(height: 8.0)
+            ],
           ),
         ),
-        backgroundColor: app.AppColor.backgroundColor,
+      );
+
+  Widget _appBar() => Container(
+        padding: EdgeInsets.only(top: 32.0),
+        margin: EdgeInsets.only(bottom: app.Size.getHeight * 0.02),
+        child: Column(
+          children: <Widget>[
+            _appbarTitle(),
+            _avatar(),
+            _userName(),
+          ],
+        ),
+      );
+
+  Widget _appbarTitle() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          _leadIcon(),
+          Text('Edit User',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.vidaloka(
+                  color: Colors.white, fontSize: 24 * app.Size.scaleTxt)),
+          _rightIcon(),
+        ],
+      );
+
+  Widget _userName() => Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.0),
+        child: Text(
+          ConfigApp.fbuser.displayName ?? "",
+          style: app.StyleText.header24BWhitew400,
+        ),
+      );
+
+  Widget _rightIcon() => IconButton(
+        icon: Icon(Icons.check_circle_outline, size: 30.0, color: Colors.white),
+        onPressed: () {},
+      );
+
+  Widget _leadIcon() => IconButton(
+        icon: Icon(Icons.arrow_back_ios, size: 30, color: Colors.white),
+        onPressed: () {
+          Navigator.pop(globalKey.currentContext);
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+      );
+
+  Widget buildBackground(double height) => Positioned.fill(
+        child: ClipPath(
+          child: Container(
+            color: app.AppColor.colorClipPath,
+          ),
+          clipper: HomeClipPath(height),
+        ),
       );
 
   InkWell _item(
@@ -91,89 +148,8 @@ class _UserEditPageState extends State<UserEditPage> {
         ),
       );
 
-  Widget _appBar() => PreferredSize(
-        preferredSize: Size.fromHeight(app.Size.getHeight * 0.4),
-        child: AppBar(
-          backgroundColor: app.AppColor.colorClipPath,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text(
-            'Edit Profile',
-            style: app.StyleText.header24BWhite,
-          ),
-          actions: <Widget>[
-            Container(
-              padding: EdgeInsets.only(right: 10.0),
-              child: IconButton(
-                icon: Icon(
-                  Icons.check_circle_outline,
-                  size: 30.0,
-                ),
-                onPressed: () {},
-              ),
-            ),
-          ],
-          flexibleSpace: _flexibleSpace(),
-        ),
-      );
-
-  Widget _flexibleSpace() => Container(
-        margin: EdgeInsets.only(
-            top:
-                MediaQuery.of(context).padding.top + app.Size.getHeight * 0.06),
-        height: double.maxFinite,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            _avatar(),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.0),
-              child: Text(
-                ConfigApp.fbuser.displayName ?? "",
-                style: app.StyleText.header24BWhitew400,
-              ),
-            ),
-            Container(
-              width: double.maxFinite,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  _itemBtn(
-                      title: "My Account", color: app.AppColor.alerBtnColor),
-                  _itemBtn(
-                      title: "My Resume",
-                      color: app.AppColor.selectContainerColor)
-                ],
-              ),
-            )
-          ],
-        ),
-      );
-
-  Widget _itemBtn({String title, Color color, Function onTap}) => InkWell(
-        onTap: () {
-          if (onTap != null) onTap();
-        },
-        child: Container(
-          width: app.Size.getWidth * 0.4,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0), color: color),
-          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-          child: Center(
-            child: Text(
-              title.toUpperCase(),
-              style: app.StyleText.subhead18White500,
-            ),
-          ),
-        ),
-      );
-
   Widget _avatar() => Container(
+        // margin: EdgeInsets.only(top: 16.0),
         height: app.Size.getHeight * 0.15,
         width: app.Size.getHeight * 0.15,
         child: Stack(
@@ -196,8 +172,8 @@ class _UserEditPageState extends State<UserEditPage> {
               ),
             ),
             Positioned(
-              bottom: 8,
-              right: 8,
+              bottom: 4,
+              right: 0,
               child: Container(
                 padding: EdgeInsets.only(bottom: 2.0),
                 height: 30,

@@ -11,35 +11,32 @@ import 'pages/intro/view/intro_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await innitDB();
 
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //   statusBarColor: Colors.transparent,
-  //   statusBarBrightness: Brightness.dark,
-  //   // systemNavigationBarColor: Colors.black,
-  //   // systemNavigationBarIconBrightness: Brightness.light
-  // ));
-
-  SystemChrome.setEnabledSystemUIOverlays([]);
-
-  runApp(OKToast(
-    textStyle: TextStyle(fontSize: 19.0, color: Colors.white),
-    textPadding: EdgeInsets.symmetric(horizontal: 8.0),
-    backgroundColor: Colors.black54,
-    radius: 10.0,
-    animationCurve: Curves.easeIn,
-    position: ToastPosition.bottom,
-    animationBuilder: Miui10AnimBuilder(),
-    animationDuration: Duration(milliseconds: 200),
-    duration: Duration(seconds: 3),
-    child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Find Accommodation',
-      // theme: ThemeData(primarySwatch: Colors.blue),
-      home: App(),
-      // home: ListViewStudent(),
+  runApp(
+    OKToast(
+      textStyle: TextStyle(fontSize: 19.0, color: Colors.white),
+      textPadding: EdgeInsets.symmetric(horizontal: 8.0),
+      backgroundColor: Colors.black54,
+      radius: 10.0,
+      animationCurve: Curves.easeIn,
+      position: ToastPosition.bottom,
+      animationBuilder: Miui10AnimBuilder(),
+      animationDuration: Duration(milliseconds: 200),
+      duration: Duration(seconds: 3),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Find Accommodation',
+        // theme: ThemeData(primarySwatch: Colors.blue),
+        home: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarBrightness: Brightness.light
+          ),
+          child: App(),
+        ),
+      ),
     ),
-  ));
+  );
 }
 
 class App extends StatefulWidget {

@@ -70,7 +70,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
   Widget _scaffold() {
     return Scaffold(
       key: _globalKey,
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
           _menuBar(),

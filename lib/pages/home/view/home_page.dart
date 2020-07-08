@@ -82,21 +82,23 @@ class _HomePageState extends State<HomePage> {
     return Stack(
       children: <Widget>[
         Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           key: homeGlobalKey,
           backgroundColor: AppColor.backgroundColor,
           body: Stack(
             children: <Widget>[
               buildBackground(Size.getHeight),
               Positioned.fill(
-                  child: Column(
-                children: <Widget>[
-                  buildTopView(),
-                  buildFindDistricts(),
-                  buildListDistric(),
-                  // Spacer(),
-                  buildViewMotels()
-                ],
+                  child: SafeArea(
+                child: Column(
+                  children: <Widget>[
+                    buildTopView(),
+                    // buildFindDistricts(),
+                    buildListDistric(),
+                    // Spacer(),
+                    buildViewMotels()
+                  ],
+                ),
               ))
             ],
           ),
@@ -124,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   margin: EdgeInsets.only(right: 16.0),
                   padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
-                  width: Size.getWidth * 0.7,
+                  width: Size.getWidth * 0.5,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25.0),
                     image: DecorationImage(
@@ -172,7 +174,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildListDistric() {
     return Container(
-      margin: EdgeInsets.only(top: 16.0, left: 16.0),
+      margin: EdgeInsets.only(top: 32, bottom: 16, left: 8.0),
       height: Size.getHeight * 0.06,
       width: Size.getWidth,
       child: ListView.builder(
@@ -213,7 +215,8 @@ class _HomePageState extends State<HomePage> {
   Widget buildFindDistricts() {
     return Container(
       height: 40.0,
-      padding: EdgeInsets.symmetric(horizontal: 32.0),
+      margin: EdgeInsets.only(top: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: 24.0),
       // child: Placeholder(),
       child: TextFormField(
         style: StyleText.subhead18GreenMixBlue,
@@ -250,7 +253,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildTopView() => Container(
         padding: EdgeInsets.only(left: 8.0),
-        height: Size.getHeight * 0.245,
         child: Stack(
           children: <Widget>[
             _topImage(),
@@ -293,10 +295,20 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text("Find Your Dream",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.vidaloka(
                         color: Colors.white, fontSize: 20 * Size.scaleTxt)),
                 SizedBox(height: Size.getHeight * 0.01),
-                Text("Boarding Motel",
+                Text("Boarding",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.vidaloka(
+                        color: Colors.white, fontSize: 20 * Size.scaleTxt)),
+                SizedBox(height: Size.getHeight * 0.01),
+                Text("Motel",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.vidaloka(
                         color: Colors.white, fontSize: 20 * Size.scaleTxt)),
               ],
@@ -310,7 +322,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Container(
             width: Size.getWidth * 0.60,
-            height: Size.getHeight * 0.25,
+            height: Size.getHeight * 0.3,
             child: SvgPicture.asset(imageUrl, fit: BoxFit.fill),
           ),
         ],
@@ -321,7 +333,7 @@ class _HomePageState extends State<HomePage> {
           child: Container(
             color: AppColor.colorClipPath,
           ),
-          clipper: HomeClipPath(0.25),
+          clipper: HomeClipPath(0.35),
         ),
       );
 }

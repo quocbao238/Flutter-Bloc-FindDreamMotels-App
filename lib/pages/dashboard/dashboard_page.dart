@@ -32,8 +32,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return _pageView(context, Size.getWidth, Size.getHeight);
   }
 
-  Widget _pageView(BuildContext context, double getHeight, double getWidth) =>
-      Scaffold(
+  Widget _pageView(BuildContext context, double getHeight, double getWidth) => Scaffold(
         backgroundColor: AppColor.backgroundColor,
         key: dashboardGlobalKey,
         bottomNavigationBar: _bottomNavigationBar(),

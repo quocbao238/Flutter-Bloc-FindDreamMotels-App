@@ -106,51 +106,55 @@ class _IntroPageState extends State<IntroPage> {
     return Stack(
       children: <Widget>[
         Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Stack(
+          resizeToAvoidBottomPadding: false,
+        body: Stack(
             children: <Widget>[
               Positioned.fill(
-                  child: IntroSlider(
-                slides: this.slides,
-
-                // Skip button
-                renderSkipBtn: this.renderSkipBtn(),
-                colorSkipBtn: AppColor.backgroundColor,
-                highlightColorSkipBtn: AppColor.colorBlue156,
-
-                // Next button
-                renderNextBtn: this.renderNextBtn(),
-
-                // Done button
-                renderDoneBtn: this.renderDoneBtn(),
-                onDonePress: this.onDonePress,
-                colorDoneBtn: AppColor.backgroundColor,
-                highlightColorDoneBtn: Color(0xffffcc5c),
-
-                // Dot indicator
-                colorDot: AppColor.colorBlue156,
-                colorActiveDot: AppColor.backgroundColor,
-
-                sizeDot: 13.0,
-                typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
-
-                // Tabs
-                listCustomTabs: this.renderListCustomTabs(),
-                backgroundColorAllSlides: AppColor.colorClipPath,
-                refFuncGoToTab: (refFunc) {
-                  this.goToTab = refFunc;
-                },
-
-                // Show or hide status bar
-                shouldHideStatusBar: true,
-
-                // On tab change completed
-                onTabChangeCompleted: this.onTabChangeCompleted,
-              ))
+                // child: Container(color: Colors.red),
+                child: _introSlider()
+              )
             ],
           ),
         ),
       ],
     );
   }
+
+  Widget _introSlider() => IntroSlider(
+        slides: this.slides,
+
+        // Skip button
+        renderSkipBtn: this.renderSkipBtn(),
+        colorSkipBtn: AppColor.backgroundColor,
+        highlightColorSkipBtn: AppColor.colorBlue156,
+
+        // Next button
+        renderNextBtn: this.renderNextBtn(),
+
+        // Done button
+        renderDoneBtn: this.renderDoneBtn(),
+        onDonePress: this.onDonePress,
+        colorDoneBtn: AppColor.backgroundColor,
+        highlightColorDoneBtn: Color(0xffffcc5c),
+
+        // Dot indicator
+        colorDot: AppColor.colorBlue156,
+        colorActiveDot: AppColor.backgroundColor,
+
+        sizeDot: 13.0,
+        typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
+
+        // Tabs
+        listCustomTabs: this.renderListCustomTabs(),
+        backgroundColorAllSlides: AppColor.colorClipPath,
+        refFuncGoToTab: (refFunc) {
+          this.goToTab = refFunc;
+        },
+
+        // Show or hide status bar
+        shouldHideStatusBar: true,
+
+        // On tab change completed
+        onTabChangeCompleted: this.onTabChangeCompleted,
+      );
 }
