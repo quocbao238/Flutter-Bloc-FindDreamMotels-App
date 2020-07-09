@@ -112,7 +112,7 @@ class _UserEditPageState extends State<UserEditPage> {
           Navigator.pop(globalKey.currentContext);
           FocusScope.of(context).requestFocus(FocusNode());
         },
-      );
+      );  
 
   Widget buildBackground(double height) => Positioned.fill(
         child: ClipPath(

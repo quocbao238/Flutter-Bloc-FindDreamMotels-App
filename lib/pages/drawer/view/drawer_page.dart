@@ -117,10 +117,10 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                         context,
                         MaterialPageRoute(
                             builder: (context) => UserEditPage()))),
-                _item(
-                    icon: Icons.view_carousel,
-                    title: 'Dashboard',
-                    onTap: () => showToast('Dashboard')),
+                // _item(
+                //     icon: Icons.view_carousel,
+                //     title: 'Dashboard',
+                //     onTap: () => showToast('Dashboard')),
                 _item(
                     icon: Icons.chat,
                     title: 'Chat',
@@ -216,26 +216,48 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Rate App',
-              style: StyleText.subhead16White500,
+            child: Row(
+              children: <Widget>[
+                Text(
+                  'Rate App',
+                  style: StyleText.subhead16White500,
+                ),
+                SizedBox(width: 8.0),
+                Container(
+                  width: Size.getWidth * 0.3,
+                  child: FittedBox(
+                    child: FlutterRatingBar(
+                      initialRating: 3.5,
+                      itemSize: 30.0,
+                      fillColor: Colors.amber,
+                      borderColor: Colors.amber.withAlpha(60),
+                      allowHalfRating: true,
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Container(
-              child: FlutterRatingBar(
-                initialRating: 3.5,
-                itemSize: 30.0,
-                fillColor: Colors.amber,
-                borderColor: Colors.amber.withAlpha(60),
-                allowHalfRating: true,
-                onRatingUpdate: (rating) {
-                  print(rating);
-                },
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(bottom: 8.0),
+          //   child: FittedBox(
+          //     child: Container(
+          //       child: FlutterRatingBar(
+          //         initialRating: 3.5,
+          //         itemSize: 30.0,
+          //         fillColor: Colors.amber,
+          //         borderColor: Colors.amber.withAlpha(60),
+          //         allowHalfRating: true,
+          //         onRatingUpdate: (rating) {
+          //           print(rating);
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       );
 
@@ -319,19 +341,21 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
   }
 
   Widget _avatar() {
-    return Container(
-      margin: EdgeInsets.only(left: 8.0, top: 16.0),
-      width: Size.getWidth * 0.42,
-      height: Size.getWidth / 4.1,
-      child: Center(
-        child: CachedNetworkImage(
-          imageUrl: ConfigApp?.fbuser?.photoUrl ?? "",
-          imageBuilder: (context, imageProvider) =>
-              _dataAvatar(imageProvider, null),
-          placeholder: (context, url) =>
-              Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) =>
-              _dataAvatar(null, AppSetting.defaultAvatarImg),
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.only(left: 8.0, top: 16.0),
+        width: Size.getWidth * 0.42,
+        height: Size.getWidth / 4.1,
+        child: Center(
+          child: CachedNetworkImage(
+            imageUrl: ConfigApp?.fbuser?.photoUrl ?? "",
+            imageBuilder: (context, imageProvider) =>
+                _dataAvatar(imageProvider, null),
+            placeholder: (context, url) =>
+                Center(child: CircularProgressIndicator()),
+            errorWidget: (context, url, error) =>
+                _dataAvatar(null, AppSetting.defaultAvatarImg),
+          ),
         ),
       ),
     );

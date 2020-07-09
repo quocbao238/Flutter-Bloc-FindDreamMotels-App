@@ -61,7 +61,10 @@ class CloudStorageService {
   }
 
   Future<File> selectImage() async {
-    return await ImagePicker.pickImage(source: ImageSource.gallery);
+    return await ImagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxHeight: 200,
+        maxWidth: 200);
   }
 
   Future<String> readImage({String title}) async {
