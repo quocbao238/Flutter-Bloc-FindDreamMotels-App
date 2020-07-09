@@ -112,7 +112,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                 SizedBox(height: 10.0),
                 _item(
                     icon: Icons.account_circle,
-                    title: 'Profile',
+                    title: 'User Profile',
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -345,7 +345,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
       child: Container(
         margin: EdgeInsets.only(left: 8.0, top: 16.0),
         width: Size.getWidth * 0.42,
-        height: Size.getWidth / 4.1,
+        height: Size.getWidth / 3.2,
         child: Center(
           child: CachedNetworkImage(
             imageUrl: ConfigApp?.fbuser?.photoUrl ?? "",
@@ -362,8 +362,8 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
   }
 
   Widget _dataAvatar(ImageProvider imageProvider, String errorImg) => Container(
-        width: Size.getWidth / 4.1,
-        height: Size.getWidth / 4.1,
+        width: Size.getWidth / 3.2,
+        height: Size.getWidth / 3.2,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(60),
           image: DecorationImage(
@@ -372,28 +372,28 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                   : NetworkImage(errorImg),
               fit: BoxFit.cover),
         ),
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.only(bottom: 2.0),
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    color: Colors.grey[400],
-                    border: Border.all(color: Colors.white, width: 1.0)),
-                child: Center(
-                  child: Icon(
-                    Icons.camera_enhance,
-                    color: Colors.black87,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        // child: Stack(
+        //   children: <Widget>[
+        //     Positioned(
+        //       bottom: 0,
+        //       right: 0,
+        //       child: Container(
+        //         padding: EdgeInsets.only(bottom: 2.0),
+        //         height: 30,
+        //         width: 30,
+        //         decoration: BoxDecoration(
+        //             borderRadius: BorderRadius.circular(30.0),
+        //             color: Colors.grey[400],
+        //             border: Border.all(color: Colors.white, width: 1.0)),
+        //         child: Center(
+        //           child: Icon(
+        //             Icons.camera_enhance,
+        //             color: Colors.black87,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       );
 }

@@ -17,6 +17,7 @@ class _UserEditPageState extends State<UserEditPage> {
   GlobalKey globalKey;
   TextEditingController _controller =
       TextEditingController(text: "Demo demo demo");
+  bool isEdit = false;
 
   @override
   void initState() {
@@ -71,12 +72,12 @@ class _UserEditPageState extends State<UserEditPage> {
 
   Widget _appBar() => Container(
         padding: EdgeInsets.only(top: 32.0),
-        margin: EdgeInsets.only(bottom: app.Size.getHeight * 0.02),
+        // margin: EdgeInsets.only(bottom: app.Size.getHeight * 0.02),
         child: Column(
           children: <Widget>[
             _appbarTitle(),
             _avatar(),
-            _userName(),
+            // _userName(),
           ],
         ),
       );
@@ -85,7 +86,7 @@ class _UserEditPageState extends State<UserEditPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           _leadIcon(),
-          Text('Edit User',
+          Text('${isEdit ? 'Edit User Profile' : 'User Profile'}',
               textAlign: TextAlign.center,
               style: GoogleFonts.vidaloka(
                   color: Colors.white, fontSize: 24 * app.Size.scaleTxt)),
@@ -112,7 +113,7 @@ class _UserEditPageState extends State<UserEditPage> {
           Navigator.pop(globalKey.currentContext);
           FocusScope.of(context).requestFocus(FocusNode());
         },
-      );  
+      );
 
   Widget buildBackground(double height) => Positioned.fill(
         child: ClipPath(
@@ -157,20 +158,21 @@ class _UserEditPageState extends State<UserEditPage> {
               .add(UpdateAvatarEvent());
         },
         child: Container(
-          height: app.Size.getHeight * 0.15,
-          width: app.Size.getHeight * 0.15,
+          height: app.Size.getHeight * 0.2,
+          width: app.Size.getHeight * 0.2,
+          margin: EdgeInsets.only(bottom: app.Size.getHeight * 0.05),
           child: Stack(
             children: <Widget>[
               Container(
-                height: app.Size.getHeight * 0.15,
-                width: app.Size.getHeight * 0.15,
+                height: app.Size.getHeight * 0.2,
+                width: app.Size.getHeight * 0.2,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle, color: Colors.grey[400]),
               ),
               Container(
                 padding: EdgeInsets.all(4.0),
-                width: app.Size.getHeight * 0.15,
-                height: app.Size.getHeight * 0.15,
+                width: app.Size.getHeight * 0.2,
+                height: app.Size.getHeight *0.2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(90.0),
                   child: ImageCacheNetwork(
@@ -179,8 +181,8 @@ class _UserEditPageState extends State<UserEditPage> {
                 ),
               ),
               Positioned(
-                bottom: 4,
-                right: 0,
+                bottom: 8,
+                right: 8,
                 child: Container(
                   padding: EdgeInsets.only(bottom: 2.0),
                   height: 30,
