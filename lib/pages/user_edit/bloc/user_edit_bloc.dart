@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
-import 'package:findingmotels/config_app/setting.dart';
+import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -17,14 +18,16 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
   Stream<UserEditState> mapEventToState(
     UserEditEvent event,
   ) async* {
+// Update Avatar
     if (event is UpdateAvatarEvent) {
       yield LoadingState();
       String url = await ConfigApp.fbCloudStorage
           .updateAvatar(uuid: ConfigApp.fbuser.uid);
       if (url != null) {
-        var fbUser = updateUserToFirebase(url, null);
+        var fbUser = updateUserToFirebaseAuth(imgUrl: url, name: null);
         if (fbUser != null) {
           ConfigApp.fbuser = await fbUser;
+          showToast('Update Avatar successful!');
           yield UpdateAvatarSucessState();
         } else {
           yield UpdateAvatarFailState();
@@ -35,20 +38,24 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
       }
     } else if (event is ChangeStatusEditEvent) {
       yield ChangeStatusEditState(!event.isEdit);
+
+// FeatchData
     } else if (event is FeatchDataEvent) {
-      var userInfo = UserInfo(
-          name: ConfigApp?.fbuser?.displayName ?? "".toString(),
-          email: ConfigApp?.fbuser?.email ?? "".toString(),
-          phoneNumber:
-              ConfigApp?.fbuser?.phoneNumber ?? "0981243786".toString(),
-          location: "Nguyễn Công Trứ Tỉnh Lâm Đồng");
-      yield userInfo != null
-          ? FeatchDataSucessState(userInfo)
-          : FeatchDataFailState();
-    } else if (event is EditProfileEVent) {
       yield LoadingState();
-      var fbUser = await updateUserToFirebase(null, event.name);
-      if (fbUser != null) {
+      UserInfoModel _userInfo = await featchUserData();
+      yield _userInfo != null
+          ? FeatchDataSucessState(_userInfo)
+          : FeatchDataFailState();
+    }
+// Edit profile
+    else if (event is EditProfileEVent) {
+      yield LoadingState();
+      //Update firebase auth
+      var fbUser = await updateUserToFirebaseAuth(
+          imgUrl: null, name: event.userInfoModel.name);
+      //Update firebase cloud;
+      var userInfoModel = await updateDataToClound(event.userInfoModel);
+      if (fbUser != null && userInfoModel != null) {
         ConfigApp.fbuser = fbUser;
         yield EditProfileSucessState(fbUser);
       } else {
@@ -59,7 +66,9 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     yield UserEditInitial();
   }
 
-  Future<FirebaseUser> updateUserToFirebase(String imgUrl, String name) async {
+// Update to firebase auth
+  Future<FirebaseUser> updateUserToFirebaseAuth(
+      {String imgUrl, String name}) async {
     UserUpdateInfo updateInfo = UserUpdateInfo();
     updateInfo.displayName =
         (name == null) ? ConfigApp.fbuser.displayName : name;
@@ -70,12 +79,66 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     print('USERNAME IS: ${userSend.displayName}');
     return userSend;
   }
-}
 
-class UserInfo {
-  String name;
-  String phoneNumber;
-  String email;
-  String location;
-  UserInfo({this.name, this.phoneNumber, this.email, this.location});
+// Featch Data innit
+  Future<UserInfoModel> featchUserData() async {
+    UserInfoModel _userInfo = UserInfoModel();
+    _userInfo = null;
+    await ConfigApp.databaseReference
+        .collection("user")
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.documentID == ConfigApp.fbuser.uid)
+          _userInfo = UserInfoModel.fromJson(f.data);
+      });
+    });
+    if (_userInfo == null) _userInfo = await createUserData();
+    return _userInfo;
+  }
+
+//Create userData if userInfo = null
+  Future<UserInfoModel> createUserData() async {
+    UserInfoModel _userInfo = UserInfoModel(
+      name: ConfigApp.fbuser.displayName,
+      photoUrl: ConfigApp.fbuser.photoUrl,
+      email: ConfigApp.fbuser.email,
+      address: ' ',
+      birthday: ' ',
+      phone: ' ',
+    );
+    await ConfigApp.databaseReference
+        .collection("user")
+        .document(ConfigApp.fbuser.uid)
+        .setData(_userInfo.toJson());
+    await ConfigApp.databaseReference
+        .collection("user")
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.documentID == ConfigApp.fbuser.uid)
+          _userInfo = UserInfoModel.fromJson(f.data);
+      });
+    });
+    return _userInfo;
+  }
+
+// Update
+  Future<UserInfoModel> updateDataToClound(UserInfoModel _userInfo) async {
+    UserInfoModel userInfoModel = UserInfoModel();
+    await ConfigApp.databaseReference
+        .collection("user")
+        .document(ConfigApp.fbuser.uid)
+        .setData(_userInfo.toJson());
+    await ConfigApp.databaseReference
+        .collection("user")
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.documentID == ConfigApp.fbuser.uid)
+          userInfoModel = UserInfoModel.fromJson(f.data);
+      });
+    });
+    return userInfoModel;
+  }
 }

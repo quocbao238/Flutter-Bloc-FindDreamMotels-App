@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:findingmotels/services/cloud_storage_service.dart';
 import 'package:findingmotels/services/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +14,8 @@ class ConfigApp {
   static FirebaseApp fbApp;
   static FirebaseStorage fbStorage;
   static FirebaseUser fbuser;
+  static final databaseReference = Firestore.instance;
+
   // static FirebaseAuth authen;
   // static GoogleSignIn googleSignIn;
   // static GoogleSignInAccount googleSignInAccount;

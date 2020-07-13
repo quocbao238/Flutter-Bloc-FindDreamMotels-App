@@ -20,7 +20,7 @@ class ChangeStatusEditState extends UserEditState {
 }
 
 class FeatchDataSucessState extends UserEditState {
-  final UserInfo userInfo;
+  final UserInfoModel userInfo;
   FeatchDataSucessState(this.userInfo);
 }
 

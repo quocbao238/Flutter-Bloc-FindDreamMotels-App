@@ -9,8 +9,8 @@ abstract class UserEditEvent extends Equatable {
 class UpdateAvatarEvent extends UserEditEvent {}
 
 class EditProfileEVent extends UserEditEvent {
-  final String name;
-  EditProfileEVent(this.name);
+  final UserInfoModel userInfoModel;
+  EditProfileEVent(this.userInfoModel);
 }
 
 class ChangeStatusEditEvent extends UserEditEvent {

@@ -18,13 +18,13 @@ Future<void> main() async {
   runApp(
     OKToast(
       textStyle: TextStyle(fontSize: 19.0, color: Colors.white),
-      textPadding: EdgeInsets.symmetric(horizontal: 8.0),
+      textPadding: EdgeInsets.all(10.0),
       backgroundColor: Colors.black54,
       radius: 10.0,
       animationCurve: Curves.easeIn,
       position: ToastPosition.bottom,
       animationBuilder: Miui10AnimBuilder(),
-      animationDuration: Duration(milliseconds: 200),
+      animationDuration: Duration(milliseconds: 100),
       duration: Duration(seconds: 3),
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

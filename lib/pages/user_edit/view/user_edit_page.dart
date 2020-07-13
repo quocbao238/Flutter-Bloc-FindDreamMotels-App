@@ -1,5 +1,6 @@
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart' as app;
+import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:findingmotels/pages/user_edit/bloc/user_edit_bloc.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:findingmotels/widgets/customcatch_image/customcatch_image.dart';
@@ -7,6 +8,7 @@ import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:oktoast/oktoast.dart';
 
 class UserEditPage extends StatefulWidget {
   @override
@@ -17,8 +19,9 @@ class _UserEditPageState extends State<UserEditPage> {
   GlobalKey globalKey;
   TextEditingController _nameController,
       _phoneController,
+      _birthdayController,
       _emailController,
-      _locationController;
+      _addressController;
   bool isEdit;
 
   @override
@@ -28,7 +31,8 @@ class _UserEditPageState extends State<UserEditPage> {
     _nameController = TextEditingController();
     _phoneController = TextEditingController();
     _emailController = TextEditingController();
-    _locationController = TextEditingController();
+    _addressController = TextEditingController();
+    _birthdayController = TextEditingController();
     super.initState();
   }
 
@@ -45,16 +49,19 @@ class _UserEditPageState extends State<UserEditPage> {
   void blocListener(UserEditState state, BuildContext context) {
     if (state is FeatchDataSucessState) {
       _nameController = TextEditingController(text: state.userInfo.name);
-      _phoneController =
-          TextEditingController(text: state.userInfo.phoneNumber);
+      _phoneController = TextEditingController(text: state.userInfo.phone);
       _emailController = TextEditingController(text: state.userInfo.email);
-      _locationController =
-          TextEditingController(text: state.userInfo.location);
+      _addressController = TextEditingController(text: state.userInfo.address);
+      _birthdayController =
+          TextEditingController(text: state.userInfo.birthday);
     } else if (state is ChangeStatusEditState) {
       isEdit = state.isEdit;
+      // isEdit
+      //     ? showToast('Switch to Edit Profile')
+      // : showToast('Switch to View Profile');
     } else if (state is EditProfileSucessState) {
       isEdit = false;
-      _nameController.text = state.fbuser.displayName;
+      showToast('Update Info successful!');
     }
   }
 
@@ -84,19 +91,34 @@ class _UserEditPageState extends State<UserEditPage> {
               _item(
                   title: 'Phone', controller: _phoneController, isEdit: isEdit),
               _item(
-                  title: 'Email', controller: _emailController, isEdit: isEdit),
+                  title: 'Birthday',
+                  controller: _birthdayController,
+                  onTap: () {
+                    print('onTap');
+                  },
+                  isEdit: false),
               _item(
-                  title: 'Location',
-                  controller: _locationController,
+                  title: 'Email', controller: _emailController, isEdit: false),
+              _item(
+                  title: 'Address',
+                  controller: _addressController,
                   isEdit: isEdit),
               SizedBox(height: 32.0),
               isEdit
                   ? InkWell(
                       onTap: () {
                         BlocProvider.of<UserEditBloc>(globalKey.currentContext)
-                            .add(EditProfileEVent(_nameController.text.trim()));
+                            .add(EditProfileEVent(UserInfoModel(
+                                name: _nameController.text.trim() ?? " ",
+                                address: _addressController.text.trim() ?? " ",
+                                birthday:
+                                    _birthdayController.text.trim() ?? " ",
+                                email: ConfigApp.fbuser.email ?? " ",
+                                phone: _phoneController.text.trim() ?? " ",
+                                photoUrl: ConfigApp.fbuser.photoUrl ?? " ")));
                       },
-                      child: Container(
+                      child: AnimatedContainer(
+                        duration: Duration(seconds: 1),
                         width: app.Size.getWidth * 0.8,
                         height: 60,
                         decoration: BoxDecoration(
@@ -169,7 +191,10 @@ class _UserEditPageState extends State<UserEditPage> {
       );
 
   InkWell _item(
-          {String title, TextEditingController controller, bool isEdit}) =>
+          {String title,
+          TextEditingController controller,
+          bool isEdit,
+          Function onTap}) =>
       InkWell(
         onTap: () {},
         child: Container(
@@ -177,6 +202,11 @@ class _UserEditPageState extends State<UserEditPage> {
           padding: EdgeInsets.all(10.0),
           child: TextField(
             maxLines: 1,
+            onTap: () {
+              if (onTap != null) {
+                onTap();
+              }
+            },
             enabled: isEdit,
             controller: controller,
             style: app.StyleText.subhead16Black,
