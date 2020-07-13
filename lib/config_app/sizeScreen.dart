@@ -157,6 +157,13 @@ class StyleText {
     fontWeight: FontWeight.w500,
   );
 
+  
+  static TextStyle subhead14GreenMixBlue = TextStyle(
+    color: Color.fromRGBO(44, 156, 162, 1),
+    fontSize: 14.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w500,
+  );
+
   static TextStyle content14WhiteNormal = TextStyle(
     color: Colors.white,
     fontSize: 14.0 * Size.scaleTxt,

@@ -7,3 +7,15 @@ abstract class UserEditEvent extends Equatable {
 }
 
 class UpdateAvatarEvent extends UserEditEvent {}
+
+class EditProfileEVent extends UserEditEvent {
+  final String name;
+  EditProfileEVent(this.name);
+}
+
+class ChangeStatusEditEvent extends UserEditEvent {
+  final bool isEdit;
+  ChangeStatusEditEvent({this.isEdit});
+}
+
+class FeatchDataEvent extends UserEditEvent {}

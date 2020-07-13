@@ -100,20 +100,16 @@ class _IntroPageState extends State<IntroPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Scaffold(
-          resizeToAvoidBottomPadding: false,
-        body: Stack(
-            children: <Widget>[
-              Positioned.fill(
-                // child: Container(color: Colors.red),
-                child: _introSlider()
-              )
-            ],
-          ),
-        ),
-      ],
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+    body: Stack(
+        children: <Widget>[
+          Positioned.fill(
+            // child: Container(color: Colors.red),
+            child: _introSlider()
+          )
+        ],
+      ),
     );
   }
 

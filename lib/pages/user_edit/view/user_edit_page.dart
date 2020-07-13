@@ -15,27 +15,48 @@ class UserEditPage extends StatefulWidget {
 
 class _UserEditPageState extends State<UserEditPage> {
   GlobalKey globalKey;
-  TextEditingController _controller =
-      TextEditingController(text: "Demo demo demo");
-  bool isEdit = false;
+  TextEditingController _nameController,
+      _phoneController,
+      _emailController,
+      _locationController;
+  bool isEdit;
 
   @override
   void initState() {
+    isEdit = false;
     globalKey = GlobalKey();
+    _nameController = TextEditingController();
+    _phoneController = TextEditingController();
+    _emailController = TextEditingController();
+    _locationController = TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => UserEditBloc(),
+        create: (context) => UserEditBloc()..add(FeatchDataEvent()),
         child: BlocListener<UserEditBloc, UserEditState>(
             listener: (context, state) => blocListener(state, context),
             child: BlocBuilder<UserEditBloc, UserEditState>(
                 builder: (context, state) => _scaffold(state))));
   }
 
-  void blocListener(UserEditState state, BuildContext context) {}
+  void blocListener(UserEditState state, BuildContext context) {
+    if (state is FeatchDataSucessState) {
+      _nameController = TextEditingController(text: state.userInfo.name);
+      _phoneController =
+          TextEditingController(text: state.userInfo.phoneNumber);
+      _emailController = TextEditingController(text: state.userInfo.email);
+      _locationController =
+          TextEditingController(text: state.userInfo.location);
+    } else if (state is ChangeStatusEditState) {
+      isEdit = state.isEdit;
+    } else if (state is EditProfileSucessState) {
+      isEdit = false;
+      _nameController.text = state.fbuser.displayName;
+    }
+  }
 
   Widget _scaffold(UserEditState state) => Scaffold(
       key: globalKey,
@@ -59,12 +80,39 @@ class _UserEditPageState extends State<UserEditPage> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 16.0),
-              _item(title: 'First Name', controller: _controller, isEdit: true),
-              _item(title: 'Last Name', controller: _controller, isEdit: true),
-              _item(title: 'BirthDay', controller: _controller, isEdit: true),
-              _item(title: 'Email', controller: _controller, isEdit: true),
-              _item(title: 'Location', controller: _controller, isEdit: true),
-              SizedBox(height: 8.0)
+              _item(title: 'Name', controller: _nameController, isEdit: isEdit),
+              _item(
+                  title: 'Phone', controller: _phoneController, isEdit: isEdit),
+              _item(
+                  title: 'Email', controller: _emailController, isEdit: isEdit),
+              _item(
+                  title: 'Location',
+                  controller: _locationController,
+                  isEdit: isEdit),
+              SizedBox(height: 32.0),
+              isEdit
+                  ? InkWell(
+                      onTap: () {
+                        BlocProvider.of<UserEditBloc>(globalKey.currentContext)
+                            .add(EditProfileEVent(_nameController.text.trim()));
+                      },
+                      child: Container(
+                        width: app.Size.getWidth * 0.8,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                            border: Border.all(
+                                width: 2, color: app.AppColor.colorClipPath)),
+                        child: Center(
+                          child: Text(
+                            'Save Profile',
+                            style: app.StyleText.subhead18GreenMixBlue,
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+              SizedBox(height: 16.0)
             ],
           ),
         ),
@@ -94,17 +142,13 @@ class _UserEditPageState extends State<UserEditPage> {
         ],
       );
 
-  Widget _userName() => Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.0),
-        child: Text(
-          ConfigApp.fbuser.displayName ?? "",
-          style: app.StyleText.header24BWhitew400,
-        ),
-      );
-
   Widget _rightIcon() => IconButton(
-        icon: Icon(Icons.check_circle_outline, size: 30.0, color: Colors.white),
-        onPressed: () {},
+        icon: Icon(isEdit ? Icons.cancel : Icons.mode_edit,
+            size: 30.0, color: Colors.white),
+        onPressed: () {
+          BlocProvider.of<UserEditBloc>(globalKey.currentContext)
+              .add(ChangeStatusEditEvent(isEdit: isEdit));
+        },
       );
 
   Widget _leadIcon() => IconButton(
@@ -135,14 +179,14 @@ class _UserEditPageState extends State<UserEditPage> {
             maxLines: 1,
             enabled: isEdit,
             controller: controller,
-            style: app.StyleText.subhead18Black87w400,
+            style: app.StyleText.subhead16Black,
             decoration: InputDecoration(
                 prefix: Container(
                   width: app.Size.getWidth * 0.3,
                   padding: EdgeInsets.only(left: 5, right: 15.0),
                   child: Text(
                     title.toUpperCase(),
-                    style: app.StyleText.subhead16GreenMixBlue,
+                    style: app.StyleText.subhead14GreenMixBlue,
                     maxLines: 1,
                   ),
                 ),
@@ -172,7 +216,7 @@ class _UserEditPageState extends State<UserEditPage> {
               Container(
                 padding: EdgeInsets.all(4.0),
                 width: app.Size.getHeight * 0.2,
-                height: app.Size.getHeight *0.2,
+                height: app.Size.getHeight * 0.2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(90.0),
                   child: ImageCacheNetwork(

@@ -1,13 +1,16 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
+import 'package:findingmotels/pages/intro/view/intro_screen.dart';
 import 'package:findingmotels/services/firebase_service.dart';
-import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
-import 'pages/drawer/view/drawer_page.dart';
-import 'pages/intro/view/intro_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,16 +27,17 @@ Future<void> main() async {
       animationDuration: Duration(milliseconds: 200),
       duration: Duration(seconds: 3),
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Find Accommodation',
-        // theme: ThemeData(primarySwatch: Colors.blue),
-        home: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-              statusBarBrightness: Brightness.light),
-          child: App(),
-        ),
-      ),
+          debugShowCheckedModeBanner: false,
+          title: 'Find Accommodation',
+          theme: ThemeData(primarySwatch: Colors.blue),
+          home: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+                statusBarColor: Colors.black,
+                statusBarBrightness: Brightness.dark),
+            child: App(),
+          )
+          // home: App(),
+          ),
     ),
   );
 }
@@ -67,10 +71,58 @@ class _AppState extends State<App> {
         },
         child: BlocBuilder<AuthBloc, AuthBlocState>(
           builder: (context, state) {
-            return LoadingWidget();
+            return _splashscreen();
           },
         ),
       ),
     );
   }
+
+  Widget _splashscreen() => Scaffold(
+        backgroundColor: AppColor.colorClipPath,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SafeArea(
+              child: Container(
+                margin: EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0),
+                child: SvgPicture.asset(
+                  AppSetting.logoutImg,
+                  // width: 300.0,
+                  height: 300.0,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    margin: EdgeInsets.only(bottom: 20.0),
+                    color: Colors.transparent,
+                    height: 40.0,
+                    child: Center(
+                        child: SpinKitCircle(
+                            duration: Duration(milliseconds: 2000),
+                            itemBuilder: (BuildContext context, int index) {
+                              return DecoratedBox(
+                                decoration: BoxDecoration(
+                                    color: index.isEven
+                                        ? Colors.red
+                                        : Colors.white),
+                              );
+                            }))),
+                FadeAnimatedTextKit(
+                    text: ["Loading...."],
+                    textStyle: StyleText.header24BWhitew400),
+              ],
+            )
+          ],
+          // child: Center(
+          //   child: LoadingWidget(),
+          // ),
+        ),
+      );
 }

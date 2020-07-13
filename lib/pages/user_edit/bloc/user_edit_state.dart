@@ -12,4 +12,23 @@ class UpdateAvatarSucessState extends UserEditState {}
 
 class UpdateAvatarFailState extends UserEditState {}
 
-class LoadingState extends UserEditState{}
+class LoadingState extends UserEditState {}
+
+class ChangeStatusEditState extends UserEditState {
+  final bool isEdit;
+  ChangeStatusEditState(this.isEdit);
+}
+
+class FeatchDataSucessState extends UserEditState {
+  final UserInfo userInfo;
+  FeatchDataSucessState(this.userInfo);
+}
+
+class FeatchDataFailState extends UserEditState {}
+
+class EditProfileSucessState extends UserEditState {
+  final FirebaseUser fbuser;
+  EditProfileSucessState(this.fbuser);
+}
+
+class EditProfileFailState extends UserEditState {}

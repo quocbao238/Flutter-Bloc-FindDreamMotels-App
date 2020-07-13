@@ -70,6 +70,10 @@ dependencies:
   #Rating App
   flutter_rating_bar: 1.1.0
 
+  #Animation text kit
+  animated_text_kit: 2.2.0
+
+
 
 dev_dependencies:
   flutter_test:

@@ -15,6 +15,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     if (event is AppStartedEvent) {
       yield AuthenLoadingState();
       try {
+        await Future.delayed(Duration(seconds: 2));
         var isSignedIn = await ConfigApp.firebaseAuth.isSignedIn();
         if (isSignedIn) {
           var user = await ConfigApp.firebaseAuth.getCurrentUser();
