@@ -83,24 +83,34 @@ class _HomePageState extends State<HomePage> {
           resizeToAvoidBottomInset: true,
           key: homeGlobalKey,
           backgroundColor: AppColor.backgroundColor,
-          body: Stack(
+          body: _body(),
+          floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: AppColor.colorClipPath.withOpacity(0.8),
+              child: Center(
+                child: Icon(Icons.add),
+              )),
+        ),
+      ],
+    );
+  }
+
+  Widget _body() {
+    return Stack(
+      children: <Widget>[
+        buildBackground(Size.getHeight),
+        Positioned.fill(
+            child: SafeArea(
+          child: Column(
             children: <Widget>[
-              buildBackground(Size.getHeight),
-              Positioned.fill(
-                  child: SafeArea(
-                child: Column(
-                  children: <Widget>[
-                    buildTopView(),
-                    // buildFindDistricts(),
-                    buildListDistric(),
-                    // Spacer(),
-                    buildViewMotels()
-                  ],
-                ),
-              ))
+              buildTopView(),
+              // buildFindDistricts(),
+              buildListDistric(),
+              // Spacer(),
+              buildViewMotels()
             ],
           ),
-        ),
+        ))
       ],
     );
   }

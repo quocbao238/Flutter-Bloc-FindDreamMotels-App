@@ -98,7 +98,10 @@ class _UserEditPageState extends State<UserEditPage> {
                   },
                   isEdit: false),
               _item(
-                  title: 'Email', controller: _emailController, isEdit: false),
+                  title: 'Email',
+                  controller: _emailController,
+                  isEdit: false,
+                  onTap: () => showToast('Unable to change email')),
               _item(
                   title: 'Address',
                   controller: _addressController,
@@ -190,38 +193,31 @@ class _UserEditPageState extends State<UserEditPage> {
         ),
       );
 
-  InkWell _item(
+  Widget _item(
           {String title,
           TextEditingController controller,
           bool isEdit,
           Function onTap}) =>
       InkWell(
-        onTap: () {},
-        child: Container(
-          height: 60.0,
-          padding: EdgeInsets.all(10.0),
-          child: TextField(
-            maxLines: 1,
-            onTap: () {
-              if (onTap != null) {
-                onTap();
-              }
-            },
-            enabled: isEdit,
-            controller: controller,
-            style: app.StyleText.subhead16Black,
-            decoration: InputDecoration(
-                prefix: Container(
-                  width: app.Size.getWidth * 0.3,
-                  padding: EdgeInsets.only(left: 5, right: 15.0),
-                  child: Text(
-                    title.toUpperCase(),
-                    style: app.StyleText.subhead14GreenMixBlue,
-                    maxLines: 1,
-                  ),
+        onTap: () {
+          if (onTap != null) onTap();
+        },
+        child: TextField(
+          maxLines: 1,
+          onTap: () {},
+          enabled: isEdit,
+          controller: controller,
+          style: app.StyleText.subhead16Black,
+          decoration: InputDecoration(
+              prefix: Container(
+                width: app.Size.getWidth * 0.3,
+                padding: EdgeInsets.only(left: 5, right: 15.0),
+                child: Text(
+                  title.toUpperCase(),
+                  style: app.StyleText.subhead14GreenMixBlue,
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16.0)),
-          ),
+              ),
+              contentPadding: EdgeInsets.all(16.0)),
         ),
       );
 

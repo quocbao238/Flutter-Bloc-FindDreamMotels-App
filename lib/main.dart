@@ -18,26 +18,26 @@ Future<void> main() async {
   runApp(
     OKToast(
       textStyle: TextStyle(fontSize: 19.0, color: Colors.white),
-      textPadding: EdgeInsets.all(10.0),
+      textPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
       backgroundColor: Colors.black54,
       radius: 10.0,
       animationCurve: Curves.easeIn,
       position: ToastPosition.bottom,
       animationBuilder: Miui10AnimBuilder(),
       animationDuration: Duration(milliseconds: 100),
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 1),
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Find Accommodation',
-          theme: ThemeData(primarySwatch: Colors.blue),
-          home: AnnotatedRegion<SystemUiOverlayStyle>(
-            value: SystemUiOverlayStyle(
-                statusBarColor: Colors.black,
-                statusBarBrightness: Brightness.dark),
-            child: App(),
-          )
-          // home: App(),
-          ),
+        debugShowCheckedModeBanner: false,
+        title: 'Find Accommodation',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        // home: AnnotatedRegion<SystemUiOverlayStyle>(
+        //   value: SystemUiOverlayStyle(
+        //       statusBarColor: Colors.black,
+        //       statusBarBrightness: Brightness.dark),
+        //   child: App(),
+        // )
+        home: App(),
+      ),
     ),
   );
 }

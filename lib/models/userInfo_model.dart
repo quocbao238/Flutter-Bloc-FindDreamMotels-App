@@ -1,3 +1,9 @@
+/*
+  Role 0 -> user 
+  Role 1    -> leaser
+  Role 2    -> admin
+ */
+
 class UserInfoModel {
   String name;
   String phone;
@@ -5,9 +11,11 @@ class UserInfoModel {
   String birthday;
   String photoUrl;
   String address;
+  String role;
 
   UserInfoModel(
       {this.name,
+      this.role,
       this.phone,
       this.email,
       this.birthday,
@@ -17,6 +25,7 @@ class UserInfoModel {
   UserInfoModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     phone = json['phone'];
+    role = json['role'];
     email = json['email'];
     birthday = json['birthday'];
     photoUrl = json['photoUrl'];
@@ -28,6 +37,7 @@ class UserInfoModel {
     data['name'] = this.name;
     data['phone'] = this.phone;
     data['email'] = this.email;
+    data['role'] = this.role;
     data['birthday'] = this.birthday;
     data['photoUrl'] = this.photoUrl;
     data['address'] = this.address;

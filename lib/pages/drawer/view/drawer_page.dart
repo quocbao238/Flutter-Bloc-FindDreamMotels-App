@@ -68,6 +68,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
     return Scaffold(
       key: _globalKey,
       // resizeToAvoidBottomInset: false,
+      backgroundColor: AppColor.backgroundColor,
       body: Stack(
         children: <Widget>[
           _menuBar(),

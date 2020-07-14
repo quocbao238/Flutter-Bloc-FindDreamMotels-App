@@ -303,8 +303,7 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.of(context).pushReplacement(
             new MaterialPageRoute(
               builder: (context) {
-                return RegisterPage(
-                );
+                return RegisterPage();
               },
             ),
           );
@@ -312,7 +311,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   Widget _btnGoogleFacebook(double height, double width) => Container(
-        margin: EdgeInsets.only(top: height * 0.045),
+        margin: EdgeInsets.only(top: height * 0.05 + Size.statusBar / 2),
         height: height * 0.06,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -331,8 +330,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Container(
                     width: 25,
                     height: 25,
-                    child:
-                        Image.asset(AppSetting.googleIcon, fit: BoxFit.fill),
+                    child: Image.asset(AppSetting.googleIcon, fit: BoxFit.fill),
                   ),
                 ),
               ),
@@ -346,8 +344,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   width: 25,
                   height: 25,
-                  child:
-                      Image.asset(AppSetting.facebookIcon, fit: BoxFit.fill),
+                  child: Image.asset(AppSetting.facebookIcon, fit: BoxFit.fill),
                 ),
               ),
             ),

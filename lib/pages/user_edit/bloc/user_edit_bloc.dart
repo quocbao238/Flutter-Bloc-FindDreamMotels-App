@@ -7,9 +7,9 @@ import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:oktoast/oktoast.dart';
-
 part 'user_edit_event.dart';
 part 'user_edit_state.dart';
+
 
 class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
   @override
@@ -106,6 +106,7 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
       address: ' ',
       birthday: ' ',
       phone: ' ',
+      role: '0'
     );
     await ConfigApp.databaseReference
         .collection("user")
