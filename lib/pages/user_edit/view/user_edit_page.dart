@@ -7,6 +7,7 @@ import 'package:findingmotels/widgets/customcatch_image/customcatch_image.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -87,25 +88,36 @@ class _UserEditPageState extends State<UserEditPage> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 16.0),
-              _item(title: 'Name', controller: _nameController, isEdit: isEdit),
+              _item(title: 'Name', controller: _nameController, itemisEdit: isEdit),
               _item(
-                  title: 'Phone', controller: _phoneController, isEdit: isEdit),
+                  title: 'Phone', controller: _phoneController, itemisEdit: isEdit),
               _item(
                   title: 'Birthday',
                   controller: _birthdayController,
                   onTap: () {
-                    print('onTap');
+                    DatePicker.showDatePicker(
+                      context,
+                      showTitleActions: true,
+                      minTime: DateTime(1900, 1, 1),
+                      maxTime: DateTime.now(),
+                      onChanged: (date) {},
+                      onConfirm: (date) {
+                        print('date');
+                      },
+                      currentTime: DateTime.now(),
+                      locale: LocaleType.en,
+                    );
                   },
-                  isEdit: false),
+                  itemisEdit: false),
               _item(
                   title: 'Email',
                   controller: _emailController,
-                  isEdit: false,
+                  itemisEdit: false,
                   onTap: () => showToast('Unable to change email')),
               _item(
                   title: 'Address',
                   controller: _addressController,
-                  isEdit: isEdit),
+                  itemisEdit: isEdit),
               SizedBox(height: 32.0),
               isEdit
                   ? InkWell(
@@ -196,16 +208,16 @@ class _UserEditPageState extends State<UserEditPage> {
   Widget _item(
           {String title,
           TextEditingController controller,
-          bool isEdit,
+          bool itemisEdit,
           Function onTap}) =>
       InkWell(
         onTap: () {
-          if (onTap != null) onTap();
+          if (onTap != null) if (isEdit) onTap();
         },
         child: TextField(
           maxLines: 1,
           onTap: () {},
-          enabled: isEdit,
+          enabled: itemisEdit,
           controller: controller,
           style: app.StyleText.subhead16Black,
           decoration: InputDecoration(

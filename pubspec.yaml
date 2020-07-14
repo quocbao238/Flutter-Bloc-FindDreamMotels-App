@@ -56,13 +56,15 @@ dependencies:
   oktoast: 2.3.2
   google_nav_bar: 2.2.0
   line_icons: 0.2.0
+  flutter_datetime_picker: 1.3.8
+
 
   #Animation
   simple_animations: 1.3.3
+  animated_text_kit: 2.2.0
 
   #Rating
   smooth_star_rating: 1.1.1
-
 
   #Check email phonenumber
   regexpattern: 0.2.3
@@ -70,8 +72,8 @@ dependencies:
   #Rating App
   flutter_rating_bar: 1.1.0
 
-  #Animation text kit
-  animated_text_kit: 2.2.0
+
+
 
 
 
