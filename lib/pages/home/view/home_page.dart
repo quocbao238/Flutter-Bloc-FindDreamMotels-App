@@ -1,6 +1,7 @@
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/models/district_model.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
 import 'package:findingmotels/pages/motel_detail/motels_description_screen.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
@@ -22,32 +23,7 @@ class _HomePageState extends State<HomePage> {
   String districSelect = "District 1";
   var rating = 3.0;
 
-  List<String> districList = [
-    "District 1",
-    "District 2",
-    "District 3",
-    "District 4",
-    "District 5",
-    "District 6",
-    "District 7",
-    "District 8",
-    "District 9",
-    "District 10",
-    "District 11",
-    "District 12",
-    "Binh Tan District",
-    "Binh Thanh District",
-    "Go Vap District",
-    "Phu Nhuan District",
-    "Tan Binh District",
-    "Tan Phu District",
-    "Thu Duc District",
-    "Binh Chanh District",
-    "Can Gio District",
-    "Cu Chi District",
-    "Hoc Mon District",
-    "Nha Be District"
-  ];
+  List<DistrictModel> listDistrict = [];
 
   @override
   void initState() {
@@ -58,22 +34,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => HomeBloc(),
+        create: (context) => HomeBloc()..add(FeatchDataEvent()),
         child: BlocListener<HomeBloc, HomeState>(
             listener: (context, state) {
-              if (state is OnClickListDistrictsState) {
-                districSelect = districList[state.index];
-              } else if (state is OnClickListMotelssState) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MotelDescriptionPage(
-                              index: state.index,
-                            )));
-              }
+              blocListener(state, context);
             },
             child: BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) => buildBody(state))));
+  }
+
+  void blocListener(HomeState state, BuildContext context) {
+    if (state is FeatchDataSucesesState) {
+      listDistrict = state.listDistrict;
+    } else if (state is OnClickListDistrictsState) {
+      // districSelect = listDistrict[state.index];
+    } else if (state is OnClickListMotelssState) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MotelDescriptionPage(
+                    index: state.index,
+                  )));
+    }
   }
 
   Widget buildBody(HomeState state) {
@@ -187,7 +169,7 @@ class _HomePageState extends State<HomePage> {
       width: Size.getWidth,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: districList.length,
+        itemCount: listDistrict.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
             if (!ConfigApp.drawerShow) {
@@ -201,15 +183,15 @@ class _HomePageState extends State<HomePage> {
             height: Size.getHeight * 0.06,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: districSelect == districList[index]
+              color: districSelect == listDistrict[index].name
                   ? Colors.red[300]
                   : Colors.white,
             ),
             child: Center(
               child: Text(
-                districList[index],
+                listDistrict[index].name,
                 textAlign: TextAlign.center,
-                style: districSelect == districList[index]
+                style: districSelect == listDistrict[index].name
                     ? StyleText.subhead16White500
                     : StyleText.subhead16GreenMixBlue,
               ),

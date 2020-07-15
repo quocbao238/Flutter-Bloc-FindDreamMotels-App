@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:oktoast/oktoast.dart';
@@ -76,7 +77,6 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     await ConfigApp.fbuser.updateProfile(updateInfo);
     await ConfigApp.fbuser.reload();
     var userSend = await ConfigApp.firebaseAuth.getCurrentUser();
-    print('USERNAME IS: ${userSend.displayName}');
     return userSend;
   }
 
@@ -85,7 +85,7 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     UserInfoModel _userInfo = UserInfoModel();
     _userInfo = null;
     await ConfigApp.databaseReference
-        .collection("user")
+        .collection(AppSetting.user)
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {
@@ -109,11 +109,11 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
       role: '0'
     );
     await ConfigApp.databaseReference
-        .collection("user")
+        .collection(AppSetting.user)
         .document(ConfigApp.fbuser.uid)
         .setData(_userInfo.toJson());
     await ConfigApp.databaseReference
-        .collection("user")
+        .collection(AppSetting.user)
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {
@@ -128,11 +128,11 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
   Future<UserInfoModel> updateDataToClound(UserInfoModel _userInfo) async {
     UserInfoModel userInfoModel = UserInfoModel();
     await ConfigApp.databaseReference
-        .collection("user")
+        .collection(AppSetting.user)
         .document(ConfigApp.fbuser.uid)
         .setData(_userInfo.toJson());
     await ConfigApp.databaseReference
-        .collection("user")
+        .collection(AppSetting.user)
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {

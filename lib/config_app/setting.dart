@@ -39,4 +39,11 @@ class AppSetting {
   //svg icon
   static const messageIconSvg = 'assets/icon/messageSvg.svg';
   static const favoriteIconSvg = 'assets/icon/favoriteSvg.svg';
+
+
+  //Database
+  static String collection = 'districList';
+  static String user = 'user';
+
 }
+

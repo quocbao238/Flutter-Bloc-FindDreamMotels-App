@@ -11,7 +11,9 @@ class OnClickListDistrictsEvent extends HomeEvent {
   OnClickListDistrictsEvent(this.index);
 }
 
-class OnClickListMotelssEvent extends HomeEvent{
+class OnClickListMotelssEvent extends HomeEvent {
   final int index;
   OnClickListMotelssEvent(this.index);
 }
+
+class FeatchDataEvent extends HomeEvent {}
