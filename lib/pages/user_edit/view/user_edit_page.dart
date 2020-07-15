@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:intl/intl.dart';
 
 class UserEditPage extends StatefulWidget {
   @override
@@ -88,9 +89,14 @@ class _UserEditPageState extends State<UserEditPage> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 16.0),
-              _item(title: 'Name', controller: _nameController, itemisEdit: isEdit),
               _item(
-                  title: 'Phone', controller: _phoneController, itemisEdit: isEdit),
+                  title: 'Name',
+                  controller: _nameController,
+                  itemisEdit: isEdit),
+              _item(
+                  title: 'Phone',
+                  controller: _phoneController,
+                  itemisEdit: isEdit),
               _item(
                   title: 'Birthday',
                   controller: _birthdayController,
@@ -102,9 +108,14 @@ class _UserEditPageState extends State<UserEditPage> {
                       maxTime: DateTime.now(),
                       onChanged: (date) {},
                       onConfirm: (date) {
-                        print('date');
+                        // print(date);
+                        print(DateFormat('dd-MM-yyyy').format(date));
+                        _birthdayController.text =
+                            DateFormat('dd-MM-yyyy').format(date);
                       },
-                      currentTime: DateTime.now(),
+                      currentTime: DateFormat('dd-MM-yyyy')
+                              .parse(_birthdayController.text.trim()) ??
+                          DateTime(1990),
                       locale: LocaleType.en,
                     );
                   },
@@ -228,6 +239,14 @@ class _UserEditPageState extends State<UserEditPage> {
                   title.toUpperCase(),
                   style: app.StyleText.subhead14GreenMixBlue,
                 ),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue),
+                //  when the TextFormField in unfocused
+              ),
+              disabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+                //  when the TextFormField in focused
               ),
               contentPadding: EdgeInsets.all(16.0)),
         ),
