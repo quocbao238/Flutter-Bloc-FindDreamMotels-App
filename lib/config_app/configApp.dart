@@ -15,13 +15,13 @@ class ConfigApp {
   static FirebaseStorage fbStorage;
   static FirebaseUser fbuser;
   static final databaseReference = Firestore.instance;
+}
 
-  // static FirebaseAuth authen;
-  // static GoogleSignIn googleSignIn;
-  // static GoogleSignInAccount googleSignInAccount;
-  // static GoogleSignInAuthentication googleSignInAuthentication;
-  // static String accessToken = "";
-  // static String idToken = "";
-  // static String namedContact = "";
-  // static String userName = "";
+class ConfigUserInfo{
+  ConfigUserInfo._();
+  static String name;
+  static String phone;
+  static String birthday;
+  static String email;
+  static String address;
 }

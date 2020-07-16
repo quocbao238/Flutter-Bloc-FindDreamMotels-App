@@ -28,10 +28,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield OnClickListDistrictsState(event.index);
     } else if (event is OnClickListMotelssEvent) {
       yield OnClickListMotelssState(event.index);
+    } else if(event is NewMotelEvent){
+      yield NewMotelState();
     }
     yield HomeInitial();
   }
 }
+
+
+
+
+
 
 Future<List<DistrictModel>> featchDistrictLst() async {
   List<DistrictModel> listDistrict = [];
@@ -44,5 +51,7 @@ Future<List<DistrictModel>> featchDistrictLst() async {
       listDistrict.add(district);
     });
   });
+  listDistrict.sort((a,b) => int.parse(a.districtId).compareTo(int.parse(b.districtId)));
   return listDistrict;
+
 }

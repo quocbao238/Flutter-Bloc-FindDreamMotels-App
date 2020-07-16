@@ -17,3 +17,5 @@ class OnClickListMotelssEvent extends HomeEvent {
 }
 
 class FeatchDataEvent extends HomeEvent {}
+
+class NewMotelEvent extends HomeEvent{}

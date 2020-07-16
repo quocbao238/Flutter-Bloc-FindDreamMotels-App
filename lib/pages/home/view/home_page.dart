@@ -4,6 +4,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/district_model.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
 import 'package:findingmotels/pages/motel_detail/motels_description_screen.dart';
+import 'package:findingmotels/pages/new_motel/view/new_motel_screen.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,7 +48,7 @@ class _HomePageState extends State<HomePage> {
     if (state is FeatchDataSucesesState) {
       listDistrict = state.listDistrict;
     } else if (state is OnClickListDistrictsState) {
-      // districSelect = listDistrict[state.index];
+      districSelect = listDistrict[state.index].name;
     } else if (state is OnClickListMotelssState) {
       Navigator.push(
           context,
@@ -55,6 +56,9 @@ class _HomePageState extends State<HomePage> {
               builder: (context) => MotelDescriptionPage(
                     index: state.index,
                   )));
+    } else if (state is NewMotelState) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => NewMotelPage()));
     }
   }
 
@@ -67,7 +71,10 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: AppColor.backgroundColor,
           body: _body(),
           floatingActionButton: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                    .add(NewMotelEvent());
+              },
               backgroundColor: AppColor.colorClipPath.withOpacity(0.8),
               child: Center(
                 child: Icon(Icons.add),
@@ -167,6 +174,7 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.only(top: 32, bottom: 16, left: 8.0),
       height: Size.getHeight * 0.06,
       width: Size.getWidth,
+      color: AppColor.backgroundColor,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: listDistrict.length,

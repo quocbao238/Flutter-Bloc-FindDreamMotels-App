@@ -24,3 +24,5 @@ class OnClickListMotelssState extends HomeState {
   final int index;
   OnClickListMotelssState(this.index);
 }
+
+class NewMotelState extends HomeState{}

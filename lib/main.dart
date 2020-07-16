@@ -29,12 +29,6 @@ Future<void> main() async {
         debugShowCheckedModeBanner: false,
         title: 'Find Accommodation',
         theme: ThemeData(primarySwatch: Colors.blue),
-        // home: AnnotatedRegion<SystemUiOverlayStyle>(
-        //   value: SystemUiOverlayStyle(
-        //       statusBarColor: Colors.black,
-        //       statusBarBrightness: Brightness.dark),
-        //   child: App(),
-        // )
         home: App(),
       ),
     ),
@@ -60,11 +54,6 @@ class _AppState extends State<App> {
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
               return DrawerDashBoard();
             }));
-
-            // Navigator.of(context)
-            //     .pushReplacement(new MaterialPageRoute(builder: (context) {
-            //   return CreateDataPage();
-            // }));
           } else if (state is UnauthenticatedState) {
             debugPrint("UnauthenticatedState");
             Navigator.of(context)

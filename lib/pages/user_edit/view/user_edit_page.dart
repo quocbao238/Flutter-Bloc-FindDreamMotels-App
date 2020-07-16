@@ -58,9 +58,6 @@ class _UserEditPageState extends State<UserEditPage> {
           TextEditingController(text: state.userInfo.birthday);
     } else if (state is ChangeStatusEditState) {
       isEdit = state.isEdit;
-      // isEdit
-      //     ? showToast('Switch to Edit Profile')
-      // : showToast('Switch to View Profile');
     } else if (state is EditProfileSucessState) {
       isEdit = false;
       showToast('Update Info successful!');

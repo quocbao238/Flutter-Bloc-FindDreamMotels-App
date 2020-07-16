@@ -311,7 +311,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   Widget _btnGoogleFacebook(double height, double width) => Container(
-        margin: EdgeInsets.only(top: height * 0.05 + Size.statusBar / 2),
+        margin: EdgeInsets.only(top: height * 0.075 + Size.statusBar / 2),
         height: height * 0.06,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

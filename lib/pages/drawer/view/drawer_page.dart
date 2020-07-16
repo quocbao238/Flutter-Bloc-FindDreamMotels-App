@@ -118,10 +118,6 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                         context,
                         MaterialPageRoute(
                             builder: (context) => UserEditPage()))),
-                // _item(
-                //     icon: Icons.view_carousel,
-                //     title: 'Dashboard',
-                //     onTap: () => showToast('Dashboard')),
                 _item(
                     icon: Icons.chat,
                     title: 'Chat',

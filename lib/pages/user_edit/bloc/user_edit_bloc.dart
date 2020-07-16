@@ -11,7 +11,6 @@ import 'package:oktoast/oktoast.dart';
 part 'user_edit_event.dart';
 part 'user_edit_state.dart';
 
-
 class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
   @override
   UserEditState get initialState => UserEditInitial();
@@ -94,20 +93,20 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
       });
     });
     if (_userInfo == null) _userInfo = await createUserData();
+    ConfigUserInfo.phone = _userInfo.phone;
     return _userInfo;
   }
 
 //Create userData if userInfo = null
   Future<UserInfoModel> createUserData() async {
     UserInfoModel _userInfo = UserInfoModel(
-      name: ConfigApp.fbuser.displayName,
-      photoUrl: ConfigApp.fbuser.photoUrl,
-      email: ConfigApp.fbuser.email,
-      address: ' ',
-      birthday: ' ',
-      phone: ' ',
-      role: '0'
-    );
+        name: ConfigApp.fbuser.displayName,
+        photoUrl: ConfigApp.fbuser.photoUrl,
+        email: ConfigApp.fbuser.email,
+        address: ' ',
+        birthday: ' ',
+        phone: ' ',
+        role: '0');
     await ConfigApp.databaseReference
         .collection(AppSetting.user)
         .document(ConfigApp.fbuser.uid)
