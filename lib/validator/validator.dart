@@ -11,11 +11,15 @@ class Valid {
     return (userName.length >= 3 && userName.length <= 15);
   }
 
-  static bool isPhoneNumber(String email) {
-    return RegexValidation.hasMatch(email, RegexPattern.phone);
+  static bool isPhoneNumber(String phone) {
+    return RegexValidation.hasMatch(phone, RegexPattern.phone);
   }
 
   static bool isPassword(String email) {
     return RegexValidation.hasMatch(email, RegexPattern.passwordEasy);
+  }
+
+  static bool checkNull(String data) {
+    return data != '' ? true : false;
   }
 }

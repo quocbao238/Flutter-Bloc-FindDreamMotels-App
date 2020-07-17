@@ -27,6 +27,7 @@ class AppColor {
   static Color alerBtnColor = Color(0xff00bfa5);
   static Color selectContainerColor =
       Color.fromRGBO(255, 79, 76, 1).withOpacity(0.6);
+  static Color selectColor = Color(0xff556F7A);
 }
 
 class StyleText {
@@ -157,7 +158,6 @@ class StyleText {
     fontWeight: FontWeight.w500,
   );
 
-  
   static TextStyle subhead14GreenMixBlue = TextStyle(
     color: Color.fromRGBO(44, 156, 162, 1),
     fontSize: 14.0 * Size.scaleTxt,

@@ -1,9 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/models/motel_model.dart';
+import 'package:findingmotels/pages/new_motel/bloc/newmotel_bloc.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:oktoast/oktoast.dart';
 
 class NewMotelPage extends StatefulWidget {
   @override
@@ -13,26 +19,64 @@ class NewMotelPage extends StatefulWidget {
 class _NewMotelPageState extends State<NewMotelPage> {
   TextEditingController titleTextEditingController;
   TextEditingController descriptionTextEditingController;
+  TextEditingController priceTextEditingController;
   TextEditingController phoneTextEditingController;
-  TextEditingController addresasTextEditingController;
+  TextEditingController addressTextEditingController;
+
   String district;
+  int totalPhoto;
+  GlobalKey _globalKey;
+  List<Asset> _listImg;
+  List<Amenity> _listAmenity;
+  Location location;
 
   @override
   void initState() {
+    location = Location(lng: 123.123, lat: 123.123);
     super.initState();
+    _globalKey = GlobalKey();
     titleTextEditingController = TextEditingController();
     descriptionTextEditingController = TextEditingController();
     phoneTextEditingController =
         TextEditingController(text: ConfigUserInfo.phone);
-    phoneTextEditingController =
+    addressTextEditingController =
         TextEditingController(text: ConfigUserInfo.address);
   }
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => NewmotelBloc(),
+        child: BlocListener<NewmotelBloc, NewmotelState>(
+            listener: (context, state) => blocListener(state, context),
+            child: BlocBuilder<NewmotelBloc, NewmotelState>(
+                builder: (context, state) => _scaffold())));
+  }
+
+  void blocListener(NewmotelState state, BuildContext context) {
+    if (state is OnTapSelectDistrictSucessState) {
+      district = state.district;
+    } else if (state is OnTapSelectImgSucessState) {
+      _listImg = state.listImg;
+      totalPhoto = _listImg.length;
+    } else if (state is OnTapSelectAmenitiesSucessState) {
+      _listAmenity = state.lstamenities;
+    } else if (state is OnTapCreatePostFailState) {
+      showToast(state.errorMessage);
+    } else if (state is OnTapCreatePostSucessState) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  Widget _scaffold(NewmotelState state) {
     return Scaffold(
+      key: _globalKey,
       backgroundColor: AppColor.backgroundColor,
-      body: Stack(children: <Widget>[buildBackground(0.06), _body()]),
+      body: Stack(children: <Widget>[
+        buildBackground(0.06),
+        _body(),
+        state is LoadingState ? LoadingWidget() : SizedBox(),
+      ]),
     );
   }
 
@@ -49,7 +93,7 @@ class _NewMotelPageState extends State<NewMotelPage> {
 
   Widget _appBar() {
     return Container(
-      padding: EdgeInsets.only(top: 16.0),
+      padding: EdgeInsets.only(top: 16.0, left: 8.0, right: 8.0),
       height: Size.getHeight * 0.11,
       width: Size.getWidth,
       color: AppColor.colorClipPath,
@@ -71,10 +115,27 @@ class _NewMotelPageState extends State<NewMotelPage> {
                   color: Colors.white, fontSize: 24 * Size.scaleTxt)),
           IconButton(
             icon: Icon(
-              Icons.fiber_new,
+              Icons.edit,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              BlocProvider.of<NewmotelBloc>(_globalKey.currentContext).add(
+                OnTapCreateEvent(
+                  address: addressTextEditingController.text.trim(),
+                  description: descriptionTextEditingController.text.trim(),
+                  districtId: districList.indexOf(district) > 0
+                      ? districList.indexOf(district)
+                      : null,
+                  amenities: _listAmenity,
+                  price: "60",
+                  phoneNumber: ConfigUserInfo.phone ?? "",
+                  location: location,
+                  title: titleTextEditingController.text.trim(),
+                  listImg: _listImg,
+                  // location: location,
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -91,9 +152,12 @@ class _NewMotelPageState extends State<NewMotelPage> {
       );
 
   Widget _content() => Expanded(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(10, 16, 0, 8),
+        child: Container(
+          // color: AppColor.backgroundColor,
+          color: Colors.transparent,
+          padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
           child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -118,54 +182,91 @@ class _NewMotelPageState extends State<NewMotelPage> {
                     topMargin: 10.0),
                 _customTextField(
                     hintext: "Address",
-                    readOnly: true,
-                    keyboardStyle: TextInputType.phone,
+                    // readOnly: false,
+                    keyboardStyle: TextInputType.text,
                     iconData: Icons.location_city,
-                    textEditingController: addresasTextEditingController,
+                    textEditingController: addressTextEditingController,
                     topMargin: 10.0),
-                _districtPrice(),
-                _getImage()
+                _districtAmenities(),
+                _getImagePrice(),
+                _listImg != null
+                    ? Container(
+                        color: AppColor.backgroundColor,
+                        child: ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: _listImg.length,
+                          itemBuilder: (context, index) => Container(
+                            color: AppColor.backgroundColor,
+                            margin: EdgeInsets.fromLTRB(0, 8, 8, 8),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: AssetThumb(
+                                asset: _listImg[index],
+                                width: Size.getWidth.toInt(),
+                                height: (Size.getHeight * 0.3).toInt(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
         ),
       );
 
-  Widget _getImage() {
-    return Row(
-      children: <Widget>[
-        InkWell(
-          onTap: () {},
-          child: Container(
-            padding:
-                EdgeInsets.only(left: 16.0, top: 8, bottom: 8, right: 16.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.0),
-                color: AppColor.colorClipPath),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.image, color: Colors.white),
-                SizedBox(width: 4.0),
-                Text(
-                  district != null ? district : 'Add Photo',
-                  style: StyleText.subhead16White500,
-                ),
-              ],
-            ),
-          ),
-        ),
-        Spacer(),
-      ],
+  Widget _getImagePrice() {
+    return Container(
+      color: AppColor.backgroundColor,
+      child: Row(
+        children: <Widget>[
+          _selectButton(
+              name: 'Add Photo',
+              iconData: Icons.add_a_photo,
+              enableName: totalPhoto != null ? '$totalPhoto Photo' : null,
+              enableColor: totalPhoto != null ? AppColor.colorClipPath : null,
+              function: () {
+                BlocProvider.of<NewmotelBloc>(_globalKey.currentContext)
+                    .add(OnTapSelectImgEvent(_listImg));
+              }),
+          Spacer(),
+          _price()
+        ],
+      ),
     );
   }
 
-  Widget _districtPrice() {
+  Widget _districtAmenities() {
     return Container(
-      padding: EdgeInsets.only(top: 10.0),
+      padding: EdgeInsets.only(top: 10.0, right: 15.0),
+      color: AppColor.backgroundColor,
       child: Row(
-        children: <Widget>[_getDistrict(), Spacer(), _price()],
+        children: <Widget>[
+          _selectButton(
+              name: 'Select District',
+              iconData: Icons.my_location,
+              enableName: district,
+              enableColor: district != null ? AppColor.colorClipPath : null,
+              function: () {
+                BlocProvider.of<NewmotelBloc>(_globalKey.currentContext).add(
+                    OnTapSelectDistrictEvent(
+                        context: _globalKey.currentContext,
+                        district: district));
+              }),
+          Spacer(),
+          _selectButton(
+              name: 'Select Amenities',
+              iconData: Icons.ac_unit,
+              enableColor: _listAmenity != null ? AppColor.colorClipPath : null,
+              function: () {
+                BlocProvider.of<NewmotelBloc>(_globalKey.currentContext).add(
+                    OnTapSelectAmenitiesEvent(
+                        listAmenity: _listAmenity,
+                        context: _globalKey.currentContext));
+              }),
+        ],
       ),
     );
   }
@@ -182,6 +283,7 @@ class _NewMotelPageState extends State<NewMotelPage> {
             child: IntrinsicWidth(
               child: TextField(
                 maxLines: 1,
+                controller: priceTextEditingController,
                 keyboardType: TextInputType.number,
                 style: StyleText.subhead18GreenMixBlue,
                 decoration: InputDecoration(
@@ -197,17 +299,40 @@ class _NewMotelPageState extends State<NewMotelPage> {
     );
   }
 
-  Widget _getDistrict() {
+  Widget _selectButton({
+    Color enableColor,
+    dynamic varible,
+    String name,
+    String enableName,
+    IconData iconData,
+    Function function,
+  }) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        if (function != null) function();
+      },
       child: Container(
         padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+        // width: 160,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30.0),
-            color: AppColor.colorClipPath),
-        child: Text(
-          district != null ? district : 'Select District',
-          style: StyleText.subhead16White500,
+            color: enableColor != null ? enableColor : AppColor.selectColor),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              // Icons.add_location,
+              iconData,
+              size: 20.0,
+              color: Colors.white,
+            ),
+            SizedBox(width: 4.0),
+            Text(
+              enableName != null ? enableName : name,
+              style: StyleText.subhead16White500,
+            ),
+          ],
         ),
       ),
     );
@@ -224,7 +349,8 @@ class _NewMotelPageState extends State<NewMotelPage> {
           int maxLines,
           TextEditingController textEditingController}) =>
       Container(
-        margin: EdgeInsets.only(top: topMargin, right: 8.0),
+        color: AppColor.backgroundColor,
+        padding: EdgeInsets.only(top: topMargin, right: 8.0),
         child: TextField(
             style: textStyle != null ? textStyle : StyleText.subhead16Black,
             keyboardType: keyboardStyle,
@@ -254,41 +380,45 @@ class _NewMotelPageState extends State<NewMotelPage> {
       );
 
   Widget _profile() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          height: 40.0,
-          width: 40.0,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(60.0),
-            child: CachedNetworkImage(
-                imageUrl: ConfigApp.fbuser.photoUrl,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                        child: CircularProgressIndicator(
-                            value: downloadProgress.progress)),
-                errorWidget: (context, url, error) =>
-                    Center(child: Icon(Icons.error))),
-          ),
-        ),
-        SizedBox(width: 10.0),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              ConfigApp.fbuser.displayName,
-              style: StyleText.subhead16Black,
+    return Container(
+      padding: EdgeInsets.only(top: 16.0),
+      color: Colors.transparent,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            height: 40.0,
+            width: 40.0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(60.0),
+              child: CachedNetworkImage(
+                  imageUrl: ConfigApp.fbuser.photoUrl,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                          child: CircularProgressIndicator(
+                              value: downloadProgress.progress)),
+                  errorWidget: (context, url, error) =>
+                      Center(child: Icon(Icons.error))),
             ),
-            Text(
-              ConfigApp.fbuser.email,
-              style: StyleText.content14Black400,
-            )
-          ],
-        )
-      ],
+          ),
+          SizedBox(width: 10.0),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                ConfigApp.fbuser.displayName,
+                style: StyleText.subhead16Black,
+              ),
+              Text(
+                ConfigApp.fbuser.email,
+                style: StyleText.content14Black400,
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 }

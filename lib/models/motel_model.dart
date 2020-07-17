@@ -10,9 +10,9 @@ String motelModelToJson(MotelModel data) => json.encode(data.toJson());
 
 class MotelModel {
     MotelModel({
-        this.motelId,
         this.userIdCreate,
         this.districtId,
+        this.title,
         this.name,
         this.email,
         this.timeUpdate,
@@ -20,14 +20,15 @@ class MotelModel {
         this.rating,
         this.price,
         this.phoneNumber,
+        this.imageMotel,
         this.amenities,
         this.description,
         this.location,
     });
 
-    int motelId;
     String userIdCreate;
     int districtId;
+    String title;
     String name;
     String email;
     double timeUpdate;
@@ -35,14 +36,15 @@ class MotelModel {
     double rating;
     String price;
     String phoneNumber;
-    Amenities amenities;
+    List<ImageMotel> imageMotel;
+    List<Amenity> amenities;
     String description;
     Location location;
 
     factory MotelModel.fromJson(Map<String, dynamic> json) => MotelModel(
-        motelId: json["motelId"] == null ? null : json["motelId"],
         userIdCreate: json["userIdCreate"] == null ? null : json["userIdCreate"],
         districtId: json["districtId"] == null ? null : json["districtId"],
+        title: json["title"] == null ? null : json["title"],
         name: json["name"] == null ? null : json["name"],
         email: json["email"] == null ? null : json["email"],
         timeUpdate: json["timeUpdate"] == null ? null : json["timeUpdate"].toDouble(),
@@ -50,15 +52,16 @@ class MotelModel {
         rating: json["rating"] == null ? null : json["rating"].toDouble(),
         price: json["price"] == null ? null : json["price"],
         phoneNumber: json["phoneNumber"] == null ? null : json["phoneNumber"],
-        amenities: json["amenities"] == null ? null : Amenities.fromJson(json["amenities"]),
+        imageMotel: json["imageMotel"] == null ? null : List<ImageMotel>.from(json["imageMotel"].map((x) => ImageMotel.fromJson(x))),
+        amenities: json["amenities"] == null ? null : List<Amenity>.from(json["amenities"].map((x) => Amenity.fromJson(x))),
         description: json["description"] == null ? null : json["description"],
         location: json["location"] == null ? null : Location.fromJson(json["location"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "motelId": motelId == null ? null : motelId,
         "userIdCreate": userIdCreate == null ? null : userIdCreate,
         "districtId": districtId == null ? null : districtId,
+        "title": title == null ? null : title,
         "name": name == null ? null : name,
         "email": email == null ? null : email,
         "timeUpdate": timeUpdate == null ? null : timeUpdate,
@@ -66,41 +69,50 @@ class MotelModel {
         "rating": rating == null ? null : rating,
         "price": price == null ? null : price,
         "phoneNumber": phoneNumber == null ? null : phoneNumber,
-        "amenities": amenities == null ? null : amenities.toJson(),
+        "imageMotel": imageMotel == null ? null : List<dynamic>.from(imageMotel.map((x) => x.toJson())),
+        "amenities": amenities == null ? null : List<dynamic>.from(amenities.map((x) => x.toJson())),
         "description": description == null ? null : description,
         "location": location == null ? null : location.toJson(),
     };
 }
 
-class Amenities {
-    Amenities({
-        this.freeWifi,
-        this.bed,
-        this.airCondition,
-        this.bathRoom,
-        this.televison,
+class Amenity {
+    Amenity({
+        this.name,
+        this.isHave,
     });
 
-    bool freeWifi;
-    bool bed;
-    bool airCondition;
-    bool bathRoom;
-    bool televison;
+    String name;
+    bool isHave;
 
-    factory Amenities.fromJson(Map<String, dynamic> json) => Amenities(
-        freeWifi: json["freeWifi"] == null ? null : json["freeWifi"],
-        bed: json["bed"] == null ? null : json["bed"],
-        airCondition: json["airCondition"] == null ? null : json["airCondition"],
-        bathRoom: json["bathRoom"] == null ? null : json["bathRoom"],
-        televison: json["televison"] == null ? null : json["televison"],
+    factory Amenity.fromJson(Map<String, dynamic> json) => Amenity(
+        name: json["name"] == null ? null : json["name"],
+        isHave: json["isHave"] == null ? null : json["isHave"],
     );
 
     Map<String, dynamic> toJson() => {
-        "freeWifi": freeWifi == null ? null : freeWifi,
-        "bed": bed == null ? null : bed,
-        "airCondition": airCondition == null ? null : airCondition,
-        "bathRoom": bathRoom == null ? null : bathRoom,
-        "televison": televison == null ? null : televison,
+        "name": name == null ? null : name,
+        "isHave": isHave == null ? null : isHave,
+    };
+}
+
+class ImageMotel {
+    ImageMotel({
+        this.imageUrl,
+        this.name,
+    });
+
+    String imageUrl;
+    String name;
+
+    factory ImageMotel.fromJson(Map<String, dynamic> json) => ImageMotel(
+        imageUrl: json["imageUrl"] == null ? null : json["imageUrl"],
+        name: json["name"] == null ? null : json["name"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "imageUrl": imageUrl == null ? null : imageUrl,
+        "name": name == null ? null : name,
     };
 }
 

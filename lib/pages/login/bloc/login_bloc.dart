@@ -1,4 +1,4 @@
-  import 'dart:async';
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
@@ -20,8 +20,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (Valid.isEmail(event.email)) {
         if (Valid.isPassword(event.password)) {
           try {
-            var user = await ConfigApp.firebaseAuth.signInEmailAndPassword(
-                event.email, event.password);
+            var user = await ConfigApp.firebaseAuth
+                .signInEmailAndPassword(event.email, event.password);
             if (user != null) {
               ConfigApp.fbuser = user;
               yield LoginSuccessState(user: user);
