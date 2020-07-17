@@ -8,16 +8,12 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 class HomeMotelItem extends StatelessWidget {
   final MotelModel motelModel;
   final Function onTap;
-  const HomeMotelItem(this.motelModel, this.onTap);
+  const HomeMotelItem({this.motelModel, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // if (!ConfigApp.drawerShow) {
-        //   BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-        //       .add(OnClickListMotelssEvent(index));
-        // }
         if (onTap != null) onTap();
       },
       child: Container(
@@ -27,7 +23,8 @@ class HomeMotelItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
           image: DecorationImage(
-              image: NetworkImage(AppSetting.imageTest), fit: BoxFit.cover),
+              image: NetworkImage(motelModel.imageMotel[0].imageUrl),
+              fit: BoxFit.cover),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

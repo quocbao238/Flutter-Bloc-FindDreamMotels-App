@@ -10,7 +10,8 @@ class HomeInitial extends HomeState {}
 
 class FeatchDataSucesesState extends HomeState {
   final List<DistrictModel> listDistrict;
-  FeatchDataSucesesState({this.listDistrict});
+  final List<MotelModel> listMotel;
+  FeatchDataSucesesState({this.listDistrict, this.listMotel});
 }
 
 class FeatchDataFailState extends HomeState {}
@@ -25,4 +26,4 @@ class OnClickListMotelssState extends HomeState {
   OnClickListMotelssState(this.index);
 }
 
-class NewMotelState extends HomeState{}
+class NewMotelState extends HomeState {}

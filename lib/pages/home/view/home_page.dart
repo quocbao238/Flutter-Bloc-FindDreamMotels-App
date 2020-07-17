@@ -2,9 +2,11 @@ import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/district_model.dart';
+import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
 import 'package:findingmotels/pages/motel_detail/motels_description_screen.dart';
 import 'package:findingmotels/pages/new_motel/view/new_motel_screen.dart';
+import 'package:findingmotels/pages/widgets/home_item_motel.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   var rating = 3.0;
 
   List<DistrictModel> listDistrict = [];
+  List<MotelModel> listMotels = [];
 
   @override
   void initState() {
@@ -44,9 +47,10 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, state) => buildBody(state))));
   }
 
-  void blocListener(HomeState state, BuildContext context) {
+  Future<void> blocListener(HomeState state, BuildContext context) async {
     if (state is FeatchDataSucesesState) {
       listDistrict = state.listDistrict;
+      listMotels = state.listMotel;
     } else if (state is OnClickListDistrictsState) {
       districSelect = listDistrict[state.index].name;
     } else if (state is OnClickListMotelssState) {
@@ -57,8 +61,10 @@ class _HomePageState extends State<HomePage> {
                     index: state.index,
                   )));
     } else if (state is NewMotelState) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => NewMotelPage()));
+      await Navigator.push(
+              context, MaterialPageRoute(builder: (context) => NewMotelPage()))
+          .then((v) => BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+              .add(FeatchDataEvent()));
     }
   }
 
@@ -106,17 +112,24 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildViewMotels() {
     return Expanded(
-      child: Container(
-        margin: EdgeInsets.only(bottom: Size.getHeight * 0.02),
-        // height: Size.getHeight * 0.35,
-        padding: EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: districSelect.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: ((context, index) =>
-              HomeMotelItem(homeGlobalKey: homeGlobalKey, rating: rating)),
-        ),
-      ),
+      child: listMotels.length > 0
+          ? Container(
+              margin: EdgeInsets.only(bottom: Size.getHeight * 0.02),
+              // height: Size.getHeight * 0.35,
+              padding: EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemCount: listMotels.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: ((context, index) => HomeMotelItem(
+                      motelModel: listMotels[index],
+                      onTap: () {
+                        BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                            .add(OnClickListMotelssEvent(index));
+                      },
+                    )),
+              ),
+            )
+          : SizedBox(),
     );
   }
 
@@ -285,69 +298,4 @@ class _HomePageState extends State<HomePage> {
           clipper: HomeClipPath(0.35),
         ),
       );
-}
-
-class HomeMotelItem extends StatelessWidget {
-  const HomeMotelItem({
-    Key key,
-    @required this.homeGlobalKey,
-    @required this.rating,
-  }) : super(key: key);
-
-  final GlobalKey<State<StatefulWidget>> homeGlobalKey;
-  final double rating;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (!ConfigApp.drawerShow) {
-          // BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-          //     .add(OnClickListMotelssEvent(index));
-        }
-      },
-      child: Container(
-        margin: EdgeInsets.only(right: 16.0),
-        padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
-        width: Size.getWidth * 0.5,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
-          image: DecorationImage(
-              image: NetworkImage(AppSetting.imageTest), fit: BoxFit.cover),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Text(
-              "Cheap motel room",
-              maxLines: 1,
-              style: StyleText.header20Whitew500,
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh",
-              maxLines: 1,
-              style: StyleText.content14White60w400,
-            ),
-            SizedBox(height: 8.0),
-            SmoothStarRating(
-              rating: rating,
-              isReadOnly: false,
-              size: 24.0,
-              filledIconData: Icons.star,
-              halfFilledIconData: Icons.star_half,
-              defaultIconData: Icons.star_border,
-              starCount: 5,
-              allowHalfRating: true,
-              spacing: 2.0,
-              onRated: (value) {},
-              color: Colors.yellow,
-              borderColor: Colors.yellow[100],
-            )
-          ],
-        ),
-      ),
-    );
-  }
 }
