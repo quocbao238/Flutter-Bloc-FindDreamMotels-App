@@ -32,8 +32,9 @@ class _NewMotelPageState extends State<NewMotelPage> {
 
   @override
   void initState() {
-    location = Location(lng: 123.123, lat: 123.123);
     super.initState();
+    print('NewMotelScreen');
+    location = Location(lng: 123.123, lat: 123.123);
     _globalKey = GlobalKey();
     titleTextEditingController = TextEditingController();
     descriptionTextEditingController = TextEditingController();
@@ -50,7 +51,7 @@ class _NewMotelPageState extends State<NewMotelPage> {
         child: BlocListener<NewmotelBloc, NewmotelState>(
             listener: (context, state) => blocListener(state, context),
             child: BlocBuilder<NewmotelBloc, NewmotelState>(
-                builder: (context, state) => _scaffold())));
+                builder: (context, state) => _scaffold(state))));
   }
 
   void blocListener(NewmotelState state, BuildContext context) {
@@ -69,14 +70,18 @@ class _NewMotelPageState extends State<NewMotelPage> {
   }
 
   Widget _scaffold(NewmotelState state) {
-    return Scaffold(
-      key: _globalKey,
-      backgroundColor: AppColor.backgroundColor,
-      body: Stack(children: <Widget>[
-        buildBackground(0.06),
-        _body(),
+    return Stack(
+      children: <Widget>[
+        Scaffold(
+          key: _globalKey,
+          backgroundColor: AppColor.backgroundColor,
+          body: Stack(children: <Widget>[
+            buildBackground(0.06),
+            _body(),
+          ]),
+        ),
         state is LoadingState ? LoadingWidget() : SizedBox(),
-      ]),
+      ],
     );
   }
 
@@ -123,7 +128,7 @@ class _NewMotelPageState extends State<NewMotelPage> {
                 OnTapCreateEvent(
                   address: addressTextEditingController.text.trim(),
                   description: descriptionTextEditingController.text.trim(),
-                  districtId: districList.indexOf(district) > 0
+                  districtId: districList.indexOf(district) >= 0
                       ? districList.indexOf(district)
                       : null,
                   amenities: _listAmenity,

@@ -57,8 +57,8 @@ class _HomePageState extends State<HomePage> {
                     index: state.index,
                   )));
     } else if (state is NewMotelState) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => NewMotelPage()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => NewMotelPage()));
     }
   }
 
@@ -113,57 +113,8 @@ class _HomePageState extends State<HomePage> {
         child: ListView.builder(
           itemCount: districSelect.length,
           scrollDirection: Axis.horizontal,
-          itemBuilder: ((context, index) => InkWell(
-                onTap: () {
-                  if (!ConfigApp.drawerShow) {
-                    BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                        .add(OnClickListMotelssEvent(index));
-                  }
-                },
-                child: Container(
-                  margin: EdgeInsets.only(right: 16.0),
-                  padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
-                  width: Size.getWidth * 0.5,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25.0),
-                    image: DecorationImage(
-                        image: NetworkImage(AppSetting.imageTest),
-                        fit: BoxFit.cover),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        "Cheap motel room",
-                        maxLines: 1,
-                        style: StyleText.header20Whitew500,
-                      ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh",
-                        maxLines: 1,
-                        style: StyleText.content14White60w400,
-                      ),
-                      SizedBox(height: 8.0),
-                      SmoothStarRating(
-                        rating: rating,
-                        isReadOnly: false,
-                        size: 24.0,
-                        filledIconData: Icons.star,
-                        halfFilledIconData: Icons.star_half,
-                        defaultIconData: Icons.star_border,
-                        starCount: 5,
-                        allowHalfRating: true,
-                        spacing: 2.0,
-                        onRated: (value) {},
-                        color: Colors.yellow,
-                        borderColor: Colors.yellow[100],
-                      )
-                    ],
-                  ),
-                ),
-              )),
+          itemBuilder: ((context, index) =>
+              HomeMotelItem(homeGlobalKey: homeGlobalKey, rating: rating)),
         ),
       ),
     );
@@ -334,4 +285,69 @@ class _HomePageState extends State<HomePage> {
           clipper: HomeClipPath(0.35),
         ),
       );
+}
+
+class HomeMotelItem extends StatelessWidget {
+  const HomeMotelItem({
+    Key key,
+    @required this.homeGlobalKey,
+    @required this.rating,
+  }) : super(key: key);
+
+  final GlobalKey<State<StatefulWidget>> homeGlobalKey;
+  final double rating;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        if (!ConfigApp.drawerShow) {
+          // BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+          //     .add(OnClickListMotelssEvent(index));
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 16.0),
+        padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
+        width: Size.getWidth * 0.5,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25.0),
+          image: DecorationImage(
+              image: NetworkImage(AppSetting.imageTest), fit: BoxFit.cover),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              "Cheap motel room",
+              maxLines: 1,
+              style: StyleText.header20Whitew500,
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh",
+              maxLines: 1,
+              style: StyleText.content14White60w400,
+            ),
+            SizedBox(height: 8.0),
+            SmoothStarRating(
+              rating: rating,
+              isReadOnly: false,
+              size: 24.0,
+              filledIconData: Icons.star,
+              halfFilledIconData: Icons.star_half,
+              defaultIconData: Icons.star_border,
+              starCount: 5,
+              allowHalfRating: true,
+              spacing: 2.0,
+              onRated: (value) {},
+              color: Colors.yellow,
+              borderColor: Colors.yellow[100],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
