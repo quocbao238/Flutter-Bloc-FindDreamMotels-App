@@ -51,6 +51,18 @@ class StyleText {
     fontWeight: FontWeight.bold,
   );
 
+  static TextStyle header24Red = TextStyle(
+    color: Colors.red,
+    fontSize: 24.0 * Size.scaleTxt,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle header24GreenMixBlue = TextStyle(
+    color: Color.fromRGBO(44, 156, 162, 1),
+    fontSize: 24.0 * Size.scaleTxt,
+    fontWeight: FontWeight.bold,
+  );
+
   static TextStyle header24BlackW400 = TextStyle(
     color: Colors.black,
     fontSize: 24.0 * Size.scaleTxt,

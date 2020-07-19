@@ -1,4 +1,3 @@
-import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:flutter/material.dart';
 

@@ -30,6 +30,7 @@ class AppSetting {
   static const logoIcon = 'assets/logo/logo.png';
   static const airIcon = 'assets/icon/airIcon.png';
   static const bathIcon = 'assets/icon/bathIcon.png';
+  static const tvIcon = 'assets/icon/tv.png';
   static const bedIcon = 'assets/icon/bedIcon.png';
   static const facebookIcon = 'assets/icon/facebookIcon.png';
   static const facebookWhiteIcon = 'assets/icon/facebookWhiteIcon.png';

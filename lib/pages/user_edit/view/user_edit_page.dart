@@ -98,6 +98,7 @@ class _UserEditPageState extends State<UserEditPage> {
                   title: 'Birthday',
                   controller: _birthdayController,
                   onTap: () {
+                    print('onTap');
                     DatePicker.showDatePicker(
                       context,
                       showTitleActions: true,
@@ -105,14 +106,13 @@ class _UserEditPageState extends State<UserEditPage> {
                       maxTime: DateTime.now(),
                       onChanged: (date) {},
                       onConfirm: (date) {
-                        // print(date);
                         print(DateFormat('dd-MM-yyyy').format(date));
                         _birthdayController.text =
                             DateFormat('dd-MM-yyyy').format(date);
                       },
-                      currentTime: DateFormat('dd-MM-yyyy')
-                              .parse(_birthdayController.text.trim()) ??
-                          DateTime(1990),
+                      currentTime: _birthdayController.text.trim() != '' ? DateFormat('dd-MM-yyyy')
+                              .parse(_birthdayController.text.trim())
+                           : DateTime(1990),
                       locale: LocaleType.en,
                     );
                   },

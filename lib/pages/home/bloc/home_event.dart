@@ -7,13 +7,13 @@ abstract class HomeEvent extends Equatable {
 }
 
 class OnClickListDistrictsEvent extends HomeEvent {
-  final int index;
-  OnClickListDistrictsEvent(this.index);
+  final DistrictModel districtModel;
+  OnClickListDistrictsEvent(this.districtModel);
 }
 
 class OnClickListMotelssEvent extends HomeEvent {
-  final int index;
-  OnClickListMotelssEvent(this.index);
+  final MotelModel motelModel;
+  OnClickListMotelssEvent(this.motelModel);
 }
 
 class FeatchDataEvent extends HomeEvent {

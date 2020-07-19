@@ -19,6 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeEvent event,
   ) async* {
     if (event is FeatchDataEvent) {
+      yield LoadingState();
       var listDistrict = await featchDistrictLst();
       if (listDistrict != null) {
         var listMotel =
@@ -29,9 +30,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         yield FeatchDataFailState();
       }
     } else if (event is OnClickListDistrictsEvent) {
-      yield OnClickListDistrictsState(event.index);
+      yield LoadingMotels();
+      var listMotel =
+          await featchMotelList(int.parse(event.districtModel.districtId));
+      yield listMotel != null
+          ? OnClickListDistrictsState(
+              selectMotel: event.districtModel, listMotel: listMotel)
+          : OnClickListDistrictsState(
+              selectMotel: event.districtModel, listMotel: []);
     } else if (event is OnClickListMotelssEvent) {
-      yield OnClickListMotelssState(event.index);
+      yield OnClickListMotelssState(event.motelModel);
     } else if (event is NewMotelEvent) {
       yield NewMotelState();
     }

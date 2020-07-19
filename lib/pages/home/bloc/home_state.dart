@@ -8,6 +8,10 @@ abstract class HomeState extends Equatable {
 
 class HomeInitial extends HomeState {}
 
+class LoadingState extends HomeState {}
+
+class LoadingMotels extends HomeState {}
+
 class FeatchDataSucesesState extends HomeState {
   final List<DistrictModel> listDistrict;
   final List<MotelModel> listMotel;
@@ -17,13 +21,14 @@ class FeatchDataSucesesState extends HomeState {
 class FeatchDataFailState extends HomeState {}
 
 class OnClickListDistrictsState extends HomeState {
-  final int index;
-  OnClickListDistrictsState(this.index);
+  final DistrictModel selectMotel;
+  final List<MotelModel> listMotel;
+  OnClickListDistrictsState({this.selectMotel,this.listMotel});
 }
 
 class OnClickListMotelssState extends HomeState {
-  final int index;
-  OnClickListMotelssState(this.index);
+  final MotelModel motelModel;
+  OnClickListMotelssState(this.motelModel);
 }
 
 class NewMotelState extends HomeState {}

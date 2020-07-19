@@ -8,11 +8,13 @@ import 'package:findingmotels/pages/motel_detail/motels_description_screen.dart'
 import 'package:findingmotels/pages/new_motel/view/new_motel_screen.dart';
 import 'package:findingmotels/pages/widgets/home_item_motel.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/widgets/empty/empty_widget.dart';
+import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,13 +54,14 @@ class _HomePageState extends State<HomePage> {
       listDistrict = state.listDistrict;
       listMotels = state.listMotel;
     } else if (state is OnClickListDistrictsState) {
-      districSelect = listDistrict[state.index].name;
+      districSelect = state.selectMotel.name;
+      listMotels = state.listMotel;
     } else if (state is OnClickListMotelssState) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => MotelDescriptionPage(
-                    index: state.index,
+                    motelModel: state.motelModel
                   )));
     } else if (state is NewMotelState) {
       await Navigator.push(
@@ -75,7 +78,7 @@ class _HomePageState extends State<HomePage> {
           resizeToAvoidBottomInset: true,
           key: homeGlobalKey,
           backgroundColor: AppColor.backgroundColor,
-          body: _body(),
+          body: _body(state),
           floatingActionButton: FloatingActionButton(
               onPressed: () {
                 BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
@@ -86,11 +89,12 @@ class _HomePageState extends State<HomePage> {
                 child: Icon(Icons.add),
               )),
         ),
+        state is LoadingState ? LoadingWidget() : SizedBox()
       ],
     );
   }
 
-  Widget _body() {
+  Widget _body(HomeState state) {
     return Stack(
       children: <Widget>[
         buildBackground(Size.getHeight),
@@ -102,7 +106,23 @@ class _HomePageState extends State<HomePage> {
               // buildFindDistricts(),
               buildListDistric(),
               // Spacer(),
-              buildViewMotels()
+              Expanded(
+                child: Stack(
+                  children: <Widget>[
+                    buildViewMotels(),
+                    state is LoadingMotels
+                        ? Center(
+                            child: SpinKitThreeBounce(
+                              size: 50.0,
+                            
+                              duration: Duration(milliseconds: 1000),
+                              color: AppColor.colorClipPath,
+                            ),
+                          )
+                        : SizedBox()
+                  ],
+                ),
+              )
             ],
           ),
         ))
@@ -111,26 +131,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildViewMotels() {
-    return Expanded(
-      child: listMotels.length > 0
-          ? Container(
-              margin: EdgeInsets.only(bottom: Size.getHeight * 0.02),
-              // height: Size.getHeight * 0.35,
-              padding: EdgeInsets.all(8.0),
-              child: ListView.builder(
-                itemCount: listMotels.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: ((context, index) => HomeMotelItem(
-                      motelModel: listMotels[index],
-                      onTap: () {
-                        BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                            .add(OnClickListMotelssEvent(index));
-                      },
-                    )),
-              ),
-            )
-          : SizedBox(),
-    );
+    return listMotels.length > 0
+        ? Container(
+            margin: EdgeInsets.only(bottom: Size.getHeight * 0.02),
+            // height: Size.getHeight * 0.35,
+            padding: EdgeInsets.all(8.0),
+            child: ListView.builder(
+              itemCount: listMotels.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: ((context, index) => HomeMotelItem(
+                    motelModel: listMotels[index],
+                    onTap: () {
+                      BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                          .add(OnClickListMotelssEvent(listMotels[index]));
+                    },
+                  )),
+            ),
+          )
+        : EmptyWidget();
   }
 
   Widget buildListDistric() {
@@ -146,7 +164,7 @@ class _HomePageState extends State<HomePage> {
           onTap: () {
             if (!ConfigApp.drawerShow) {
               BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                  .add(OnClickListDistrictsEvent(index));
+                  .add(OnClickListDistrictsEvent(listDistrict[index]));
             }
           },
           child: Container(
@@ -295,7 +313,7 @@ class _HomePageState extends State<HomePage> {
           child: Container(
             color: AppColor.colorClipPath,
           ),
-          clipper: HomeClipPath(0.35),
+          clipper: HomeClipPath(0.32),
         ),
       );
 }

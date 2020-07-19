@@ -14,3 +14,15 @@ List<Amenities> listAmenities = [
   Amenities(name: "Air\nCondition", urlIcon: AppSetting.airIcon, isHave: true),
   Amenities(name: "BathRoom", urlIcon: AppSetting.bathIcon, isHave: true),
 ];
+
+String getIconFromListAmenities(String name) {
+  return name == "freeWifi"
+      ? AppSetting.wifiIcon
+      : name == "bed"
+          ? AppSetting.bedIcon
+          : name == "airCondition"
+              ? AppSetting.airIcon
+              : name == "bathRoom"
+                  ? AppSetting.bathIcon
+                  : name == "televison" ? AppSetting.tvIcon : "";
+}

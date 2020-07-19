@@ -59,6 +59,7 @@ dependencies:
   flutter_datetime_picker: 1.3.8
   multi_image_picker: 4.6.7
   basic_utils: 1.2.0
+  carousel_pro: 1.0.0
 
 
 

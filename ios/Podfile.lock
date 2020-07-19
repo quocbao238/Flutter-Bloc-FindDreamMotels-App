@@ -223,6 +223,11 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.7):
     - BoringSSL-GRPC/Interface (= 0.0.7)
   - BoringSSL-GRPC/Interface (0.0.7)
+  - BSGridCollectionViewLayout (1.2.5)
+  - BSImagePicker (2.10.3):
+    - BSGridCollectionViewLayout (= 1.2.5)
+    - BSImageView (= 1.0.3)
+  - BSImageView (1.0.3)
   - cloud_firestore (0.0.1):
     - Firebase/Core
     - Firebase/Firestore (~> 6.0)
@@ -243,6 +248,9 @@ PODS:
   - Firebase/Firestore (6.26.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 1.15.0)
+  - Firebase/Storage (6.26.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 3.6.1)
   - firebase_auth (0.0.1):
     - Firebase/Auth (~> 6.3)
     - Firebase/Core
@@ -256,6 +264,9 @@ PODS:
     - Flutter
   - firebase_database (0.0.1):
     - Firebase/Database
+    - Flutter
+  - firebase_storage (0.0.1):
+    - Firebase/Storage
     - Flutter
   - FirebaseAnalytics (6.6.0):
     - FirebaseCore (~> 6.7)
@@ -307,7 +318,13 @@ PODS:
     - GoogleUtilities/Environment (~> 6.6)
     - GoogleUtilities/UserDefaults (~> 6.6)
     - PromisesObjC (~> 1.2)
+  - FirebaseStorage (3.6.1):
+    - FirebaseAuthInterop (~> 1.1)
+    - FirebaseCore (~> 6.6)
+    - GTMSessionFetcher/Core (~> 1.1)
   - Flutter (1.0.0)
+  - flutter_plugin_android_lifecycle (0.0.1):
+    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -381,7 +398,12 @@ PODS:
   - GTMSessionFetcher/Core (1.4.0)
   - GTMSessionFetcher/Full (1.4.0):
     - GTMSessionFetcher/Core (= 1.4.0)
+  - image_picker (0.0.1):
+    - Flutter
   - leveldb-library (1.22)
+  - multi_image_picker (4.6.7):
+    - BSImagePicker (~> 2.10.3)
+    - Flutter
   - nanopb (1.30905.0):
     - nanopb/decode (= 1.30905.0)
     - nanopb/encode (= 1.30905.0)
@@ -412,9 +434,13 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
+  - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
   - google_sign_in_web (from `.symlinks/plugins/google_sign_in_web/ios`)
+  - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - multi_image_picker (from `.symlinks/plugins/multi_image_picker/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - path_provider_linux (from `.symlinks/plugins/path_provider_linux/ios`)
   - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
@@ -428,6 +454,9 @@ SPEC REPOS:
     - abseil
     - AppAuth
     - BoringSSL-GRPC
+    - BSGridCollectionViewLayout
+    - BSImagePicker
+    - BSImageView
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -438,6 +467,7 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseFirestore
     - FirebaseInstallations
+    - FirebaseStorage
     - FMDB
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -467,12 +497,20 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core_web/ios"
   firebase_database:
     :path: ".symlinks/plugins/firebase_database/ios"
+  firebase_storage:
+    :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
   google_sign_in_web:
     :path: ".symlinks/plugins/google_sign_in_web/ios"
+  image_picker:
+    :path: ".symlinks/plugins/image_picker/ios"
+  multi_image_picker:
+    :path: ".symlinks/plugins/multi_image_picker/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   path_provider_linux:
@@ -492,6 +530,9 @@ SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
+  BSGridCollectionViewLayout: 333dcb457a5a3bdd9212607ab5756553dcfe06cb
+  BSImagePicker: 07404254f2fcdaf5a2eb403c0f8c337267ce8738
+  BSImageView: a149459433a2687157d034c78e059d30ac7f2544
   cloud_firestore: 4cc700e236ebfe2d5d980e49cb066d202cfee0e9
   cloud_firestore_web: 9ec3dc7f5f98de5129339802d491c1204462bfec
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6
@@ -500,6 +541,7 @@ SPEC CHECKSUMS:
   firebase_core: 335c02abd48672b7c83c683df833d0488a72e73e
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
   firebase_database: 88085c38a41ad0b5c3c611ede7205831a2ece844
+  firebase_storage: 22966fce4aa6e8848cbaa017df62107cee29f327
   FirebaseAnalytics: 96634d356482d4f3af8fe459a0ebf19a99c71b75
   FirebaseAuth: 7047aec89c0b17ecd924a550c853f0c27ac6015e
   FirebaseAuthInterop: a0f37ae05833af156e72028f648d313f7e7592e9
@@ -509,7 +551,9 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 4e99c0c475d1ee0aa64ae2b53c93f80b7b60d7d9
   FirebaseFirestore: 8c158bdde010fa397386333a74570eaef033e62d
   FirebaseInstallations: 6f5f680e65dc374397a483c32d1799ba822a395b
+  FirebaseStorage: f4f39ae834a7145963b913f54e2f24a9db1d8fac
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_plugin_android_lifecycle: dc0b544e129eebb77a6bfb1239d4d1c673a60a35
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_sign_in: decaf71f56e22fb1dc179de062177ae6df415716
   google_sign_in_web: 52deb24929ac0992baff65c57956031c44ed44c3
@@ -522,7 +566,9 @@ SPEC CHECKSUMS:
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
+  multi_image_picker: 7968ace12b658a9ee51be6514473f5ee5501ea80
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   path_provider_linux: 4d630dc393e1f20364f3e3b4a2ff41d9674a84e4
