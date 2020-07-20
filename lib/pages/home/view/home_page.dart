@@ -11,7 +11,6 @@ import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:findingmotels/widgets/empty/empty_widget.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oktoast/oktoast.dart';
@@ -27,13 +26,15 @@ class _HomePageState extends State<HomePage> {
   String imageUrl = AppSetting.logoutImg;
   String districSelect = "District 1";
   var rating = 3.0;
+  bool isHaveData;
 
-  List<DistrictModel> listDistrict = [];
-  List<MotelModel> listMotels = [];
+  List<MotelModel> listMotels;
 
   @override
   void initState() {
     super.initState();
+    listMotels = [];
+    isHaveData = false;
     homeGlobalKey = GlobalKey();
   }
 
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  MotelDescriptionPage(motelModel: state.motelModel)));
+                  MotelDetailPage(motelModel: state.motelModel)));
     } else if (state is NewMotelState) {
       await Navigator.push(
               context, MaterialPageRoute(builder: (context) => NewMotelPage()))
@@ -104,20 +105,7 @@ class _HomePageState extends State<HomePage> {
               buildTopView(),
               _lookingFor(),
               Expanded(
-                child: Stack(
-                  children: <Widget>[
-                    buildViewMotels(),
-                    state is LoadingMotels
-                        ? Center(
-                            child: SpinKitThreeBounce(
-                              size: 50.0,
-                              duration: Duration(milliseconds: 1000),
-                              color: AppColor.colorClipPath,
-                            ),
-                          )
-                        : SizedBox()
-                  ],
-                ),
+                child: buildViewMotels(state),
               )
             ],
           ),
@@ -126,7 +114,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildViewMotels() {
+  Widget buildViewMotels(HomeState state) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +157,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               )
-            : Expanded(child: EmptyWidget()),
+            : listMotels.length == 0
+                ? Expanded(child: SizedBox())
+                : SizedBox()
       ],
     );
   }

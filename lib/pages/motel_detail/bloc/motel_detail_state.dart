@@ -20,6 +20,11 @@ class OnTapFavoriteSucessState extends MotelDetailState {
   OnTapFavoriteSucessState(this.isFv);
 }
 
+class OnTapFavoriteRemoveState extends MotelDetailState {
+  final bool isFv;
+  OnTapFavoriteRemoveState(this.isFv);
+}
+
 class FailState extends MotelDetailState {
   final String errorString;
   FailState(this.errorString);

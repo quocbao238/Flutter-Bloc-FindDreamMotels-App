@@ -1,32 +1,28 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
-import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
+import 'package:findingmotels/models/motel_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 
 class FavoriteItem extends StatelessWidget {
+  final MotelModel motelModel;
   final int index;
+  final Function onTapImage;
   final Function onTapCall;
-  final Function onTapMessaga;
+  final Function onTapMessage;
   final Function onTapDirect;
-  final String imageUrl;
-  final String title;
-  final String address;
-  final int pricce;
-  final double rating;
 
-  FavoriteItem(
-      {this.onTapCall,
-      this.index,
-      this.imageUrl,
-      this.onTapMessaga,
-      this.onTapDirect,
-      this.title,
-      this.address,
-      this.pricce,
-      this.rating});
+  FavoriteItem({
+    this.index,
+    this.onTapImage,
+    this.onTapCall,
+    this.onTapMessage,
+    this.onTapDirect,
+    this.motelModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,28 +51,38 @@ class FavoriteItem extends StatelessWidget {
       );
 
   Widget _itemImage() {
-    return Container(
-      height: 120.0,
-      width: 120.0,
-      margin: EdgeInsets.only(right: 16.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30.0),
-        child: CachedNetworkImage(
-            imageUrl: imageUrl,
-            fit: BoxFit.cover,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                Center(
-                  child: LoadingWidget(),
-                ),
-            errorWidget: (context, url, error) => Container(
-                  // color: Colors.red,
-                  child: Center(
-                    child: SvgPicture.asset(
-                      AppSetting.logoIcon,
-                      fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        if (onTapImage != null) onTapImage();
+      },
+      child: Container(
+        height: 120.0,
+        width: 120.0,
+        margin: EdgeInsets.only(right: 16.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30.0),
+          child: CachedNetworkImage(
+              imageUrl: motelModel.imageMotel[0].imageUrl,
+              fit: BoxFit.cover,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  Center(child: SpinKitFadingCircle(
+                    itemBuilder: (BuildContext context, int index) {
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: index.isEven ? Colors.red : Colors.green),
+                      );
+                    },
+                  )),
+              errorWidget: (context, url, error) => Container(
+                    // color: Colors.red,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        AppSetting.logoIcon,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                )),
+                  )),
+        ),
       ),
     );
   }
@@ -91,7 +97,7 @@ class FavoriteItem extends StatelessWidget {
             children: <Widget>[
               Text(
                 // "Cheap motel room",
-                title,
+                motelModel.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: StyleText.subhead16Black500,
@@ -99,7 +105,7 @@ class FavoriteItem extends StatelessWidget {
               SizedBox(height: 8.0),
               Text(
                 // "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh 21321 3213 21321312321 321 3213 21",
-                address,
+                motelModel.address,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: StyleText.content14Black400,
@@ -108,13 +114,13 @@ class FavoriteItem extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    '$pricce\$',
+                    '${motelModel.price}\$',
                     style: StyleText.price20Red,
                   ),
                   Spacer(),
                   FlutterRatingBar(
                     itemSize: 24.0,
-                    initialRating: rating,
+                    initialRating: motelModel.rating,
                     onRatingUpdate: (v) {},
                   )
                 ],
@@ -140,7 +146,7 @@ class FavoriteItem extends StatelessWidget {
             Expanded(
                 child: _iconfunction(
               onTap: () {
-                if (onTapMessaga != null) onTapMessaga();
+                if (onTapMessage != null) onTapMessage();
               },
               icondata: Icons.message,
             )),

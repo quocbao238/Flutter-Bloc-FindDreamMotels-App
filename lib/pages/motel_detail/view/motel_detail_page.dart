@@ -11,14 +11,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-class MotelDescriptionPage extends StatefulWidget {
+class MotelDetailPage extends StatefulWidget {
   final MotelModel motelModel;
-  MotelDescriptionPage({this.motelModel});
+  MotelDetailPage({this.motelModel});
   @override
-  _MotelDescriptionPageState createState() => _MotelDescriptionPageState();
+  _MotelDetailPageState createState() => _MotelDetailPageState();
 }
 
-class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
+class _MotelDetailPageState extends State<MotelDetailPage> {
   List<dynamic> images = [];
   GlobalKey globalKey;
   bool _isFv = false;
@@ -30,10 +30,13 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
       images.add(CachedNetworkImage(
         imageUrl: imgMotel.imageUrl,
         fit: BoxFit.cover,
-        placeholder: (context, url) => Center(
-            child: SpinKitCircle(
-          duration: Duration(milliseconds: 1000),
-          size: 8.0,
+        placeholder: (context, url) => Center(child: SpinKitFadingCircle(
+          itemBuilder: (BuildContext context, int index) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                  color: index.isEven ? Colors.red : Colors.green),
+            );
+          },
         )),
         errorWidget: (context, url, error) => Center(child: EmptyWidget()),
       ));
@@ -53,6 +56,8 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
 
   void blocListener(MotelDetailState state, BuildContext context) {
     if (state is FeatchDataSucessState) {
+      _isFv = state.isFv;
+    } else if (state is OnTapFavoriteRemoveState) {
       _isFv = state.isFv;
     }
   }

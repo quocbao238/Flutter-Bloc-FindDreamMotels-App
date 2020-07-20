@@ -33,10 +33,11 @@ class MotelDetailBloc extends Bloc<MotelDetailEvent, MotelDetailState> {
       if (event.isFavorite) {
         //Delete
         showToast('Delete');
+        bool isRemove = await removeMotelFavorite(event.motel);
+        yield OnTapFavoriteRemoveState(!isRemove);
       } else {
         //Add New
         bool isFv = await addToListFavorite(event.motel);
-
         yield OnTapFavoriteSucessState(isFv);
       }
     }
@@ -103,6 +104,32 @@ Future<bool> addToListFavorite(MotelModel motelModel) async {
     return false;
   }
   return isHave;
+}
+
+Future<bool> removeMotelFavorite(MotelModel motelModel) async {
+  bool removeSucess = false;
+  try {
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection(AppSetting.dbfavorite)
+        .document(motelModel.documentId)
+        .delete();
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection(AppSetting.dbfavorite)
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        removeSucess = f.documentID == motelModel.documentId ? false : true;
+      });
+    });
+  } catch (e) {
+    print(e.toString());
+    return false;
+  }
+  return removeSucess;
 }
 
 Future<List<MotelModel>> featchListFavorite() async {

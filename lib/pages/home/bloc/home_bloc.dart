@@ -26,15 +26,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       } else {
         yield FeatchDataFailState();
       }
-    } else if (event is OnClickListDistrictsEvent) {
-      yield LoadingMotels();
-      var listMotel =
-          await featchMotelList(int.parse(event.districtModel.districtId));
-      yield listMotel != null
-          ? OnClickListDistrictsState(
-              selectMotel: event.districtModel, listMotel: listMotel)
-          : OnClickListDistrictsState(
-              selectMotel: event.districtModel, listMotel: []);
+    // } 
+    // else if (event is OnClickListDistrictsEvent) {
+    //   yield LoadingMotels();
+    //   var listMotel =
+    //       await featchMotelList(int.parse(event.districtModel.districtId));
+    //   yield listMotel != null
+    //       ? OnClickListDistrictsState(
+    //           selectMotel: event.districtModel, listMotel: listMotel)
+    //       : OnClickListDistrictsState(
+    //           selectMotel: event.districtModel, listMotel: []);
     } else if (event is OnClickListMotelssEvent) {
       yield OnClickListMotelssState(event.motelModel);
     } else if (event is NewMotelEvent) {
@@ -62,21 +63,21 @@ Future<List<MotelModel>> featchMotelPopular() async {
   return listMotel;
 }
 
-Future<List<MotelModel>> featchMotelList(int id) async {
-  List<MotelModel> listMotel = [];
-  await ConfigApp.databaseReference
-      .collection(id.toString())
-      .getDocuments()
-      .then((QuerySnapshot snapshot) {
-    snapshot.documents.forEach((f) {
-      var motel = MotelModel.fromJson(f.data);
-      listMotel.add(motel);
-    });
-  });
-  listMotel.sort((a, b) => double.parse(a.timeUpdate.toString())
-      .compareTo(double.parse(b.timeUpdate.toString())));
-  return listMotel;
-}
+// Future<List<MotelModel>> featchMotelList(int id) async {
+//   List<MotelModel> listMotel = [];
+//   await ConfigApp.databaseReference
+//       .collection(id.toString())
+//       .getDocuments()
+//       .then((QuerySnapshot snapshot) {
+//     snapshot.documents.forEach((f) {
+//       var motel = MotelModel.fromJson(f.data);
+//       listMotel.add(motel);
+//     });
+//   });
+//   listMotel.sort((a, b) => double.parse(a.timeUpdate.toString())
+//       .compareTo(double.parse(b.timeUpdate.toString())));
+//   return listMotel;
+// }
 
 // Future<List<DistrictModel>> featchDistrictLst() async {
 //   List<DistrictModel> listDistrict = [];

@@ -1,9 +1,11 @@
-
-import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/pages/favorite/bloc/favorite_bloc.dart';
+import 'package:findingmotels/pages/motel_detail/view/motel_detail_page.dart';
 import 'package:findingmotels/pages/widgets/favorite_item.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/widgets/empty/empty_widget.dart';
+import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,9 +17,11 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   GlobalKey globalKey;
+  List<MotelModel> listFavoriteMotels;
 
   @override
   void initState() {
+    listFavoriteMotels = [];
     globalKey = GlobalKey();
     super.initState();
   }
@@ -25,50 +29,68 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => FavoriteBloc(),
+        create: (context) => FavoriteBloc()..add(FeatchFavoriteListEvent()),
         child: BlocListener<FavoriteBloc, FavoriteState>(
             listener: (context, state) => blocListener(state, context),
             child: BlocBuilder<FavoriteBloc, FavoriteState>(
-                builder: (context, state) => _scaffold())));
+                builder: (context, state) => Stack(
+                      children: <Widget>[
+                        _scaffold(state),
+                        state is FavoriteLoadingState ? LoadingWidget() : SizedBox()
+                      ],
+                    ))));
   }
 
-  void blocListener(FavoriteState state, BuildContext context) {}
+  void blocListener(FavoriteState state, BuildContext context) async {
+    if (state is FeatchFavoriteListSucessState) {
+      listFavoriteMotels = state.listMotel;
+    } else if (state is GoToDetailState) {
+      await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  MotelDetailPage(motelModel: state.motelModel))).then((_) {
+        BlocProvider.of(globalKey.currentContext)
+            .add(FeatchFavoriteListEvent());
+      });
+    }
+  }
 
-  Widget _scaffold() => Scaffold(
+  Widget _scaffold(FavoriteState state) => Scaffold(
         key: globalKey,
         backgroundColor: AppColor.backgroundColor,
         body: Stack(
-          children: <Widget>[buildBackground(0.12), _body()],
+          children: <Widget>[buildBackground(0.12), _body(state)],
         ),
       );
 
-  Widget _body() => Positioned.fill(
+  Widget _body(FavoriteState state) => Positioned.fill(
         child: Column(
           children: <Widget>[
             _appBar(),
-            _content(),
+            _content(state),
           ],
         ),
       );
 
-  Widget _content() => Expanded(
-        child: ListView.builder(
-          itemCount: 10,
-          shrinkWrap: true,
-          itemBuilder: (context, index) => FavoriteItem(
-            index: index,
-            imageUrl: AppSetting.imageTest,
-            address:
-                "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh 21321 3213 21321312321 321 3213 21",
-            pricce: 68,
-            rating: 4.2,
-            title: "Cheap motel room",
-            onTapCall: () {},
-            onTapMessaga: () {},
-            onTapDirect: () {},
-          ),
-        ),
-      );
+  Widget _content(FavoriteState state) => Expanded(
+      child: listFavoriteMotels.length > 0
+          ? ListView.builder(
+              itemCount: listFavoriteMotels.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) => FavoriteItem(
+                motelModel: listFavoriteMotels[index],
+                index: index,
+                onTapImage: () {
+                  BlocProvider.of<FavoriteBloc>(globalKey.currentContext)
+                      .add(GoToDetailEvent(listFavoriteMotels[index]));
+                },
+                onTapCall: () {},
+                onTapMessage: () {},
+                onTapDirect: () {},
+              ),
+            )
+          : state is FavoriteLoadingState ? SizedBox() : EmptyWidget());
 
   Widget _appBar() => Container(
         padding: EdgeInsets.only(top: 32.0),
