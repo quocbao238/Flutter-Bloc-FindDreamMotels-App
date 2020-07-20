@@ -36,6 +36,7 @@ class MotelDetailBloc extends Bloc<MotelDetailEvent, MotelDetailState> {
       } else {
         //Add New
         bool isFv = await addToListFavorite(event.motel);
+
         yield OnTapFavoriteSucessState(isFv);
       }
     }
@@ -45,8 +46,38 @@ class MotelDetailBloc extends Bloc<MotelDetailEvent, MotelDetailState> {
 
 Future<bool> checkFavorite(
     List<MotelModel> favoriteList, MotelModel motelModel) async {
-  return favoriteList.contains(motelModel);
+  var isFv = false;
+  favoriteList.forEach((e) {
+    if (e.name == motelModel.name) isFv = true;
+  });
+  return isFv;
 }
+
+// Future<bool> demoAddFavorite(MotelModel motelModel) async {
+//   bool isHave = false;
+//   try {
+//     await ConfigApp.databaseReference
+//         .collection(AppSetting.dbData)
+//         .document(AppSetting.locationHCM)
+//         .collection(AppSetting.dbpopular)
+//         .document(motelModel.documentId)
+//         .setData(motelModel.toJson());
+//     await ConfigApp.databaseReference
+//         .collection(AppSetting.dbData)
+//         .document(AppSetting.locationHCM)
+//         .collection(AppSetting.dbpopular)
+//         .getDocuments()
+//         .then((QuerySnapshot snapshot) {
+//       snapshot.documents.forEach((f) {
+//         isHave = f.documentID == motelModel.documentId ? true : false;
+//       });
+//     });
+//   } catch (e) {
+//     print(e.toString());
+//     return false;
+//   }
+//   return isHave;
+// }
 
 Future<bool> addToListFavorite(MotelModel motelModel) async {
   bool isHave = false;

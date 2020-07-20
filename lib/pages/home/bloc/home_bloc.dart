@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/models/district_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
 
@@ -46,7 +47,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 Future<List<MotelModel>> featchMotelPopular() async {
   List<MotelModel> listMotel = [];
   await ConfigApp.databaseReference
-      .collection('popular')
+      .collection(AppSetting.dbData)
+      .document(AppSetting.locationHCM)
+      .collection(AppSetting.dbpopular)
       .getDocuments()
       .then((QuerySnapshot snapshot) {
     snapshot.documents.forEach((f) {

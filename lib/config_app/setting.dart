@@ -50,7 +50,6 @@ class AppSetting {
   static String locationHCM = 'hcm';
   static String dbData = 'data';
   static String dbpopular = 'popular';
-
   static String dbuser = 'user';
   static String dbfavorite = 'favorite';
 }

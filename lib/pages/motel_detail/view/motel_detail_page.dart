@@ -8,6 +8,7 @@ import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class MotelDescriptionPage extends StatefulWidget {
@@ -29,7 +30,11 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
       images.add(CachedNetworkImage(
         imageUrl: imgMotel.imageUrl,
         fit: BoxFit.cover,
-        placeholder: (context, url) => Center(child: LoadingWidget()),
+        placeholder: (context, url) => Center(
+            child: SpinKitCircle(
+          duration: Duration(milliseconds: 1000),
+          size: 8.0,
+        )),
         errorWidget: (context, url, error) => Center(child: EmptyWidget()),
       ));
     }
@@ -43,7 +48,7 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
         child: BlocListener<MotelDetailBloc, MotelDetailState>(
             listener: (context, state) => blocListener(state, context),
             child: BlocBuilder<MotelDetailBloc, MotelDetailState>(
-                builder: (context, state) => _scaffold())));
+                builder: (context, state) => _scaffold(state))));
   }
 
   void blocListener(MotelDetailState state, BuildContext context) {
@@ -52,15 +57,20 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
     }
   }
 
-  Widget _scaffold() {
-    return Scaffold(
-      key: globalKey,
-      body: Stack(
-        children: <Widget>[
-          buildPageView(),
-          buildButtonBack(),
-        ],
-      ),
+  Widget _scaffold(MotelDetailState state) {
+    return Stack(
+      children: <Widget>[
+        Scaffold(
+          key: globalKey,
+          body: Stack(
+            children: <Widget>[
+              buildPageView(),
+              buildButtonBack(),
+            ],
+          ),
+        ),
+        state is LoadingState ? LoadingWidget() : SizedBox(),
+      ],
     );
   }
 
