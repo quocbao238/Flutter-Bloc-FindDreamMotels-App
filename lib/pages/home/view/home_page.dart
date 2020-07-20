@@ -153,10 +153,10 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildListDistric() {
     return Container(
-      margin: EdgeInsets.only(top: 32, bottom: 16, left: 8.0),
+      margin: EdgeInsets.only(top: 16, bottom: 16, left: 8.0,right: 32.0),
       height: Size.getHeight * 0.06,
       width: Size.getWidth,
-      color: AppColor.backgroundColor,
+      color: Colors.red,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: listDistrict.length,
@@ -286,7 +286,7 @@ class _HomePageState extends State<HomePage> {
                     style: GoogleFonts.vidaloka(
                         color: Colors.white, fontSize: 20 * Size.scaleTxt)),
                 SizedBox(height: Size.getHeight * 0.01),
-                Text("Motel",
+                Text("Motel HCM",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.vidaloka(
