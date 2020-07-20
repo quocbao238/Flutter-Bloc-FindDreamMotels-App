@@ -18,12 +18,12 @@ class HomeMotelItem extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(right: 16.0),
         padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
-        width: Size.getWidth * 0.5,
+        width: Size.getWidth * 0.4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
           image: DecorationImage(
               image: NetworkImage(motelModel.imageMotel[0].imageUrl),
-              fit: BoxFit.cover),
+              fit: BoxFit.fill),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

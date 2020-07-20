@@ -181,11 +181,11 @@ Future<MotelModel> createNewPost(
       title: title,
       userIdCreate: userIdCreate);
   await ConfigApp.databaseReference
-      .collection(districtId.toString())
+      .collection('popular')
       .document(newDocument.toString())
       .setData(_newmotel.toJson());
   await ConfigApp.databaseReference
-      .collection(districtId.toString())
+      .collection('popular')
       .getDocuments()
       .then((QuerySnapshot snapshot) {
     snapshot.documents.forEach((f) {
@@ -195,6 +195,9 @@ Future<MotelModel> createNewPost(
   });
   return _newmotel;
 }
+
+      // .collection(districtId.toString())
+
 
 Future<ImageMotel> postImage(Asset imageFile) async {
   String fileName = DateTime.now().millisecondsSinceEpoch.toString();

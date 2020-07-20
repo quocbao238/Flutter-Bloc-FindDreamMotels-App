@@ -19,6 +19,7 @@ class MotelDescriptionPage extends StatefulWidget {
 
 class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
   List<dynamic> images = [];
+  bool _enable = false;
   @override
   void initState() {
     super.initState();
@@ -48,7 +49,7 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
   Widget buildPageView() {
     return Positioned.fill(
       child: Container(
-        color: AppColor.backgroundColor,
+        color: AppColor.backgroundColor.withOpacity(0.6),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -82,13 +83,13 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
                       SizedBox(height: Size.getHeight * 0.02),
                       buildTextLocation(),
                       SizedBox(height: Size.getHeight * 0.01),
-                      Container(
-                        height: Size.getHeight * 0.3,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: Colors.white),
-                        child: Placeholder(),
-                      )
+                      // Container(
+                      //   height: Size.getHeight * 0.3,
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(25),
+                      //       color: Colors.white),
+                      //   child: Placeholder(),
+                      // )
                     ],
                   ),
                 ),
@@ -186,86 +187,106 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
   }
 
   Widget buildRating() {
-    return SmoothStarRating(
-      rating: widget.motelModel.rating,
-      isReadOnly: false,
-      size: 24.0,
-      filledIconData: Icons.star,
-      halfFilledIconData: Icons.star_half,
-      defaultIconData: Icons.star_border,
-      starCount: 5,
-      allowHalfRating: true,
-      spacing: 2.0,
-      onRated: (value) {},
-      color: Colors.yellow,
-      borderColor: Colors.yellow[100],
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'Rating:',
+          textAlign: TextAlign.center,
+          style: StyleText.subhead16Black500,
+        ),
+        SizedBox(width: 8.0),
+        SmoothStarRating(
+          rating: widget.motelModel.rating,
+          isReadOnly: false,
+          size: 24.0,
+          filledIconData: Icons.star,
+          halfFilledIconData: Icons.star_half,
+          defaultIconData: Icons.star_border,
+          starCount: 5,
+          allowHalfRating: true,
+          spacing: 2.0,
+          onRated: (value) {},
+          color: Colors.yellow,
+          borderColor: Colors.yellow[100],
+        ),
+        SizedBox(width: 8.0),
+        Text(
+          '(${widget.motelModel.rating})',
+          textAlign: TextAlign.center,
+          style: StyleText.subhead16Black500,
+        ),
+      ],
     );
   }
 
   Widget buildTitile() {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(left: 4.0),
-                child: Text(
-                  widget.motelModel.title,
-                  style: StyleText.header24Black,
+        Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 4.0),
+              child: Text(
+                widget.motelModel.title,
+                style: StyleText.header24Black,
+              ),
+            ),
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  widget?.motelModel?.price ?? "",
+                  maxLines: 1,
+                  style: StyleText.header24GreenMixBlue,
                 ),
-              ),
-              SizedBox(height: Size.getHeight * 0.01),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.location_on,
-                        color: Colors.red,
-                        size: 24.0,
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 4.0),
-                  Flexible(
-                    child: Text(
-                      widget?.motelModel?.address ?? "",
-                      maxLines: 3,
-                      style: StyleText.subhead16Red500,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+                SizedBox(width: 4.0),
+                Text(
+                  "\$",
+                  maxLines: 1,
+                  style: StyleText.header24Red,
+                ),
+              ],
+            )
+          ],
         ),
-        Expanded(
-          flex: 1,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                widget?.motelModel?.price ?? "",
-                maxLines: 1,
-                style: StyleText.header24GreenMixBlue,
+        SizedBox(height: Size.getHeight * 0.01),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                  size: 24.0,
+                ),
+              ],
+            ),
+            SizedBox(width: 4.0),
+            Flexible(
+              child: Text(
+                widget?.motelModel?.address ?? "",
+                maxLines: 3,
+                style: StyleText.subhead16Red500,
               ),
-              SizedBox(width: 4.0),
-              Text(
-                "\$",
-                maxLines: 1,
-                style: StyleText.header24Red,
-              ),
-            ],
-          ),
+            ),
+            IconButton(
+              iconSize: 30.0,
+              icon: Icon(_enable ? Icons.favorite_border : Icons.favorite,
+                  color: _enable ? AppColor.selectColor : Colors.red),
+              onPressed: () {
+                setState(() {
+                  _enable = !_enable;
+                });
+              },
+            )
+          ],
         )
       ],
     );
@@ -275,10 +296,9 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40), topRight: Radius.circular(40)),
-        color: Colors.white,
-      ),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+          color: AppColor.colorClipPath),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -303,8 +323,7 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
             width: Size.getWidth * 0.65,
             height: Size.getHeight * 0.075,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
-                color: AppColor.selectContainerColor),
+                borderRadius: BorderRadius.circular(15.0), color: Colors.red),
             child: Center(
               child: Text(
                 "Booking rent",
@@ -314,7 +333,6 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
           )
         ],
       ),
-      // child: Placeholder(),
     );
   }
 

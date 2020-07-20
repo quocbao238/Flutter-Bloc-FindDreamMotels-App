@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> blocListener(HomeState state, BuildContext context) async {
     if (state is FeatchDataSucesesState) {
-      listDistrict = state.listDistrict;
+      // listDistrict = state.listDistrict;
       listMotels = state.listMotel;
     } else if (state is OnClickListDistrictsState) {
       districSelect = state.selectMotel.name;
@@ -60,9 +60,8 @@ class _HomePageState extends State<HomePage> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => MotelDescriptionPage(
-                    motelModel: state.motelModel
-                  )));
+              builder: (context) =>
+                  MotelDescriptionPage(motelModel: state.motelModel)));
     } else if (state is NewMotelState) {
       await Navigator.push(
               context, MaterialPageRoute(builder: (context) => NewMotelPage()))
@@ -103,9 +102,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: <Widget>[
               buildTopView(),
-              // buildFindDistricts(),
-              buildListDistric(),
-              // Spacer(),
+              _lookingFor(),
               Expanded(
                 child: Stack(
                   children: <Widget>[
@@ -114,7 +111,6 @@ class _HomePageState extends State<HomePage> {
                         ? Center(
                             child: SpinKitThreeBounce(
                               size: 50.0,
-                            
                               duration: Duration(milliseconds: 1000),
                               color: AppColor.colorClipPath,
                             ),
@@ -131,66 +127,156 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildViewMotels() {
-    return listMotels.length > 0
-        ? Container(
-            margin: EdgeInsets.only(bottom: Size.getHeight * 0.02),
-            // height: Size.getHeight * 0.35,
-            padding: EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemCount: listMotels.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: ((context, index) => HomeMotelItem(
-                    motelModel: listMotels[index],
-                    onTap: () {
-                      BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                          .add(OnClickListMotelssEvent(listMotels[index]));
-                    },
-                  )),
-            ),
-          )
-        : EmptyWidget();
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: Row(
+            children: <Widget>[
+              Text('Popular Destinations',
+                  style: GoogleFonts.heebo(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontSize: 18 * Size.scaleTxt)),
+              Spacer(),
+              Text('More',
+                  style: GoogleFonts.heebo(
+                      fontWeight: FontWeight.w300,
+                      decoration: TextDecoration.underline,
+                      color: Colors.black87,
+                      fontSize: 18 * Size.scaleTxt))
+            ],
+          ),
+        ),
+        listMotels.length > 0
+            ? Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    itemCount: listMotels.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: ((context, index) => HomeMotelItem(
+                          motelModel: listMotels[index],
+                          onTap: () {
+                            BlocProvider.of<HomeBloc>(
+                                    homeGlobalKey.currentContext)
+                                .add(
+                                    OnClickListMotelssEvent(listMotels[index]));
+                          },
+                        )),
+                  ),
+                ),
+              )
+            : Expanded(child: EmptyWidget()),
+      ],
+    );
   }
 
-  Widget buildListDistric() {
+  Widget _lookingFor() {
     return Container(
-      margin: EdgeInsets.only(top: 16, bottom: 16, left: 8.0,right: 32.0),
-      height: Size.getHeight * 0.06,
+      margin: EdgeInsets.only(top: 8, bottom: 8, left: 16.0, right: 8.0),
+      // height: Size.getHeight * 0.08,
       width: Size.getWidth,
-      color: Colors.red,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: listDistrict.length,
-        itemBuilder: (context, index) => InkWell(
-          onTap: () {
-            if (!ConfigApp.drawerShow) {
-              BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                  .add(OnClickListDistrictsEvent(listDistrict[index]));
-            }
-          },
-          child: Container(
-            margin: EdgeInsets.only(right: 12.0),
-            width: Size.getWidth * 0.25,
-            height: Size.getHeight * 0.06,
-            decoration: BoxDecoration(
+      // color: Colors.red,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "What are you looking for?",
+            style: GoogleFonts.heebo(
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+                fontSize: 30 * Size.scaleTxt),
+          ),
+          // SizedBox(height: 10.0),
+          Row(
+            children: <Widget>[
+              _itemLookingFor(iconUrl: AppSetting.flightIcon, title: "Fight"),
+              _itemLookingFor(iconUrl: AppSetting.hotelIcon, title: "Hotels"),
+              _itemLookingFor(
+                  iconUrl: AppSetting.holidayIcon, title: "Holidays"),
+              _itemLookingFor(iconUrl: AppSetting.eventIcon, title: "Event")
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _itemLookingFor({String iconUrl, String title, Function onTap}) {
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          if (onTap != null) onTap();
+        },
+        child: Container(
+          height: 80,
+          margin: EdgeInsets.only(right: 8.0),
+          decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: districSelect == listDistrict[index].name
-                  ? Colors.red[300]
-                  : Colors.white,
-            ),
-            child: Center(
-              child: Text(
-                listDistrict[index].name,
-                textAlign: TextAlign.center,
-                style: districSelect == listDistrict[index].name
-                    ? StyleText.subhead16White500
-                    : StyleText.subhead16GreenMixBlue,
-              ),
+              color: AppColor.colorClipPath.withOpacity(0.1)),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(child: SvgPicture.asset(iconUrl)),
+                SizedBox(height: 8.0),
+                Text(title,
+                    style: GoogleFonts.heebo(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        fontSize: 14 * Size.scaleTxt))
+              ],
             ),
           ),
         ),
       ),
     );
   }
+
+  // Widget buildListDistric() {
+  //   return Container(
+  //     margin: EdgeInsets.only(top: 16, bottom: 16, left: 8.0,right: 32.0),
+  //     height: Size.getHeight * 0.06,
+  //     width: Size.getWidth,
+  //     color: AppColor.backgroundColor,
+  //     child: ListView.builder(
+  //       scrollDirection: Axis.horizontal,
+  //       itemCount: listDistrict.length,
+  //       itemBuilder: (context, index) => InkWell(
+  //         onTap: () {
+  //           if (!ConfigApp.drawerShow) {
+  //             BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+  //                 .add(OnClickListDistrictsEvent(listDistrict[index]));
+  //           }
+  //         },
+  //         child: Container(
+  //           margin: EdgeInsets.only(right: 12.0),
+  //           width: Size.getWidth * 0.25,
+  //           height: Size.getHeight * 0.06,
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(15),
+  //             color: districSelect == listDistrict[index].name
+  //                 ? Colors.red[300]
+  //                 : Colors.white,
+  //           ),
+  //           child: Center(
+  //             child: Text(
+  //               listDistrict[index].name,
+  //               textAlign: TextAlign.center,
+  //               style: districSelect == listDistrict[index].name
+  //                   ? StyleText.subhead16White500
+  //                   : StyleText.subhead16GreenMixBlue,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget buildFindDistricts() {
     return Container(
@@ -286,7 +372,7 @@ class _HomePageState extends State<HomePage> {
                     style: GoogleFonts.vidaloka(
                         color: Colors.white, fontSize: 20 * Size.scaleTxt)),
                 SizedBox(height: Size.getHeight * 0.01),
-                Text("Motel HCM",
+                Text("Hotel",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.vidaloka(

@@ -41,7 +41,7 @@ class _NewMotelPageState extends State<NewMotelPage> {
     phoneTextEditingController =
         TextEditingController(text: ConfigUserInfo.phone);
     addressTextEditingController =
-        TextEditingController(text: ConfigUserInfo.address);
+        TextEditingController();
   }
 
   @override

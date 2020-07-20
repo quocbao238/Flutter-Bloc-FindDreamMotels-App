@@ -13,9 +13,9 @@ class LoadingState extends HomeState {}
 class LoadingMotels extends HomeState {}
 
 class FeatchDataSucesesState extends HomeState {
-  final List<DistrictModel> listDistrict;
+  // final List<DistrictModel> listDistrict;
   final List<MotelModel> listMotel;
-  FeatchDataSucesesState({this.listDistrict, this.listMotel});
+  FeatchDataSucesesState({ this.listMotel});
 }
 
 class FeatchDataFailState extends HomeState {}

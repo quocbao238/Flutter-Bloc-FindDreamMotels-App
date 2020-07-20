@@ -20,12 +20,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async* {
     if (event is FeatchDataEvent) {
       yield LoadingState();
-      var listDistrict = await featchDistrictLst();
-      if (listDistrict != null) {
-        var listMotel =
-            await featchMotelList(int.parse(listDistrict[0].districtId));
-        yield FeatchDataSucesesState(
-            listDistrict: listDistrict, listMotel: listMotel);
+      var listMotel = await featchMotelPopular();
+      if (listMotel != null) {
+        yield FeatchDataSucesesState(listMotel: listMotel);
       } else {
         yield FeatchDataFailState();
       }
@@ -45,6 +42,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
     yield HomeInitial();
   }
+}
+
+Future<List<MotelModel>> featchMotelPopular() async {
+  List<MotelModel> listMotel = [];
+  await ConfigApp.databaseReference
+      .collection('popular')
+      .getDocuments()
+      .then((QuerySnapshot snapshot) {
+    snapshot.documents.forEach((f) {
+      var motel = MotelModel.fromJson(f.data);
+      listMotel.add(motel);
+    });
+  });
+  listMotel.sort((a, b) => double.parse(a.timeUpdate.toString())
+      .compareTo(double.parse(b.timeUpdate.toString())));
+  return listMotel;
 }
 
 Future<List<MotelModel>> featchMotelList(int id) async {

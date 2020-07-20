@@ -9,7 +9,7 @@ import 'package:line_icons/line_icons.dart';
 
 class DashboardPage extends StatefulWidget {
   final Function onUserTap;
-  DashboardPage({@required  this.onUserTap});
+  DashboardPage({@required this.onUserTap});
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }
@@ -30,7 +30,8 @@ class _DashboardPageState extends State<DashboardPage> {
     return _pageView(context, Size.getWidth, Size.getHeight);
   }
 
-  Widget _pageView(BuildContext context, double getHeight, double getWidth) => Scaffold(
+  Widget _pageView(BuildContext context, double getHeight, double getWidth) =>
+      Scaffold(
         backgroundColor: AppColor.backgroundColor,
         key: dashboardGlobalKey,
         bottomNavigationBar: _bottomNavigationBar(),
@@ -65,6 +66,10 @@ class _DashboardPageState extends State<DashboardPage> {
                     GButton(
                       icon: LineIcons.home,
                       text: 'Home',
+                    ),
+                    GButton(
+                      icon: LineIcons.search,
+                      text: 'Search',
                     ),
                     GButton(
                       icon: LineIcons.heart_o,
