@@ -3,7 +3,6 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
-import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/models/district_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
 
@@ -76,18 +75,18 @@ Future<List<MotelModel>> featchMotelList(int id) async {
   return listMotel;
 }
 
-Future<List<DistrictModel>> featchDistrictLst() async {
-  List<DistrictModel> listDistrict = [];
-  await ConfigApp.databaseReference
-      .collection(AppSetting.collection)
-      .getDocuments()
-      .then((QuerySnapshot snapshot) {
-    snapshot.documents.forEach((f) {
-      var district = DistrictModel.fromJson(f.data);
-      listDistrict.add(district);
-    });
-  });
-  listDistrict.sort(
-      (a, b) => int.parse(a.districtId).compareTo(int.parse(b.districtId)));
-  return listDistrict;
-}
+// Future<List<DistrictModel>> featchDistrictLst() async {
+//   List<DistrictModel> listDistrict = [];
+//   await ConfigApp.databaseReference
+//       .collection(AppSetting.dbdistricList)
+//       .getDocuments()
+//       .then((QuerySnapshot snapshot) {
+//     snapshot.documents.forEach((f) {
+//       var district = DistrictModel.fromJson(f.data);
+//       listDistrict.add(district);
+//     });
+//   });
+//   listDistrict.sort(
+//       (a, b) => int.parse(a.districtId).compareTo(int.parse(b.districtId)));
+//   return listDistrict;
+// }

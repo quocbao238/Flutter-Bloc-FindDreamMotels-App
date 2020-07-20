@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/mainData.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/intro/view/intro_screen.dart';
 import 'package:findingmotels/services/firebase_service.dart';
@@ -30,6 +31,7 @@ Future<void> main() async {
         title: 'Find Accommodation',
         theme: ThemeData(primarySwatch: Colors.blue),
         home: App(),
+        // home: CreateDataPage(),
       ),
     ),
   );

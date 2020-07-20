@@ -132,7 +132,7 @@ class _NewMotelPageState extends State<NewMotelPage> {
                       ? districList.indexOf(district)
                       : null,
                   amenities: _listAmenity,
-                  price: "60",
+                  price: priceTextEditingController.text.trim(),
                   phoneNumber: ConfigUserInfo.phone ?? "",
                   location: location,
                   title: titleTextEditingController.text.trim(),

@@ -2,13 +2,13 @@ import 'package:basic_utils/basic_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:findingmotels/models/motel_model.dart';
+import 'package:findingmotels/pages/motel_detail/bloc/motel_detail_bloc.dart';
 import 'package:findingmotels/widgets/empty/empty_widget.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
-
-import 'descripLocalData.dart';
 
 class MotelDescriptionPage extends StatefulWidget {
   final MotelModel motelModel;
@@ -19,9 +19,11 @@ class MotelDescriptionPage extends StatefulWidget {
 
 class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
   List<dynamic> images = [];
-  bool _enable = false;
+  GlobalKey globalKey;
+  bool _isFv = false;
   @override
   void initState() {
+    globalKey = GlobalKey();
     super.initState();
     for (var imgMotel in widget.motelModel.imageMotel) {
       images.add(CachedNetworkImage(
@@ -35,10 +37,26 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) =>
+            MotelDetailBloc()..add(FeatchDataEvent(widget.motelModel)),
+        child: BlocListener<MotelDetailBloc, MotelDetailState>(
+            listener: (context, state) => blocListener(state, context),
+            child: BlocBuilder<MotelDetailBloc, MotelDetailState>(
+                builder: (context, state) => _scaffold())));
+  }
+
+  void blocListener(MotelDetailState state, BuildContext context) {
+    if (state is FeatchDataSucessState) {
+      _isFv = state.isFv;
+    }
+  }
+
+  Widget _scaffold() {
     return Scaffold(
+      key: globalKey,
       body: Stack(
         children: <Widget>[
-          // buildBackground(),
           buildPageView(),
           buildButtonBack(),
         ],
@@ -276,16 +294,21 @@ class _MotelDescriptionPageState extends State<MotelDescriptionPage> {
                 style: StyleText.subhead16Red500,
               ),
             ),
-            IconButton(
-              iconSize: 30.0,
-              icon: Icon(_enable ? Icons.favorite_border : Icons.favorite,
-                  color: _enable ? AppColor.selectColor : Colors.red),
-              onPressed: () {
-                setState(() {
-                  _enable = !_enable;
-                });
-              },
-            )
+            InkWell(
+                onTap: () {
+                  BlocProvider.of<MotelDetailBloc>(globalKey.currentContext)
+                      .add(OnTapFavoriteEvent(
+                    isFavorite: _isFv,
+                    motel: widget.motelModel,
+                  ));
+                },
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                  child: Center(
+                    child: Icon(!_isFv ? Icons.favorite_border : Icons.favorite,
+                        color: !_isFv ? AppColor.selectColor : Colors.red),
+                  ),
+                ))
           ],
         )
       ],

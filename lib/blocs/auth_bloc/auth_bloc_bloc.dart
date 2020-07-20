@@ -38,7 +38,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     UserInfoModel _userInfo = UserInfoModel();
     _userInfo = null;
     await ConfigApp.databaseReference
-        .collection(AppSetting.user)
+        .collection(AppSetting.dbuser)
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {

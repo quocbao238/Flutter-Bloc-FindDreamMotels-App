@@ -7,7 +7,6 @@ import 'package:intro_slider/slide_object.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
 
 class IntroPage extends StatefulWidget {
-
   @override
   _IntroPageState createState() => _IntroPageState();
 }
@@ -101,21 +100,13 @@ class _IntroPageState extends State<IntroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-    body: Stack(
-        children: <Widget>[
-          Positioned.fill(
-            // child: Container(color: Colors.red),
-            child: _introSlider()
-          )
-        ],
-      ),
+    resizeToAvoidBottomPadding: false,
+    body: _introSlider(),
     );
   }
 
   Widget _introSlider() => IntroSlider(
         slides: this.slides,
-
         // Skip button
         renderSkipBtn: this.renderSkipBtn(),
         colorSkipBtn: AppColor.backgroundColor,
@@ -145,7 +136,7 @@ class _IntroPageState extends State<IntroPage> {
         },
 
         // Show or hide status bar
-        shouldHideStatusBar: true,
+        shouldHideStatusBar: false,
 
         // On tab change completed
         onTabChangeCompleted: this.onTabChangeCompleted,

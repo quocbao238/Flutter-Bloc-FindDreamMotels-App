@@ -14,6 +14,7 @@ class MotelModel {
         this.districtId,
         this.title,
         this.name,
+        this.documentId,
         this.email,
         this.timeUpdate,
         this.address,
@@ -30,6 +31,7 @@ class MotelModel {
     int districtId;
     String title;
     String name;
+    String documentId;
     String email;
     double timeUpdate;
     String address;
@@ -46,6 +48,7 @@ class MotelModel {
         districtId: json["districtId"] == null ? null : json["districtId"],
         title: json["title"] == null ? null : json["title"],
         name: json["name"] == null ? null : json["name"],
+        documentId: json["documentId"] == null ? null : json["documentId"],
         email: json["email"] == null ? null : json["email"],
         timeUpdate: json["timeUpdate"] == null ? null : json["timeUpdate"].toDouble(),
         address: json["address"] == null ? null : json["address"],
@@ -63,6 +66,7 @@ class MotelModel {
         "districtId": districtId == null ? null : districtId,
         "title": title == null ? null : title,
         "name": name == null ? null : name,
+        "documentId": documentId == null ? null : documentId,
         "email": email == null ? null : email,
         "timeUpdate": timeUpdate == null ? null : timeUpdate,
         "address": address == null ? null : address,

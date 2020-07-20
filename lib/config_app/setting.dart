@@ -45,10 +45,12 @@ class AppSetting {
   static const holidayIcon = 'assets/icon/hotelIcon.svg';
   static const eventIcon = 'assets/icon/eventIcon.svg';
 
-
   //Database
-  static String collection = 'districList';
-  static String user = 'user';
+  static String dbdistricList = 'districList';
+  static String locationHCM = 'hcm';
+  static String dbData = 'data';
+  static String dbpopular = 'popular';
 
+  static String dbuser = 'user';
+  static String dbfavorite = 'favorite';
 }
-

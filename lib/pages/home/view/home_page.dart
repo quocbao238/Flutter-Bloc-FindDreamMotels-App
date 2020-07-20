@@ -4,7 +4,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/district_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
-import 'package:findingmotels/pages/motel_detail/motels_description_screen.dart';
+import 'package:findingmotels/pages/motel_detail/view/motel_detail_page.dart';
 import 'package:findingmotels/pages/new_motel/view/new_motel_screen.dart';
 import 'package:findingmotels/pages/widgets/home_item_motel.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';

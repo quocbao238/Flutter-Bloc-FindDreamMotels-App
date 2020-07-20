@@ -3,6 +3,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/favorite/view/favorite_page.dart';
 import 'package:findingmotels/pages/home/view/home_page.dart';
 import 'package:findingmotels/pages/notifycation/view/notify_screen.dart';
+import 'package:findingmotels/pages/search/view/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -17,10 +18,9 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   GlobalKey dashboardGlobalKey = GlobalKey();
   int _selectedIndex = 0;
-  // static TextStyle optionStyle =
-  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List<Widget> _widgetOptions = <Widget>[
     HomePage(),
+    SearchPage(),
     FavoritePage(),
     NotifyPage(),
   ];
@@ -88,7 +88,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   onTabChange: (index) {
                     if (!ConfigApp.drawerShow) {
                       setState(() {
-                        if (index != 3) {
+                        if (index != 4) {
                           _selectedIndex = index;
                         } else {
                           if (widget.onUserTap != null) {

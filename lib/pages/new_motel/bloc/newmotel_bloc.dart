@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/validator/validator.dart';
@@ -84,38 +85,44 @@ class NewmotelBloc extends Bloc<NewmotelEvent, NewmotelState> {
             if (event.districtId != null) {
               if (event.amenities != null) {
                 if (event.price != null) {
-                  if (event.listImg != null) {
-                    List<ImageMotel> lstImg =
-                        await updateImgToClound(event.listImg);
-                    if (lstImg != null) {
-                      var motel = await createNewPost(
-                          title: event.title,
-                          description: event.description,
-                          address: event.address,
-                          districtId: event.districtId,
-                          amenities: event.amenities,
-                          price: event.price,
-                          imageMotel: lstImg,
-                          location: event.location,
-                          email: ConfigUserInfo.email ?? "",
-                          name: ConfigUserInfo.name,
-                          phoneNumber: ConfigUserInfo.phone,
-                          rating: 5.0,
-                          timeUpdate:
-                              DateTime.now().millisecondsSinceEpoch.toDouble(),
-                          userIdCreate: ConfigApp.fbuser.uid);
-                      if (motel != null) {
-                        showToast('Create new post Sucess');
-                        yield OnTapCreatePostSucessState();
+                  if (event.phoneNumber != null) {
+                    if (event.listImg != null) {
+                      List<ImageMotel> lstImg =
+                          await updateImgToClound(event.listImg);
+                      if (lstImg != null) {
+                        var motel = await createNewPost(
+                            title: event.title,
+                            description: event.description,
+                            address: event.address,
+                            districtId: event.districtId,
+                            amenities: event.amenities,
+                            price: event.price,
+                            imageMotel: lstImg,
+                            location: event.location,
+                            email: ConfigUserInfo.email ?? "",
+                            name: ConfigUserInfo.name,
+                            phoneNumber: ConfigUserInfo.phone,
+                            rating: 5.0,
+                            timeUpdate: DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toDouble(),
+                            userIdCreate: ConfigApp.fbuser.uid);
+                        if (motel != null) {
+                          showToast('Create new post Sucess');
+                          yield OnTapCreatePostSucessState();
+                        } else {
+                          yield OnTapCreatePostFailState(
+                              errorMessage:
+                                  'Create new post fail, Please try again later');
+                        }
                       } else {
                         yield OnTapCreatePostFailState(
                             errorMessage:
-                                'Create new post fail, Please try again later');
+                                'An Image error occurred please try again later');
                       }
                     } else {
                       yield OnTapCreatePostFailState(
-                          errorMessage:
-                              'An Image error occurred please try again later');
+                          errorMessage: 'Phonenumber can not Empty');
                     }
                   } else {
                     yield OnTapCreatePostFailState(
@@ -149,6 +156,32 @@ class NewmotelBloc extends Bloc<NewmotelEvent, NewmotelState> {
   }
 }
 
+Future setDataToServer(
+    {int districtId, MotelModel newmotel, int documentId}) async {
+  await ConfigApp.databaseReference
+      .collection(AppSetting.dbData)
+      .document(AppSetting.locationHCM)
+      .collection(districtId.toString())
+      .document(documentId.toString())
+      .setData(newmotel.toJson());
+}
+
+Future<MotelModel> getDataFromSever({int documentId, int districtId}) async {
+  MotelModel _newMotel;
+  await ConfigApp.databaseReference
+      .collection(AppSetting.dbData)
+      .document(AppSetting.locationHCM)
+      .collection(districtId.toString())
+      .getDocuments()
+      .then((QuerySnapshot snapshot) {
+    snapshot.documents.forEach((f) {
+      if (f.documentID == documentId.toString())
+        _newMotel = MotelModel.fromJson(f.data);
+    });
+  });
+  return _newMotel;
+}
+
 Future<MotelModel> createNewPost(
     {String userIdCreate,
     int districtId,
@@ -164,13 +197,14 @@ Future<MotelModel> createNewPost(
     List<Amenity> amenities,
     String description,
     Location location}) async {
-  int newDocument = DateTime.now().millisecondsSinceEpoch;
+  int doucumentId = DateTime.now().millisecondsSinceEpoch;
   MotelModel _newmotel = MotelModel(
       address: address,
       amenities: amenities,
       description: description,
       districtId: districtId,
       email: email,
+      documentId: doucumentId.toString(),
       imageMotel: imageMotel,
       location: location,
       name: name,
@@ -180,24 +214,16 @@ Future<MotelModel> createNewPost(
       timeUpdate: timeUpdate,
       title: title,
       userIdCreate: userIdCreate);
-  await ConfigApp.databaseReference
-      .collection('popular')
-      .document(newDocument.toString())
-      .setData(_newmotel.toJson());
-  await ConfigApp.databaseReference
-      .collection('popular')
-      .getDocuments()
-      .then((QuerySnapshot snapshot) {
-    snapshot.documents.forEach((f) {
-      if (f.documentID == newDocument.toString())
-        _newmotel = MotelModel.fromJson(f.data);
-    });
-  });
+  try {
+    await setDataToServer(
+        districtId: districtId, documentId: doucumentId, newmotel: _newmotel);
+    _newmotel =
+        await getDataFromSever(districtId: districtId, documentId: doucumentId);
+  } catch (e) {
+    print('Catch createNewPost newmotel_bloc' + e.toString());
+  }
   return _newmotel;
 }
-
-      // .collection(districtId.toString())
-
 
 Future<ImageMotel> postImage(Asset imageFile) async {
   String fileName = DateTime.now().millisecondsSinceEpoch.toString();

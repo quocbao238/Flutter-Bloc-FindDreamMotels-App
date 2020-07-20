@@ -1,4 +1,3 @@
-
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:flutter/material.dart';
 import 'config_app/configApp.dart';
@@ -41,7 +40,9 @@ class _CreateDataPageState extends State<CreateDataPage> {
     print("asyncOne start");
     await Future.forEach(districList, (data) async {
       await ConfigApp.databaseReference
-          .collection(AppSetting.collection)
+          .collection(AppSetting.dbData)
+          .document(AppSetting.locationHCM)
+          .collection(AppSetting.dbdistricList)
           .document(i.toString())
           .setData({'name': data, "districtId": i.toString()});
       i++;
@@ -51,13 +52,15 @@ class _CreateDataPageState extends State<CreateDataPage> {
 
   
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue[200],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          createCategoriesData();
+          createCategoriesData(); 
         },
         child: Center(
           child: Icon(

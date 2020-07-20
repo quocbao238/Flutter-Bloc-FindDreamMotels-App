@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/pages/login/bloc/login_bloc.dart';
 import 'package:findingmotels/validator/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -25,11 +26,12 @@ class UserregBloc extends Bloc<UserregEvent, UserregState> {
         if (Valid.isUserNamee(event.userName)) {
           if (Valid.isEmail(event.email)) {
             if (Valid.isPassword(event.password)) {
-              var user = await ConfigApp.firebaseAuth.signUpUserWithEmailPass(
-                  event.email, event.password);
+              var user = await ConfigApp.firebaseAuth
+                  .signUpUserWithEmailPass(event.email, event.password);
               if (user != null) {
                 FirebaseUser userSend = await updateUser(event, user);
                 ConfigApp.fbuser = userSend;
+                await featchUserData();
                 yield UserRegSuccessful(userSend);
               } else {
                 yield UserRegFailure(

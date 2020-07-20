@@ -19,4 +19,7 @@ class FirebaseService {
         app: ConfigApp.fbApp,
         storageBucket: 'gs://find-accommodation-b2e61.appspot.com/');
   }
+
+  
+
 }

@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/config_app/setting.dart';
+import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:findingmotels/validator/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 part 'login_event.dart';
@@ -24,6 +27,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                 .signInEmailAndPassword(event.email, event.password);
             if (user != null) {
               ConfigApp.fbuser = user;
+              await featchUserData();
               yield LoginSuccessState(user: user);
             } else {
               yield LoginFailState(
@@ -62,3 +66,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     yield LoginInitial();
   }
 }
+
+Future<void> featchUserData() async {
+    UserInfoModel _userInfo = UserInfoModel();
+    _userInfo = null;
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.documentID == ConfigApp.fbuser.uid)
+          _userInfo = UserInfoModel.fromJson(f.data);
+      });
+    });
+    ConfigUserInfo.phone = _userInfo.phone;
+    ConfigUserInfo.address = _userInfo.address;
+    ConfigUserInfo.birthday = _userInfo.birthday;
+    ConfigUserInfo.email = _userInfo.email;
+    ConfigUserInfo.name = _userInfo.name;
+  }

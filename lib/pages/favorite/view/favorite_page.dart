@@ -38,7 +38,7 @@ class _FavoritePageState extends State<FavoritePage> {
         key: globalKey,
         backgroundColor: AppColor.backgroundColor,
         body: Stack(
-          children: <Widget>[buildBackground(0.13), _body()],
+          children: <Widget>[buildBackground(0.12), _body()],
         ),
       );
 

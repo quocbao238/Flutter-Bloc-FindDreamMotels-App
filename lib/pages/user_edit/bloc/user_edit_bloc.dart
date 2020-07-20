@@ -84,7 +84,9 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     UserInfoModel _userInfo = UserInfoModel();
     _userInfo = null;
     await ConfigApp.databaseReference
-        .collection(AppSetting.user)
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {
@@ -108,11 +110,15 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
         phone: ' ',
         role: '0');
     await ConfigApp.databaseReference
-        .collection(AppSetting.user)
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
         .document(ConfigApp.fbuser.uid)
         .setData(_userInfo.toJson());
     await ConfigApp.databaseReference
-        .collection(AppSetting.user)
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {
@@ -127,11 +133,15 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
   Future<UserInfoModel> updateDataToClound(UserInfoModel _userInfo) async {
     UserInfoModel userInfoModel = UserInfoModel();
     await ConfigApp.databaseReference
-        .collection(AppSetting.user)
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
         .document(ConfigApp.fbuser.uid)
         .setData(_userInfo.toJson());
     await ConfigApp.databaseReference
-        .collection(AppSetting.user)
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {
