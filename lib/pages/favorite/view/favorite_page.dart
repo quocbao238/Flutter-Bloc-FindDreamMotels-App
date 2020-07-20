@@ -18,6 +18,7 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   GlobalKey globalKey;
   List<MotelModel> listFavoriteMotels;
+  bool isHaveData = false;
 
   @override
   void initState() {
@@ -36,7 +37,9 @@ class _FavoritePageState extends State<FavoritePage> {
                 builder: (context, state) => Stack(
                       children: <Widget>[
                         _scaffold(state),
-                        state is FavoriteLoadingState ? LoadingWidget() : SizedBox()
+                        state is FavoriteLoadingState
+                            ? LoadingWidget()
+                            : SizedBox()
                       ],
                     ))));
   }
@@ -44,13 +47,14 @@ class _FavoritePageState extends State<FavoritePage> {
   void blocListener(FavoriteState state, BuildContext context) async {
     if (state is FeatchFavoriteListSucessState) {
       listFavoriteMotels = state.listMotel;
+      isHaveData = true;
     } else if (state is GoToDetailState) {
       await Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  MotelDetailPage(motelModel: state.motelModel))).then((_) {
-        BlocProvider.of(globalKey.currentContext)
+                  MotelDetailPage(motelModel: state.motelModel))).then((v) {
+        BlocProvider.of<FavoriteBloc>(globalKey.currentContext)
             .add(FeatchFavoriteListEvent());
       });
     }
@@ -90,7 +94,7 @@ class _FavoritePageState extends State<FavoritePage> {
                 onTapDirect: () {},
               ),
             )
-          : state is FavoriteLoadingState ? SizedBox() : EmptyWidget());
+          : isHaveData ? Expanded(child: EmptyWidget()) : SizedBox());
 
   Widget _appBar() => Container(
         padding: EdgeInsets.only(top: 32.0),

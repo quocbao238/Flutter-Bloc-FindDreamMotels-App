@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/models/motel_model.dart';
-import 'package:oktoast/oktoast.dart';
 
 part 'motel_detail_event.dart';
 part 'motel_detail_state.dart';
@@ -32,9 +31,8 @@ class MotelDetailBloc extends Bloc<MotelDetailEvent, MotelDetailState> {
       yield LoadingState();
       if (event.isFavorite) {
         //Delete
-        showToast('Delete');
         bool isRemove = await removeMotelFavorite(event.motel);
-        yield OnTapFavoriteRemoveState(!isRemove);
+        yield OnTapFavoriteRemoveState(isRemove);
       } else {
         //Add New
         bool isFv = await addToListFavorite(event.motel);
@@ -49,7 +47,7 @@ Future<bool> checkFavorite(
     List<MotelModel> favoriteList, MotelModel motelModel) async {
   var isFv = false;
   favoriteList.forEach((e) {
-    if (e.name == motelModel.name) isFv = true;
+    if (e.documentId == motelModel.documentId) isFv = true;
   });
   return isFv;
 }
@@ -107,7 +105,7 @@ Future<bool> addToListFavorite(MotelModel motelModel) async {
 }
 
 Future<bool> removeMotelFavorite(MotelModel motelModel) async {
-  bool removeSucess = false;
+  bool removeSucess = true;
   try {
     await ConfigApp.databaseReference
         .collection(AppSetting.dbuser)
@@ -127,7 +125,7 @@ Future<bool> removeMotelFavorite(MotelModel motelModel) async {
     });
   } catch (e) {
     print(e.toString());
-    return false;
+    return true;
   }
   return removeSucess;
 }

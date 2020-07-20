@@ -1,7 +1,7 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
-import 'package:findingmotels/models/district_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
 import 'package:findingmotels/pages/motel_detail/view/motel_detail_page.dart';
@@ -25,8 +25,9 @@ class _HomePageState extends State<HomePage> {
   GlobalKey homeGlobalKey;
   String imageUrl = AppSetting.logoutImg;
   String districSelect = "District 1";
+  CarouselController buttonCarouselController = CarouselController();
   var rating = 3.0;
-  bool isHaveData;
+  bool isHaveData = false;
 
   List<MotelModel> listMotels;
 
@@ -34,7 +35,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     listMotels = [];
-    isHaveData = false;
     homeGlobalKey = GlobalKey();
   }
 
@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
     if (state is FeatchDataSucesesState) {
       // listDistrict = state.listDistrict;
       listMotels = state.listMotel;
+      isHaveData = true;
     } else if (state is OnClickListDistrictsState) {
       districSelect = state.selectMotel.name;
       listMotels = state.listMotel;
@@ -138,28 +139,41 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        listMotels.length > 0
-            ? Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                    itemCount: listMotels.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: ((context, index) => HomeMotelItem(
-                          motelModel: listMotels[index],
-                          onTap: () {
-                            BlocProvider.of<HomeBloc>(
-                                    homeGlobalKey.currentContext)
-                                .add(
-                                    OnClickListMotelssEvent(listMotels[index]));
-                          },
-                        )),
-                  ),
-                ),
-              )
-            : listMotels.length == 0
-                ? Expanded(child: SizedBox())
-                : SizedBox()
+        // listMotels.length > 0
+        //     ? Expanded(
+        //         child: Container(
+        //           padding: EdgeInsets.all(8.0),
+        //           child: ListView.builder(
+        //             itemCount: listMotels.length,
+        //             scrollDirection: Axis.horizontal,
+        //             itemBuilder: ((context, index) => HomeMotelItem(
+        //                   motelModel: listMotels[index],
+        //                   onTap: () {
+        //                     BlocProvider.of<HomeBloc>(
+        //                             homeGlobalKey.currentContext)
+        //                         .add(
+        //                             OnClickListMotelssEvent(listMotels[index]));
+        //                   },
+        //                 )),
+        //           ),
+        //         ),
+        //       )
+        //     : isHaveData ? Expanded(child: EmptyWidget()) : SizedBox()
+        Expanded(
+            child: CarouselSlider.builder(
+          itemCount: listMotels.length,
+          itemBuilder: (BuildContext context, int index) => HomeMotelItem(
+            motelModel: listMotels[index],
+            onTap: () {
+              BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                  .add(OnClickListMotelssEvent(listMotels[index]));
+            },
+          ),
+          options: CarouselOptions(
+            autoPlay: true,
+            autoPlayInterval: Duration(milliseconds: 500),
+          ),
+        ))
       ],
     );
   }
@@ -178,7 +192,7 @@ class _HomePageState extends State<HomePage> {
             style: GoogleFonts.heebo(
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
-                fontSize: 30 * Size.scaleTxt),
+                fontSize: 24 * Size.scaleTxt),
           ),
           // SizedBox(height: 10.0),
           Row(

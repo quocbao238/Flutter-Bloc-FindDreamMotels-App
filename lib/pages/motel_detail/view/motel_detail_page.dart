@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:basic_utils/basic_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
@@ -58,6 +60,8 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     if (state is FeatchDataSucessState) {
       _isFv = state.isFv;
     } else if (state is OnTapFavoriteRemoveState) {
+      _isFv = !state.isFv;
+    } else if (state is OnTapFavoriteSucessState) {
       _isFv = state.isFv;
     }
   }
@@ -128,7 +132,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
                 ),
               ),
             ),
-            buildBottomCallandBooking(),
+            // buildBottomCallandBooking(),
           ],
         ),
       ),
@@ -223,11 +227,6 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(
-          'Rating:',
-          textAlign: TextAlign.center,
-          style: StyleText.subhead16Black500,
-        ),
         SizedBox(width: 8.0),
         SmoothStarRating(
           rating: widget.motelModel.rating,
@@ -245,7 +244,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
         ),
         SizedBox(width: 8.0),
         Text(
-          '(${widget.motelModel.rating})',
+          '${Random().nextInt(5000)} reviews',
           textAlign: TextAlign.center,
           style: StyleText.subhead16Black500,
         ),
@@ -318,7 +317,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
                   ));
                 },
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                   child: Center(
                     child: Icon(!_isFv ? Icons.favorite_border : Icons.favorite,
                         color: !_isFv ? AppColor.selectColor : Colors.red),
@@ -335,15 +334,14 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
       padding: EdgeInsets.symmetric(vertical: 10.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           color: AppColor.colorClipPath),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: Size.getHeight * 0.075,
-            height: Size.getHeight * 0.075,
+            padding: EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.0),
               color: AppColor.colorBlue156,
@@ -351,21 +349,20 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
             child: Center(
               child: Icon(
                 Icons.phone_iphone,
-                size: 30.0,
+                size: 16.0,
                 color: Colors.white,
               ),
             ),
           ),
           SizedBox(width: 16.0),
           Container(
-            width: Size.getWidth * 0.65,
-            height: Size.getHeight * 0.075,
+            padding: EdgeInsets.all(8.0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0), color: Colors.red),
             child: Center(
               child: Text(
                 "Booking rent",
-                style: StyleText.header20White,
+                style: StyleText.subhead16White500,
               ),
             ),
           )

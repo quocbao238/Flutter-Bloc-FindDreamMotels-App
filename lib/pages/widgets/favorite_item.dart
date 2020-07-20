@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/motel_model.dart';
+import 'package:findingmotels/pages/new_motel/bloc/newmotel_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -104,9 +107,8 @@ class FavoriteItem extends StatelessWidget {
               ),
               SizedBox(height: 8.0),
               Text(
-                // "Alley 60 - Cach Mang Thang Tam, Ward 6, District 3, Ho Chi Minh 21321 3213 21321312321 321 3213 21",
-                motelModel.address,
-                maxLines: 2,
+                districList[motelModel.districtId] + ", Ho Chi Minh, Viet Nam",
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: StyleText.content14Black400,
               ),
@@ -117,12 +119,19 @@ class FavoriteItem extends StatelessWidget {
                     '${motelModel.price}\$',
                     style: StyleText.price20Red,
                   ),
+                  SizedBox(width: 16.0),
                   Spacer(),
                   FlutterRatingBar(
-                    itemSize: 24.0,
+                    itemSize: 16.0,
                     initialRating: motelModel.rating,
                     onRatingUpdate: (v) {},
-                  )
+                  ),
+                  SizedBox(width: 8.0),
+                  Text(
+                    '${Random().nextInt(5000)} reviews',
+                    textAlign: TextAlign.center,
+                    style: StyleText.content14Black400,
+                  ),
                 ],
               ),
               SizedBox(height: 8.0),

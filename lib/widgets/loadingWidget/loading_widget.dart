@@ -5,7 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingWidget extends StatelessWidget {
   final bool filter;
-  LoadingWidget({this.filter = true});
+  LoadingWidget({this.filter = false});
   @override
   Widget build(BuildContext context) {
     return Stack(
