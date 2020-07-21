@@ -41,11 +41,12 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget _bottomNavigationBar() => Container(
     // color: AppColor.backgroundColor,
         decoration: BoxDecoration(
-          color: AppColor.colorClipPath,
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 20, color: AppColor.colorBlue156.withOpacity(0.3)),
-          ],
+          // color: AppColor.colorClipPath,
+          // boxShadow: [
+          //   BoxShadow(
+          //       blurRadius: 20, 
+          //       color: AppColor.colorClipPath.withOpacity(0.3)),
+          // ],
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
@@ -58,8 +59,8 @@ class _DashboardPageState extends State<DashboardPage> {
               child: GNav(
                   gap: 12,
                   activeColor: AppColor.whiteColor,
-                  color: AppColor.whiteColor,
-                  tabBackgroundColor: AppColor.alerBtnColor,
+                  color: AppColor.blackColor,
+                  tabBackgroundColor: AppColor.colorClipPath,
                   iconSize: 24,
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   duration: Duration(milliseconds: 200),

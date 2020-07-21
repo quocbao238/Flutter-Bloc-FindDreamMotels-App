@@ -20,13 +20,18 @@ void getSizeApp(BuildContext context) {
 
 class AppColor {
   AppColor._();
-  static Color backgroundColor = Color.fromRGBO(211, 220, 240, 1);
+  // static Color backgroundColor = Color.fromRGBO(211, 220, 240, 1);
+
+  static Color backgroundColor = Color(0xFFEBF2FA);
+  // static Color whiteColor = Colors.white;
   static Color whiteColor = Colors.white;
-  static Color colorClipPath = Color.fromRGBO(9, 92, 113, 1);
+  // static Color colorClipPath = Color.fromRGBO(9, 92, 113, 1);
+  static Color blackColor = Colors.black;
+  static Color colorClipPath = Color(0xFF6184D8);
   static Color colorBlue156 = Color.fromRGBO(44, 156, 162, 1);
   static Color alerBtnColor = Color(0xff00bfa5);
-  static Color selectContainerColor =
-      Color.fromRGBO(255, 79, 76, 1).withOpacity(0.6);
+  // static Color selectContainerColor =
+  //     Color.fromRGBO(255, 79, 76, 1).withOpacity(0.6);
   static Color selectColor = Color(0xff556F7A);
 }
 

@@ -137,6 +137,10 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                     icon: Icons.error,
                     title: 'About App',
                     onTap: () => showToast('About App')),
+                _item(
+                    icon: Icons.view_carousel,
+                    title: 'Version ${AppSetting.version}',
+                    onTap: () {}),
               ],
             ),
           ),

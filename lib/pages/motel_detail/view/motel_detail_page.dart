@@ -259,14 +259,18 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 4.0),
-              child: Text(
-                widget.motelModel.title,
-                style: StyleText.header24Black,
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(left: 4.0),
+                child: Text(
+                  widget.motelModel.title,
+                  style: StyleText.header24Black,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
-            Spacer(),
+            SizedBox(width: 8.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,

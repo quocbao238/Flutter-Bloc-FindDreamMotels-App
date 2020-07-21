@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   GlobalKey homeGlobalKey;
   String imageUrl = AppSetting.logoutImg;
   String districSelect = "District 1";
-  CarouselController buttonCarouselController = CarouselController();
+  CarouselController carouselController = CarouselController();
   var rating = 3.0;
   bool isHaveData = false;
 
@@ -139,41 +139,24 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        // listMotels.length > 0
-        //     ? Expanded(
-        //         child: Container(
-        //           padding: EdgeInsets.all(8.0),
-        //           child: ListView.builder(
-        //             itemCount: listMotels.length,
-        //             scrollDirection: Axis.horizontal,
-        //             itemBuilder: ((context, index) => HomeMotelItem(
-        //                   motelModel: listMotels[index],
-        //                   onTap: () {
-        //                     BlocProvider.of<HomeBloc>(
-        //                             homeGlobalKey.currentContext)
-        //                         .add(
-        //                             OnClickListMotelssEvent(listMotels[index]));
-        //                   },
-        //                 )),
-        //           ),
-        //         ),
-        //       )
-        //     : isHaveData ? Expanded(child: EmptyWidget()) : SizedBox()
-        Expanded(
-            child: CarouselSlider.builder(
-          itemCount: listMotels.length,
-          itemBuilder: (BuildContext context, int index) => HomeMotelItem(
-            motelModel: listMotels[index],
-            onTap: () {
-              BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                  .add(OnClickListMotelssEvent(listMotels[index]));
-            },
-          ),
-          options: CarouselOptions(
-            autoPlay: true,
-            autoPlayInterval: Duration(milliseconds: 500),
-          ),
-        ))
+        listMotels.length > 0
+            ? Expanded(
+                child: CarouselSlider.builder(
+                itemCount: listMotels.length,
+                itemBuilder: (BuildContext context, int index) => HomeMotelItem(
+                  motelModel: listMotels[index],
+                  onTap: () {
+                    BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                        .add(OnClickListMotelssEvent(listMotels[index]));
+                  },
+                ),
+                options: CarouselOptions(
+                  autoPlay: true,
+                  autoPlayCurve: Curves.easeInOut,
+                  autoPlayInterval: Duration(milliseconds: 2000),
+                ),
+              ))
+            : isHaveData ? Expanded(child: EmptyWidget()) : SizedBox()
       ],
     );
   }
@@ -241,86 +224,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Widget buildListDistric() {
-  //   return Container(
-  //     margin: EdgeInsets.only(top: 16, bottom: 16, left: 8.0,right: 32.0),
-  //     height: Size.getHeight * 0.06,
-  //     width: Size.getWidth,
-  //     color: AppColor.backgroundColor,
-  //     child: ListView.builder(
-  //       scrollDirection: Axis.horizontal,
-  //       itemCount: listDistrict.length,
-  //       itemBuilder: (context, index) => InkWell(
-  //         onTap: () {
-  //           if (!ConfigApp.drawerShow) {
-  //             BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-  //                 .add(OnClickListDistrictsEvent(listDistrict[index]));
-  //           }
-  //         },
-  //         child: Container(
-  //           margin: EdgeInsets.only(right: 12.0),
-  //           width: Size.getWidth * 0.25,
-  //           height: Size.getHeight * 0.06,
-  //           decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(15),
-  //             color: districSelect == listDistrict[index].name
-  //                 ? Colors.red[300]
-  //                 : Colors.white,
-  //           ),
-  //           child: Center(
-  //             child: Text(
-  //               listDistrict[index].name,
-  //               textAlign: TextAlign.center,
-  //               style: districSelect == listDistrict[index].name
-  //                   ? StyleText.subhead16White500
-  //                   : StyleText.subhead16GreenMixBlue,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  Widget buildFindDistricts() {
-    return Container(
-      height: 40.0,
-      margin: EdgeInsets.only(top: 16.0),
-      padding: EdgeInsets.symmetric(horizontal: 24.0),
-      // child: Placeholder(),
-      child: TextFormField(
-        style: StyleText.subhead18GreenMixBlue,
-        cursorColor: AppColor.colorBlue156,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(8.0),
-          filled: true,
-          enabled: false,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-          ),
-          prefixIcon: Icon(
-            Icons.home,
-            color: AppColor.colorBlue156,
-          ),
-          hintText: 'Search Districts',
-          suffixIcon: InkWell(
-            onTap: () {
-              showToast("Search");
-            },
-            child: Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: Icon(
-                Icons.search,
-                size: 24,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget buildTopView() => Container(
         padding: EdgeInsets.only(left: 8.0),
         child: Stack(
@@ -364,19 +267,19 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("Find Your Dream",
+                Text("Find Your",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.vidaloka(
                         color: Colors.white, fontSize: 20 * Size.scaleTxt)),
                 SizedBox(height: Size.getHeight * 0.01),
-                Text("Boarding",
+                Text("Your",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.vidaloka(
                         color: Colors.white, fontSize: 20 * Size.scaleTxt)),
                 SizedBox(height: Size.getHeight * 0.01),
-                Text("Hotel",
+                Text("Dream Hotel",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.vidaloka(

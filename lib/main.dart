@@ -27,7 +27,7 @@ Future<void> main() async {
       duration: Duration(seconds: 1),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Find Accommodation',
+        title: 'Find Dream Hotel',
         theme: ThemeData(primarySwatch: Colors.blue),
         home: App(),
         // home: CreateDataPage(),

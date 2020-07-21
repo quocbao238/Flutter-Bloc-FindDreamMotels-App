@@ -1,6 +1,15 @@
 class AppSetting {
   AppSetting._();
 
+  // Name
+  static const version = '1.0.0';
+  static const nameApp = 'Find Dream Hotel';
+  static const homeTitle = 'Find Your Dream Hotel';
+  static const favoriteTitle = 'Favorite Motels';
+  static const notificationTitle = 'Notification';
+
+
+
   // Firebase Android
   static const googleAppID = '1:3663369339:android:4124010180d7cca2413ede';
   static const gcmSenderID = '3663369339';
@@ -52,4 +61,5 @@ class AppSetting {
   static String dbpopular = 'popular';
   static String dbuser = 'user';
   static String dbfavorite = 'favorite';
+
 }
