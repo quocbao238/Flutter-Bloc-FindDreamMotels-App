@@ -25,7 +25,7 @@ class AppColor {
   static Color backgroundColor = Color(0xFFEBF2FA);
   // static Color whiteColor = Colors.white;
   static Color whiteColor = Colors.white;
-  // static Color colorClipPath = Color.fromRGBO(9, 92, 113, 1);
+  static Color colorClipPath2 = Color.fromRGBO(9, 92, 113, 1);
   static Color blackColor = Colors.black;
   static Color colorClipPath = Color(0xFF6184D8);
   static Color colorBlue156 = Color.fromRGBO(44, 156, 162, 1);

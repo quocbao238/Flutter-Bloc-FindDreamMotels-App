@@ -110,7 +110,7 @@ class _IntroPageState extends State<IntroPage> {
         // Skip button
         renderSkipBtn: this.renderSkipBtn(),
         colorSkipBtn: AppColor.backgroundColor,
-        highlightColorSkipBtn: AppColor.colorBlue156,
+        highlightColorSkipBtn: AppColor.blackColor,
 
         // Next button
         renderNextBtn: this.renderNextBtn(),
@@ -122,7 +122,7 @@ class _IntroPageState extends State<IntroPage> {
         highlightColorDoneBtn: Color(0xffffcc5c),
 
         // Dot indicator
-        colorDot: AppColor.colorBlue156,
+        colorDot: AppColor.backgroundColor,
         colorActiveDot: AppColor.backgroundColor,
 
         sizeDot: 13.0,

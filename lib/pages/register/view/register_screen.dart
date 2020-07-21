@@ -285,7 +285,7 @@ class _RegisterPageState extends State<RegisterPage> {
             0.1,
             ClipPath(
               child: Container(
-                color: Color.fromRGBO(9, 92, 113, 1),
+                color: AppColor.colorClipPath
               ),
               clipper: RegisterClipPath(),
             )),
