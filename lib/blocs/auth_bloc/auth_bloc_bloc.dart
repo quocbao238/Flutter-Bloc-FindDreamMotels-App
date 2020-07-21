@@ -29,16 +29,17 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
           yield UnauthenticatedState();
         }
       } catch (e) {
-        yield UnauthenticatedState();
+        // yield UnauthenticatedState();
       }
     }
   }
 
   Future<void> featchUserData() async {
     UserInfoModel _userInfo = UserInfoModel();
-    _userInfo = null;
     await ConfigApp.databaseReference
         .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {

@@ -1,8 +1,6 @@
-import 'dart:math';
 
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:flutter/material.dart';
-
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -20,7 +18,7 @@ class HomeMotelItem extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(right: 8.0, left: 8),
         padding: EdgeInsets.only(left: 12.0, bottom: 12.0),
-        // width: Size.getWidth * 0.4,
+        width: Size.getWidth * 1,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
           image: DecorationImage(
@@ -51,12 +49,12 @@ class HomeMotelItem extends StatelessWidget {
               color: Colors.yellow,
               borderColor: Colors.yellow[100],
             ),
-            SizedBox(height: 8.0),
-            Text(
-              motelModel.address,
-              maxLines: 1,
-              style: StyleText.content14White60w400,
-            ),
+            // SizedBox(height: 8.0),
+            // Text(
+            //   motelModel.address,
+            //   maxLines: 1,
+            //   style: StyleText.content14White60w400,
+            // ),
           ],
         ),
       ),
