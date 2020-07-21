@@ -35,6 +35,22 @@ class AppColor {
   static Color selectColor = Color(0xff556F7A);
 }
 
+const MaterialColor primarySwatch = const MaterialColor(
+  0xFFFFFFFF,
+  const <int, Color>{
+    50: const Color(0xFF6184D8),
+    100: const Color(0xFF6184D8),
+    200: const Color(0xFF6184D8),
+    300: const Color(0xFF6184D8),
+    400: const Color(0xFF6184D8),
+    500: const Color(0xFF6184D8),
+    600: const Color(0xFF6184D8),
+    700: const Color(0xFF6184D8),
+    800: const Color(0xFF6184D8),
+    900: const Color(0xFF6184D8),
+  },
+);
+
 class StyleText {
   StyleText._();
 
@@ -109,6 +125,12 @@ class StyleText {
     color: Colors.black,
     fontSize: 20.0 * Size.scaleTxt,
     fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle header20BlackNormal = TextStyle(
+    color: Colors.black,
+    fontSize: 20.0 * Size.scaleTxt,
+    // fontWeight: FontWeight.w500,
   );
 
   static TextStyle price20Red = TextStyle(

@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/pages/widgets/showBottomSheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';
@@ -30,10 +32,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 }
 
 List<DisPlayBottomMotel> listDisplaySearchBar = [
-  DisPlayBottomMotel(icon: Icons.search, title: 'Hotels'),
-  DisPlayBottomMotel(icon: Icons.search, title: 'District'),
-  // DisPlayBottomMotel(icon: Icons.search, title: 'District'),
-  // DisPlayBottomMotel(icon: Icons.search, title: 'District'),
+  DisPlayBottomMotel(iconUrl: AppSetting.modelbottomHotel, title: 'Hotels'),
+  DisPlayBottomMotel(
+      iconUrl: AppSetting.modelbottomDistrict, title: 'District'),
+  DisPlayBottomMotel(
+      iconUrl: AppSetting.modelbottomReview, title: 'MostReviews'),
+  DisPlayBottomMotel(
+      iconUrl: AppSetting.modelbottomFavorite, title: 'MostFavorite'),
 ];
 
 String getFilterName(int typeFilter) {

@@ -8,8 +8,6 @@ class AppSetting {
   static const favoriteTitle = 'Favorite Motels';
   static const notificationTitle = 'Notification';
 
-
-
   // Firebase Android
   static const googleAppID = '1:3663369339:android:4124010180d7cca2413ede';
   static const gcmSenderID = '3663369339';
@@ -53,6 +51,10 @@ class AppSetting {
   static const hotelIcon = 'assets/icon/holidayIcon.svg';
   static const holidayIcon = 'assets/icon/hotelIcon.svg';
   static const eventIcon = 'assets/icon/eventIcon.svg';
+  static const modelbottomDistrict = 'assets/icon/modelbottomDistrict.svg';
+  static const modelbottomFavorite = 'assets/icon/modelbottomFavorite.svg';
+  static const modelbottomHotel = 'assets/icon/modelbottomHotel.svg';
+  static const modelbottomReview = 'assets/icon/modelbottomReview.svg';
 
   //Database
   static String dbdistricList = 'districList';
@@ -61,5 +63,4 @@ class AppSetting {
   static String dbpopular = 'popular';
   static String dbuser = 'user';
   static String dbfavorite = 'favorite';
-
 }
