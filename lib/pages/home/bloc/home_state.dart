@@ -20,6 +20,8 @@ class FeatchDataSucesesState extends HomeState {
 
 class FeatchDataFailState extends HomeState {}
 
+class OnTapHotelsState extends HomeState{}
+
 class OnClickListDistrictsState extends HomeState {
   final DistrictModel selectMotel;
   final List<MotelModel> listMotel;

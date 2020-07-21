@@ -3,6 +3,7 @@ import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/motel_model.dart';
+import 'package:findingmotels/pages/district/view/district_page.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
 import 'package:findingmotels/pages/motel_detail/view/motel_detail_page.dart';
 import 'package:findingmotels/pages/new_motel/view/new_motel_screen.dart';
@@ -51,7 +52,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> blocListener(HomeState state, BuildContext context) async {
     if (state is FeatchDataSucesesState) {
-      // listDistrict = state.listDistrict;
       listMotels = state.listMotel;
       isHaveData = true;
     } else if (state is OnClickListDistrictsState) {
@@ -68,6 +68,11 @@ class _HomePageState extends State<HomePage> {
               context, MaterialPageRoute(builder: (context) => NewMotelPage()))
           .then((v) => BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
               .add(FeatchDataEvent()));
+    } else if (state is OnTapHotelsState) {
+      await Navigator.push(
+              context, MaterialPageRoute(builder: (context) => DistrictPage()))
+          .then((v) => BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+              .add(FeatchDataEvent()));
     }
   }
 
@@ -80,14 +85,14 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: AppColor.backgroundColor,
           body: _body(state),
           // floatingActionButton: FloatingActionButton(
-              // onPressed: () {
-              //   BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-              //       .add(NewMotelEvent());
-              // },
-              // backgroundColor: AppColor.colorClipPath.withOpacity(0.8),
-              // child: Center(
-              //   child: Icon(Icons.add),
-              // )),
+          // onPressed: () {
+          //   BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+          //       .add(NewMotelEvent());
+          // },
+          // backgroundColor: AppColor.colorClipPath.withOpacity(0.8),
+          // child: Center(
+          //   child: Icon(Icons.add),
+          // )),
         ),
         state is LoadingState ? LoadingWidget() : SizedBox()
       ],
@@ -179,11 +184,34 @@ class _HomePageState extends State<HomePage> {
           // SizedBox(height: 10.0),
           Row(
             children: <Widget>[
-              _itemLookingFor(iconUrl: AppSetting.flightIcon, title: "Fight"),
-              _itemLookingFor(iconUrl: AppSetting.hotelIcon, title: "Hotels"),
               _itemLookingFor(
-                  iconUrl: AppSetting.holidayIcon, title: "Holidays"),
-              _itemLookingFor(iconUrl: AppSetting.eventIcon, title: "Event")
+                  iconUrl: AppSetting.flightIcon,
+                  title: "Fight",
+                  onTap: () {
+                    BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                        .add(OnTapFightEvent());
+                  }),
+              _itemLookingFor(
+                  iconUrl: AppSetting.hotelIcon,
+                  title: "Hotels",
+                  onTap: () {
+                    BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                        .add(OnTapHotelsEvent());
+                  }),
+              _itemLookingFor(
+                  iconUrl: AppSetting.holidayIcon,
+                  title: "Holidays",
+                  onTap: () {
+                    BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                        .add(OnTapHolidaysEvent());
+                  }),
+              _itemLookingFor(
+                  iconUrl: AppSetting.eventIcon,
+                  title: "Event",
+                  onTap: () {
+                    BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+                        .add(OnTapEventEvent());
+                  }),
             ],
           )
         ],

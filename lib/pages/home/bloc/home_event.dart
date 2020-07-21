@@ -16,8 +16,11 @@ class OnClickListMotelssEvent extends HomeEvent {
   OnClickListMotelssEvent(this.motelModel);
 }
 
-class FeatchDataEvent extends HomeEvent {
-  
-}
+class FeatchDataEvent extends HomeEvent {}
 
-class NewMotelEvent extends HomeEvent{}
+class NewMotelEvent extends HomeEvent {}
+
+class OnTapHotelsEvent extends HomeEvent{}
+class OnTapFightEvent extends HomeEvent{}
+class OnTapHolidaysEvent extends HomeEvent{}
+class OnTapEventEvent extends HomeEvent{}
