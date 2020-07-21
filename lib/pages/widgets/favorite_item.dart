@@ -6,9 +6,11 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/pages/new_motel/bloc/newmotel_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:line_icons/line_icons.dart';
 
 class FavoriteItem extends StatelessWidget {
   final MotelModel motelModel;
@@ -127,10 +129,13 @@ class FavoriteItem extends StatelessWidget {
                     onRatingUpdate: (v) {},
                   ),
                   SizedBox(width: 8.0),
-                  Text(
-                    '${Random().nextInt(5000)} reviews',
-                    textAlign: TextAlign.center,
-                    style: StyleText.content14Black400,
+                  Expanded(
+                    child: Text(
+                      '${Random().nextInt(5000)} reviews',
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: StyleText.content14Black400,
+                    ),
                   ),
                 ],
               ),
@@ -147,25 +152,23 @@ class FavoriteItem extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: _iconfunction(
-              onTap: () {
-                if (onTapCall != null) onTapCall();
-              },
-              icondata: Icons.call,
-            )),
+                    onTap: () {
+                      if (onTapCall != null) onTapCall();
+                    },
+                    icondata: LineIcons.phone)),
             Expanded(
                 child: _iconfunction(
               onTap: () {
                 if (onTapMessage != null) onTapMessage();
               },
-              icondata: Icons.message,
+              icondata: AntDesign.message1,
             )),
             Expanded(
                 child: _iconfunction(
-              onTap: () {
-                if (onTapDirect != null) onTapDirect();
-              },
-              icondata: Icons.directions,
-            )),
+                    onTap: () {
+                      if (onTapDirect != null) onTapDirect();
+                    },
+                    icondata: Entypo.location_pin)),
           ],
         ),
       );

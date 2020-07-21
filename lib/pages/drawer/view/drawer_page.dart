@@ -5,6 +5,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/dashboard/dashboard_page.dart';
 import 'package:findingmotels/pages/drawer/bloc/drawer_bloc.dart';
 import 'package:findingmotels/pages/drawer/view/mydrawer.dart';
+import 'package:findingmotels/pages/new_motel/view/new_motel_screen.dart';
 import 'package:findingmotels/pages/user_edit/view/user_edit_page.dart';
 import 'package:findingmotels/widgets/dialog_custom/logout_dialog.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:oktoast/oktoast.dart';
 import '../../../main.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 final Color backgroundColor = Color(0xFF4A4A58);
 
@@ -112,7 +114,14 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                 _signout(),
                 SizedBox(height: 10.0),
                 _item(
-                    icon: Icons.account_circle,
+                    icon: AntDesign.plus,
+                    title: 'New Post',
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NewMotelPage()))),
+                _item(
+                    icon: AntDesign.user,
                     title: 'User Profile',
                     onTap: () => Navigator.push(
                         context,

@@ -6,6 +6,7 @@ import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/intro/view/intro_screen.dart';
 import 'package:findingmotels/services/firebase_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +15,9 @@ import 'package:oktoast/oktoast.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseService.setupFirebase();
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+
   runApp(
     OKToast(
       textStyle: TextStyle(fontSize: 19.0, color: Colors.white),

@@ -80,6 +80,7 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget _content(FavoriteState state) => Expanded(
       child: listFavoriteMotels.length > 0
           ? ListView.builder(
+              padding: EdgeInsets.only(top: 50.0),
               itemCount: listFavoriteMotels.length,
               shrinkWrap: true,
               itemBuilder: (context, index) => FavoriteItem(

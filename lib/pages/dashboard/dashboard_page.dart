@@ -75,7 +75,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                     GButton(
                       icon: LineIcons.heart_o,
-                      text: 'Likes',
+                      text: 'Favorite',
                     ),
                     GButton(
                       icon: LineIcons.bell,

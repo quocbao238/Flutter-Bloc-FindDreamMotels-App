@@ -61,6 +61,7 @@ dependencies:
   basic_utils: 1.2.0
   carousel_pro: 1.0.0
   carousel_slider: 2.2.1
+  flutter_icons: 1.1.0
 
 
 

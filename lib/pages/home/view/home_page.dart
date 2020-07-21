@@ -80,15 +80,15 @@ class _HomePageState extends State<HomePage> {
           key: homeGlobalKey,
           backgroundColor: AppColor.backgroundColor,
           body: _body(state),
-          floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                    .add(NewMotelEvent());
-              },
-              backgroundColor: AppColor.colorClipPath.withOpacity(0.8),
-              child: Center(
-                child: Icon(Icons.add),
-              )),
+          // floatingActionButton: FloatingActionButton(
+              // onPressed: () {
+              //   BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
+              //       .add(NewMotelEvent());
+              // },
+              // backgroundColor: AppColor.colorClipPath.withOpacity(0.8),
+              // child: Center(
+              //   child: Icon(Icons.add),
+              // )),
         ),
         state is LoadingState ? LoadingWidget() : SizedBox()
       ],

@@ -1,4 +1,3 @@
-
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/notifycation/bloc/notify_bloc.dart';
 import 'package:findingmotels/pages/widgets/notify_item.dart';
@@ -36,7 +35,7 @@ class _NotifyPageState extends State<NotifyPage> {
   Widget _scaffold() => Scaffold(
         key: globalKey,
         backgroundColor: AppColor.backgroundColor,
-        body: Stack(children: <Widget>[buildBackground(0.13), _body()]),
+        body: Stack(children: <Widget>[buildBackground(0.12), _body()]),
       );
 
   Widget _body() => Positioned.fill(
@@ -51,6 +50,7 @@ class _NotifyPageState extends State<NotifyPage> {
   Widget _content() => Expanded(
         child: ListView.builder(
             shrinkWrap: true,
+            padding: EdgeInsets.only(top: Size.getHeight * 0.08),
             itemCount: 10,
             itemBuilder: (context, index) => NotifyItem(
                   index: index,
