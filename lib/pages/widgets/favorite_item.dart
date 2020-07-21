@@ -95,6 +95,7 @@ class FavoriteItem extends StatelessWidget {
   Widget _itemContent() => Expanded(
         child: Container(
           height: 120.0,
+          padding: EdgeInsets.only(right: 8.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,13 +130,11 @@ class FavoriteItem extends StatelessWidget {
                     onRatingUpdate: (v) {},
                   ),
                   SizedBox(width: 8.0),
-                  Expanded(
-                    child: Text(
-                      '${Random().nextInt(5000)} reviews',
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: StyleText.content14Black400,
-                    ),
+                  Text(
+                    '${Random().nextInt(1000)} reviews',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: StyleText.content14Black400,
                   ),
                 ],
               ),
