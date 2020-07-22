@@ -3,12 +3,11 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class NotifyItem extends StatelessWidget {
-  final int index;
-  final bool isMessage;
+class DistrictItem extends StatelessWidget {
+  final String name;
   final Function onTap;
 
-  NotifyItem({this.index, this.isMessage, this.onTap});
+  DistrictItem({this.name, this.onTap});
   @override
   Widget build(BuildContext context) {
     return _item();
@@ -17,8 +16,7 @@ class NotifyItem extends StatelessWidget {
   Widget _item() => Container(
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(index == 0 ? 30.0 : 0.0)),
+          borderRadius: BorderRadius.only(topRight: Radius.circular(30.0)),
           color: AppColor.backgroundColor,
         ),
         child: Container(
@@ -66,7 +64,6 @@ class NotifyItem extends StatelessWidget {
   Widget _itemImage() => Container(
         height: 48.0,
         width: 48.0,
-        child: SvgPicture.asset(
-            isMessage ? AppSetting.messageIconSvg : AppSetting.favoriteIconSvg),
+        child: SvgPicture.asset(AppSetting.hotelIcon),
       );
 }

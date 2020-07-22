@@ -64,3 +64,5 @@ class AppSetting {
   static String dbuser = 'user';
   static String dbfavorite = 'favorite';
 }
+
+String errorMessage = 'An error occurred, please try again later';
