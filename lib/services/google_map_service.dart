@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class MyGoogleMapService {
-
   Future<void> checkPermissions() async {
     final PermissionStatus permissionGrantedResult =
         await ConfigApp.location.hasPermission();
@@ -62,8 +61,7 @@ class MyGoogleMapService {
   }
 
   Future<void> gotoMyLocation({double zoom = 10.0}) async {
-    final GoogleMapController controller =
-        await ConfigApp.ggMapcontroller.future;
+    final GoogleMapController controller = await ConfigApp.ggCompleter.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: ConfigApp.mylatLng ??
             LatLng(37.43296265331129, -122.08832357078792),

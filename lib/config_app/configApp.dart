@@ -19,7 +19,8 @@ class ConfigApp {
   static LocationData locationData;
   static PermissionStatus permissionStatus;
   static LatLng mylatLng;
-  static  Completer<GoogleMapController> ggMapcontroller = Completer();
+  static Completer<GoogleMapController> ggCompleter = Completer();
+  static GoogleMapController googleMapController;
   static CloudStorageService fbCloudStorage = CloudStorageService();
   static MyGoogleMapService myGoogleMapService = MyGoogleMapService();
   static FirebaseApp fbApp;

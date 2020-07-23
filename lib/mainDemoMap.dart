@@ -11,6 +11,8 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
+  Set<Marker> _markers = {};
+
   @override
   void initState() {
     super.initState();
@@ -23,18 +25,25 @@ class MapSampleState extends State<MapSample> {
     zoom: 14.4746,
   );
 
+  void addMaker(GoogleMapController mapController) {
+    mapController.addMarker(
+      MarkerOptions(
+        position: LatLng(37.4219999, -122.0862462),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: GoogleMap(
         myLocationEnabled: true,
-        myLocationButtonEnabled: true,
-        buildingsEnabled: false,
-        zoomControlsEnabled: false,
         mapType: MapType.normal,
+        markers: _markers,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
-          ConfigApp.ggMapcontroller.complete(controller);
+          ConfigApp.ggCompleter.complete(controller);
+          ConfigApp.googleMapController = controller;
         },
       ),
       // floatingActionButton: FloatingActionButton.extended(
