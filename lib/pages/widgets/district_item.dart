@@ -19,20 +19,25 @@ class DistrictItem extends StatelessWidget {
           borderRadius: BorderRadius.only(topRight: Radius.circular(30.0)),
           color: AppColor.backgroundColor,
         ),
-        child: Container(
-          padding: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.0),
-            color: AppColor.whiteColor,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              _itemImage(),
-              _itemMessage(),
-              Spacer(),
-              _itemArrow(),
-            ],
+        child: InkWell(
+          onTap: () {
+            if (onTap != null) onTap();
+          },
+          child: Container(
+            padding: EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30.0),
+              color: AppColor.whiteColor,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                _itemImage(),
+                _itemMessage(),
+                Spacer(),
+                _itemArrow(),
+              ],
+            ),
           ),
         ),
       );
@@ -56,7 +61,7 @@ class DistrictItem extends StatelessWidget {
   Widget _itemMessage() => Container(
         margin: EdgeInsets.only(left: 16.0),
         child: Text(
-          'You have Message',
+          name,
           style: StyleText.subhead16GreenMixBlue,
         ),
       );

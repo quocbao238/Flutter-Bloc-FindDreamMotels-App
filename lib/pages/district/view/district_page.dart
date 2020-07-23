@@ -1,13 +1,11 @@
-import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/district_model.dart';
 import 'package:findingmotels/pages/district/bloc/district_bloc.dart';
+import 'package:findingmotels/pages/districtdetail/view/district_detail_page.dart';
 import 'package:findingmotels/pages/widgets/district_item.dart';
-import 'package:findingmotels/pages/widgets/notify_item.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DistrictPage extends StatefulWidget {
@@ -48,61 +46,37 @@ class _DistrictPageState extends State<DistrictPage> {
 
   Widget _body(DistrictState state) {
     return Column(
-      children: <Widget>[
-        _appBar(),
-        Expanded(
-          child: Stack(
-            children: <Widget>[
-              listDistrict.length > 0
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 20,
-                      padding: EdgeInsets.all(0.0),
-                      physics: AlwaysScrollableScrollPhysics(),
-                      itemBuilder: ((context, index) => 
-                      // _item(index)
-                      DistrictItem(
-                        name: listDistrict[index].name,
-                        onTap: (){
-                          print(listDistrict[index].toString());
-                        },
-                      ) 
-                      ),
-                    )
-                  : SizedBox(),
-              state is LoadingDistrictState ? LoadingWidget() : SizedBox(),
-            ],
-          ),
-        )
-      ],
+      children: <Widget>[_appBar(), _data(state)],
     );
   }
 
-  Container _item(int index) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(8, 0, 8, 8),
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.0),
-        color: AppColor.whiteColor,
-      ),
-      child: Row(
+  Widget _data(DistrictState state) {
+    return Expanded(
+      child: Stack(
         children: <Widget>[
-          Container(
-            height: 30.0,
-            width: 30.0,
-            child: SvgPicture.asset(AppSetting.modelbottomHotel),
-          ),
-          SizedBox(width: 10.0),
-          Expanded(
-            child: Container(
-              child: Text('Popular Hotels in ${listDistrict[index].name}',
-                  style: GoogleFonts.heebo(
-                      color: AppColor.colorClipPath2,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16 * Size.scaleTxt)),
-            ),
-          )
+          listDistrict.length > 0
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 20,
+                  padding: EdgeInsets.all(0.0),
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemBuilder: ((context, index) => DistrictItem(
+                        name: listDistrict[index].name,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            new MaterialPageRoute(
+                              builder: (context) {
+                                return DistrictDetail(
+                                  districtModel: listDistrict[index],
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      )),
+                )
+              : SizedBox(),
+          state is LoadingDistrictState ? LoadingWidget() : SizedBox(),
         ],
       ),
     );

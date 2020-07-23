@@ -6,7 +6,6 @@ import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/pages/widgets/showBottomSheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';

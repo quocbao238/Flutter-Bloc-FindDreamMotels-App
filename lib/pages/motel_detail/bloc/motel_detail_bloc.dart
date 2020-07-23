@@ -36,6 +36,8 @@ class MotelDetailBloc extends Bloc<MotelDetailEvent, MotelDetailState> {
       } else {
         //Add New
         bool isFv = await addToListFavorite(event.motel);
+        
+        // bool isFv = await demoAddFavorite(event.motel);
         yield OnTapFavoriteSucessState(isFv);
       }
     }
@@ -52,39 +54,39 @@ Future<bool> checkFavorite(
   return isFv;
 }
 
-// Future<bool> demoAddFavorite(MotelModel motelModel) async {
-//   bool isHave = false;
-//   try {
-//     await ConfigApp.databaseReference
-//         .collection(AppSetting.dbData)
-//         .document(AppSetting.locationHCM)
-//         .collection(AppSetting.dbpopular)
-//         .document(motelModel.documentId)
-//         .setData(motelModel.toJson());
-//     await ConfigApp.databaseReference
-//         .collection(AppSetting.dbData)
-//         .document(AppSetting.locationHCM)
-//         .collection(AppSetting.dbpopular)
-//         .getDocuments()
-//         .then((QuerySnapshot snapshot) {
-//       snapshot.documents.forEach((f) {
-//         isHave = f.documentID == motelModel.documentId ? true : false;
-//       });
-//     });
-//   } catch (e) {
-//     print(e.toString());
-//     return false;
-//   }
-//   return isHave;
-// }
+Future<bool> demoAddFavorite(MotelModel motelModel) async {
+  bool isHave = false;
+  try {
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbData) // data
+        .document(AppSetting.locationHCM) //hcm
+        .collection('1') //District1
+        .document()
+        .setData(motelModel.toJson());
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbData) // data
+        .document(AppSetting.locationHCM) //hcm
+        .collection('1') //District1
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        // isHave = f.documentID == motelModel.documentId ? true : false;
+      });
+    });
+  } catch (e) {
+    print(e.toString());
+    return false;
+  }
+  return isHave;
+}
 
 Future<bool> addToListFavorite(MotelModel motelModel) async {
   bool isHave = false;
   try {
     await ConfigApp.databaseReference
-        .collection(AppSetting.dbuser)
-        .document(ConfigApp.fbuser.uid)
-        .collection(AppSetting.dbfavorite)
+        .collection(AppSetting.dbuser) // user
+        .document(ConfigApp.fbuser.uid) //uId
+        .collection(AppSetting.dbfavorite) //favorite
         .document(motelModel.documentId)
         .setData(motelModel.toJson());
     await ConfigApp.databaseReference

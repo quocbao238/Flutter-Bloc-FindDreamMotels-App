@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/search/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +18,6 @@ class _SearchPageState extends State<SearchPage> {
   GlobalKey globalKey;
   int typeFilter;
   List<bool> typeStart;
-
   int randomAveragePrice = 0;
   double _lowerValue;
   double _upperValue;
