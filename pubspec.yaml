@@ -68,6 +68,7 @@ dependencies:
   #Map
   google_maps_flutter: 0.5.28+1
   google_map_location_picker: 3.3.3
+  location: 3.0.0
 
  
 

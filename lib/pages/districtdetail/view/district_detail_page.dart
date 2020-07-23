@@ -4,7 +4,6 @@ import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/pages/districtdetail/bloc/districtdetail_bloc.dart';
 import 'package:findingmotels/pages/motel_detail/view/motel_detail_page.dart';
 import 'package:findingmotels/pages/widgets/favorite_item.dart';
-import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
 import 'package:findingmotels/widgets/empty/empty_widget.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';

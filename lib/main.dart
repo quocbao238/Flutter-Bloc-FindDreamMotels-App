@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
+import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/mainDemoMap.dart';
@@ -36,6 +37,7 @@ Future<void> main() async {
         theme: ThemeData(primarySwatch: Colors.blue),
         // home: App(),
         home: MapSample(),
+        // home: MyHomePage(),
       ),
     ),
   );
@@ -47,6 +49,12 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  @override
+  void initState() {
+    super.initState();
+    ConfigApp.myGoogleMapService.getLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
     getSizeApp(context);
