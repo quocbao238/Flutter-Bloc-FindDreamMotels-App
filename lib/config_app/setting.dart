@@ -1,6 +1,5 @@
 class AppSetting {
   AppSetting._();
-
   // Name
   static const version = '1.0.0';
   static const nameApp = 'Find Dream Hotel';
@@ -63,6 +62,9 @@ class AppSetting {
   static String dbpopular = 'popular';
   static String dbuser = 'user';
   static String dbfavorite = 'favorite';
+
+  //Key
+  static String googleKey = 'AIzaSyBlyck9ashJqWq37Fw0a-jErDAhQIyD0FU';
 }
 
 String errorMessage = 'An error occurred, please try again later';

@@ -65,7 +65,11 @@ dependencies:
   flutter_typeahead: 1.8.6
   flutter_range_slider: 1.4.0
 
+  #Map
+  google_maps_flutter: 0.5.28+1
+  google_map_location_picker: 3.3.3
 
+ 
 
 
   #Animation
