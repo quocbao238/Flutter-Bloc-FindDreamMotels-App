@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Row(
             children: <Widget>[
-              Text('Popular Destinations',
+              Text('Popular Hotels',
                   style: GoogleFonts.heebo(
                       fontWeight: FontWeight.w500,
                       color: Colors.black,

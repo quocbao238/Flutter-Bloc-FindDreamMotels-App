@@ -8,6 +8,8 @@ class AppSetting {
   static const notificationTitle = 'Notification';
 
   // Firebase Android
+  //Key
+  static String directionKey = 'AIzaSyBaE3VU4GTpO7jXeyDBRySvk5ioqGQcXa0';
   static const googleAppID = '1:3663369339:android:4124010180d7cca2413ede';
   static const gcmSenderID = '3663369339';
   static const apiKey = 'AIzaSyDOd_bLI0b3UGQ-tk41ePuVJVVezN3QGKw';
@@ -33,7 +35,7 @@ class AppSetting {
   static const registerImg = 'assets/images/registerSvg.svg';
 
   //icon image
-  static const logoIcon = 'assets/logo/logo.png';
+  static const logoIcon = 'assets/logo/appIcon.png';
   static const airIcon = 'assets/icon/airIcon.png';
   static const bathIcon = 'assets/icon/bathIcon.png';
   static const tvIcon = 'assets/icon/tv.png';
@@ -62,9 +64,6 @@ class AppSetting {
   static String dbpopular = 'popular';
   static String dbuser = 'user';
   static String dbfavorite = 'favorite';
-
-  //Key
-  static String googleKey = 'AIzaSyBlyck9ashJqWq37Fw0a-jErDAhQIyD0FU';
 }
 
 String errorMessage = 'An error occurred, please try again later';

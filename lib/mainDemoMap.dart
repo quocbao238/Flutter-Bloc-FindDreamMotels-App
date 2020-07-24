@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/helper/ulti.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -12,46 +13,65 @@ class MapSample extends StatefulWidget {
 
 class MapSampleState extends State<MapSample> {
   Set<Marker> _markers = {};
+  List<LatLng> latlng = List();
+  Set<Polyline> _polyline = {};
 
   @override
   void initState() {
     super.initState();
-    ConfigApp.myGoogleMapService.getLocation();
+    ConfigApp.myGoogleMapService
+        .getLocation()
+        .then((value) => latlng.add(ConfigApp.mylatLng));
     ConfigApp.myGoogleMapService.gotoMyLocation();
+    latlng.add(LatLng(10.771423, 106.698471));
   }
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+  static final CameraPosition initialCameraPosition = CameraPosition(
+    target: LatLng(10.771423, 106.698471),
     zoom: 14.4746,
   );
 
-  // void addMaker(GoogleMapController mapController) {
-  //   mapController.addMarker(
-  //     MarkerOptions(
-  //       position: LatLng(37.4219999, -122.0862462),
-  //     ),
-  //   );
-  // }
+  BitmapDescriptor customIcon;
+
+  Future<void> _onAddMarkerButtonPressed() async {
+    customIcon = await Helper.getAssetIcon(context);
+    _polyline = await ConfigApp.myGoogleMapService
+        .drawePolyline(ConfigApp.mylatLng, LatLng(10.771423, 106.698471));
+    setState(() {
+      _markers.add(Marker(
+          markerId: MarkerId(ConfigApp.mylatLng.toString()),
+          position: LatLng(10.771423, 106.698471),
+          infoWindow: InfoWindow(
+              title: 'test',
+              snippet: 'Test',
+              onTap: () {
+                print('Really cool place');
+              }),
+          icon: customIcon));
+    });
+    ConfigApp.myGoogleMapService.listenLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: GoogleMap(
-        myLocationEnabled: true,
         mapType: MapType.normal,
         markers: _markers,
-        initialCameraPosition: _kGooglePlex,
+        initialCameraPosition: initialCameraPosition,
+        myLocationEnabled: true,
         onMapCreated: (GoogleMapController controller) {
           ConfigApp.ggCompleter.complete(controller);
           ConfigApp.googleMapController = controller;
         },
+        polylines: _polyline,
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //     onPressed: () {
-      //       ConfigApp.myGoogleMapService.gotoMyLocation();
-      //     },
-      //     label: Text('Location'),
-      //     icon: Icon(Icons.directions_boat)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _onAddMarkerButtonPressed,
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.add_location, size: 36.0),
+      ),
     );
   }
 }
@@ -81,9 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         decoration: TextDecoration.underline,
                       ),
                     ),
-                    onTap: () => print('onTap')
-                    // launch('https://github.com/Lyokone/flutterlocation'),
-                    ),
+                    onTap: () => print('onTap')),
               ],
             ),
           ),

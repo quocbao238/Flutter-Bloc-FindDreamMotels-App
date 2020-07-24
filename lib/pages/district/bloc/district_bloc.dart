@@ -24,6 +24,7 @@ class DistrictBloc extends Bloc<DistrictEvent, DistrictState> {
           ? FeatchDistrictSucessState(listDistrict)
           : DistrictErrorState(errorMessage);
     }
+    yield DistrictInitial();
   }
 
   Future<List<DistrictModel>> featchDistrictLst() async {

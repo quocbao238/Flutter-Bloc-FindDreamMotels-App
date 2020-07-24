@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/pages/motel_detail/bloc/motel_detail_bloc.dart';
 import 'package:findingmotels/widgets/empty/empty_widget.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class MotelDetailPage extends StatefulWidget {
@@ -23,7 +25,10 @@ class MotelDetailPage extends StatefulWidget {
 class _MotelDetailPageState extends State<MotelDetailPage> {
   List<dynamic> images = [];
   GlobalKey globalKey;
+  CameraPosition initialCameraPosition;
   bool _isFv = false;
+  Set<Marker> _markers = {};
+
   @override
   void initState() {
     globalKey = GlobalKey();
@@ -43,6 +48,20 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
         errorWidget: (context, url, error) => Center(child: EmptyWidget()),
       ));
     }
+    initialCameraPosition = CameraPosition(
+      target: LatLng(
+          widget.motelModel.location.lat, widget.motelModel.location.lng),
+      zoom: 15.4746,
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // _markers.add(await ConfigApp.myGoogleMapService.setMakerIcon(context));
+      _asyncMaker();
+    });
+  }
+
+  _asyncMaker() async {
+    _markers.add(await ConfigApp.myGoogleMapService
+        .setMakerIcon(context, widget.motelModel));
   }
 
   @override
@@ -66,163 +85,145 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     }
   }
 
-  Widget _scaffold(MotelDetailState state) {
-    return Stack(
-      children: <Widget>[
-        Scaffold(
-          key: globalKey,
-          body: Stack(
-            children: <Widget>[
-              buildPageView(),
-              buildButtonBack(),
-            ],
+  Widget _scaffold(MotelDetailState state) => Stack(
+        children: <Widget>[
+          Scaffold(
+            key: globalKey,
+            body: Stack(
+              children: <Widget>[
+                buildPageView(),
+                buildButtonBack(),
+              ],
+            ),
           ),
-        ),
-        state is LoadingState ? LoadingWidget() : SizedBox(),
-      ],
-    );
-  }
+          state is LoadingState ? LoadingWidget() : SizedBox(),
+        ],
+      );
 
-  Widget buildPageView() {
-    return Positioned.fill(
-      child: Container(
-        color: AppColor.backgroundColor.withOpacity(0.6),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            sliderImg(),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: Size.getHeight * 0.02,
-                  left: Size.getWidth * 0.02,
-                  right: Size.getWidth * 0.02,
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      buildTitile(),
-                      SizedBox(height: Size.getHeight * 0.01),
-                      buildRating(),
-                      SizedBox(height: Size.getHeight * 0.02),
-                      buildTextAmentites(),
-                      SizedBox(height: Size.getHeight * 0.01),
-                      buildAmentitesList(),
-                      SizedBox(height: Size.getHeight * 0.02),
-                      buildTextDescription(),
-                      SizedBox(height: Size.getHeight * 0.01),
-                      Text(
-                        widget.motelModel.description,
-                        style: StyleText.subhead16Black,
-                      ),
-                      SizedBox(height: Size.getHeight * 0.02),
-                      buildTextLocation(),
-                      SizedBox(height: Size.getHeight * 0.01),
-                      // Container(
-                      //   height: Size.getHeight * 0.3,
-                      //   decoration: BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(25),
-                      //       color: Colors.white),
-                      //   child: Placeholder(),
-                      // )
-                    ],
+  Widget buildPageView() => Positioned.fill(
+        child: Container(
+          color: AppColor.backgroundColor.withOpacity(0.6),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              sliderImg(),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: Size.getHeight * 0.02,
+                    left: Size.getWidth * 0.02,
+                    right: Size.getWidth * 0.02,
+                    bottom: Size.getHeight * 0.02,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        buildTitile(),
+                        SizedBox(height: Size.getHeight * 0.01),
+                        buildRating(),
+                        SizedBox(height: Size.getHeight * 0.02),
+                        _title('Amenities'),
+                        SizedBox(height: Size.getHeight * 0.01),
+                        buildAmentitesList(),
+                        SizedBox(height: Size.getHeight * 0.02),
+                        _title('Description'),
+                        SizedBox(height: Size.getHeight * 0.01),
+                        Text(
+                          widget.motelModel.description,
+                          style: StyleText.subhead16Black,
+                        ),
+                        SizedBox(height: Size.getHeight * 0.02),
+                        _title('Location'),
+                        SizedBox(height: Size.getHeight * 0.01),
+                        _map()
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            // buildBottomCallandBooking(),
-          ],
+              // buildBottomCallandBooking(),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 
-  Container sliderImg() {
-    return Container(
-      height: Size.getHeight * 0.4,
-      child: Carousel(
-          boxFit: BoxFit.cover,
-          autoplay: true,
-          animationCurve: Curves.easeInOut,
-          animationDuration: Duration(milliseconds: 500),
-          dotSize: 6.0,
-          dotIncreasedColor: AppColor.colorClipPath,
-          dotBgColor: Colors.transparent,
-          dotPosition: DotPosition.bottomCenter,
-          // dotVerticalPadding: 10.0,
-          showIndicator: true,
-          // indicatorBgPadding: 7.0,
-          images: images),
-    );
-  }
+  Widget _map() => Container(
+        height: Size.getHeight * 0.35,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25), color: Colors.white),
+        child: GoogleMap(
+          mapType: MapType.normal,
+          zoomControlsEnabled: false,
+          zoomGesturesEnabled: false,
+          markers: _markers,
+          initialCameraPosition: initialCameraPosition,
+          onMapCreated: (GoogleMapController controller) {},
+        ),
+      );
 
-  Widget buildAmentitesList() {
-    return Container(
-      height: Size.getHeight * 0.12,
-      width: Size.getWidth,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: widget.motelModel.amenities.length,
-        itemBuilder: (context, index) => _itemAmentites(index),
-      ),
-    );
-  }
+  Widget sliderImg() => Container(
+        height: Size.getHeight * 0.4,
+        child: Carousel(
+            boxFit: BoxFit.cover,
+            autoplay: true,
+            animationCurve: Curves.easeInOut,
+            animationDuration: Duration(milliseconds: 500),
+            dotSize: 6.0,
+            dotIncreasedColor: AppColor.colorClipPath,
+            dotBgColor: Colors.transparent,
+            dotPosition: DotPosition.bottomCenter,
+            // dotVerticalPadding: 10.0,
+            showIndicator: true,
+            // indicatorBgPadding: 7.0,
+            images: images),
+      );
 
-  Widget _itemAmentites(index) {
-    return widget.motelModel.amenities[index].isHave
-        ? Container(
-            // width: Size.getWidth * 0.20,
-            margin: EdgeInsets.only(right: Size.getWidth * 0.1),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: Size.getWidth * 0.1,
-                  height: Size.getWidth * 0.1,
-                  child: Center(
-                    child: Image.asset(getIconFromListAmenities(
-                        widget.motelModel.amenities[index].name)),
-                  ),
+  Widget buildAmentitesList() => Container(
+        height: Size.getHeight * 0.12,
+        width: Size.getWidth,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: widget.motelModel.amenities.length,
+          itemBuilder: (context, index) => _itemAmentites(index),
+        ),
+      );
+
+  Widget _itemAmentites(index) => widget.motelModel.amenities[index].isHave
+      ? Container(
+          // width: Size.getWidth * 0.20,
+          margin: EdgeInsets.only(right: Size.getWidth * 0.1),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: Size.getWidth * 0.1,
+                height: Size.getWidth * 0.1,
+                child: Center(
+                  child: Image.asset(getIconFromListAmenities(
+                      widget.motelModel.amenities[index].name)),
                 ),
-                SizedBox(height: Size.getHeight * 0.01),
-                Flexible(
-                  child: Text(
-                    StringUtils.capitalize(
-                        widget.motelModel.amenities[index].name),
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    style: StyleText.subhead16Black500,
-                  ),
-                )
-              ],
-            ),
-          )
-        : SizedBox();
-  }
+              ),
+              SizedBox(height: Size.getHeight * 0.01),
+              Flexible(
+                child: Text(
+                  StringUtils.capitalize(
+                      widget.motelModel.amenities[index].name),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: StyleText.subhead16Black500,
+                ),
+              )
+            ],
+          ),
+        )
+      : SizedBox();
 
-  Widget buildTextAmentites() {
-    return Text(
-      "Amenities",
-      style: StyleText.header20BlackW500,
-    );
-  }
-
-  Widget buildTextLocation() {
-    return Text(
-      "Location",
-      style: StyleText.header20BlackW500,
-    );
-  }
-
-  Widget buildTextDescription() {
-    return Text(
-      "Description",
-      style: StyleText.header20BlackW500,
-    );
-  }
-
+  Widget _title(String title) => Text(
+        title,
+        style: StyleText.header20BlackW500,
+      );
   Widget buildRating() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,

@@ -29,7 +29,7 @@ class ConfigApp {
   static final databaseReference = Firestore.instance;
 }
 
-class ConfigUserInfo{
+class ConfigUserInfo {
   ConfigUserInfo._();
   static String name;
   static String phone;
