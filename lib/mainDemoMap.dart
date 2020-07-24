@@ -25,13 +25,13 @@ class MapSampleState extends State<MapSample> {
     zoom: 14.4746,
   );
 
-  void addMaker(GoogleMapController mapController) {
-    mapController.addMarker(
-      MarkerOptions(
-        position: LatLng(37.4219999, -122.0862462),
-      ),
-    );
-  }
+  // void addMaker(GoogleMapController mapController) {
+  //   mapController.addMarker(
+  //     MarkerOptions(
+  //       position: LatLng(37.4219999, -122.0862462),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
