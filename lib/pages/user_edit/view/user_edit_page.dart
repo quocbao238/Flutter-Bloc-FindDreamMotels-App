@@ -110,9 +110,10 @@ class _UserEditPageState extends State<UserEditPage> {
                         _birthdayController.text =
                             DateFormat('dd-MM-yyyy').format(date);
                       },
-                      currentTime: _birthdayController.text.trim() != '' ? DateFormat('dd-MM-yyyy')
+                      currentTime: _birthdayController.text.trim() != ''
+                          ? DateFormat('dd-MM-yyyy')
                               .parse(_birthdayController.text.trim())
-                           : DateTime(1990),
+                          : DateTime(1990),
                       locale: LocaleType.en,
                     );
                   },
@@ -124,8 +125,12 @@ class _UserEditPageState extends State<UserEditPage> {
                   onTap: () => showToast('Unable to change email')),
               _item(
                   title: 'Address',
+                  onTap: () {
+                    BlocProvider.of<UserEditBloc>(globalKey.currentContext)
+                        .add(OnSelectAddressEvent(globalKey.currentContext));
+                  },
                   controller: _addressController,
-                  itemisEdit: isEdit),
+                  itemisEdit: false),
               SizedBox(height: 32.0),
               isEdit
                   ? InkWell(

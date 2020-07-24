@@ -19,3 +19,9 @@ class ChangeStatusEditEvent extends UserEditEvent {
 }
 
 class FeatchDataEvent extends UserEditEvent {}
+
+class OnSelectAddressEvent extends UserEditEvent {
+  final BuildContext context;
+
+  OnSelectAddressEvent(this.context);
+}

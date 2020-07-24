@@ -7,6 +7,8 @@ import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:oktoast/oktoast.dart';
 part 'user_edit_event.dart';
 part 'user_edit_state.dart';
@@ -61,6 +63,19 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
       } else {
         yield EditProfileFailState();
       }
+    } else if (event is OnSelectAddressEvent) {
+      LocationResult result = await showLocationPicker(
+        event.context,
+        AppSetting.googleMapId,
+        initialCenter: ConfigApp.mylatLng,
+        myLocationButtonEnabled: true,
+        layersButtonEnabled: true,
+      );
+      print(result.address);
+      print(result.latLng);
+
+      // yield OnSelectAddressSucessState();
+      // yield OnSelectAddressFailState();
     }
 
     yield UserEditInitial();

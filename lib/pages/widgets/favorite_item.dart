@@ -102,7 +102,6 @@ class FavoriteItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Text(
-                // "Cheap motel room",
                 motelModel.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -128,13 +127,6 @@ class FavoriteItem extends StatelessWidget {
                     itemSize: 16.0,
                     initialRating: motelModel.rating,
                     onRatingUpdate: (v) {},
-                  ),
-                  SizedBox(width: 8.0),
-                  Text(
-                    '${Random().nextInt(1000)} reviews',
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: StyleText.content14Black400,
                   ),
                 ],
               ),

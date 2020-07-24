@@ -3,7 +3,6 @@ import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
-import 'package:findingmotels/mainDemoMap.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/intro/view/intro_screen.dart';
 import 'package:findingmotels/services/firebase_service.dart';
@@ -13,6 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:google_map_location_picker/generated/i18n.dart'
+    as location_picker;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,11 +33,18 @@ Future<void> main() async {
       animationDuration: Duration(milliseconds: 100),
       duration: Duration(seconds: 1),
       child: MaterialApp(
+        localizationsDelegates: const [
+          location_picker.S.delegate,
+        ],
+        supportedLocales: const <Locale>[
+          Locale('en', ''),
+          Locale('ar', ''),
+        ],
         debugShowCheckedModeBanner: false,
         title: 'Find Dream Hotel',
         theme: ThemeData(primarySwatch: Colors.blue),
-        // home: App(),
-        home: MapSample(),
+        home: App(),
+        // home: MapSample(),
         // home: MyHomePage(),
       ),
     ),

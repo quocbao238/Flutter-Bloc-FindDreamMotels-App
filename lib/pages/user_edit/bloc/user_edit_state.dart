@@ -32,3 +32,7 @@ class EditProfileSucessState extends UserEditState {
 }
 
 class EditProfileFailState extends UserEditState {}
+
+class OnSelectAddressSucessState extends UserEditState {}
+
+class OnSelectAddressFailState extends UserEditState {}

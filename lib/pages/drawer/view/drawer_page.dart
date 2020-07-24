@@ -142,12 +142,12 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                     icon: Icons.call,
                     title: 'Contact Us',
                     onTap: () => showToast('Contact Us')),
+                // _item(
+                //     icon: Icons.error,
+                //     title: 'About App',
+                //     onTap: () => showToast('About App')),
                 _item(
                     icon: Icons.error,
-                    title: 'About App',
-                    onTap: () => showToast('About App')),
-                _item(
-                    icon: Icons.view_carousel,
                     title: 'Version ${AppSetting.version}',
                     onTap: () {}),
               ],
@@ -353,7 +353,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
   Widget _avatar() {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(left: 8.0, top: 16.0),
+        margin: EdgeInsets.only(left: 8.0, top: 8.0),
         width: Size.getWidth * 0.42,
         height: Size.getWidth / 3.2,
         child: Center(

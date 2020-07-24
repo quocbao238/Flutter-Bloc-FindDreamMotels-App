@@ -265,8 +265,8 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
+            // margin: EdgeInsets.only(top: Size.statusBar),
             // color: Colors.red,
-            margin: EdgeInsets.only(top: Size.statusBar),
             child: Row(
               children: <Widget>[
                 Icon(
