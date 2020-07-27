@@ -17,7 +17,7 @@ import 'package:google_map_location_picker/generated/i18n.dart'
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseService.setupFirebase();
+  // FirebaseService.setupFirebase();
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
@@ -33,13 +33,13 @@ Future<void> main() async {
       animationDuration: Duration(milliseconds: 100),
       duration: Duration(seconds: 1),
       child: MaterialApp(
-        localizationsDelegates: const [
-          location_picker.S.delegate,
-        ],
-        supportedLocales: const <Locale>[
-          Locale('en', ''),
-          Locale('ar', ''),
-        ],
+        // localizationsDelegates: const [
+        //   location_picker.S.delegate,
+        // ],
+        // supportedLocales: const <Locale>[
+        //   Locale('en', ''),
+        //   Locale('ar', ''),
+        // ],
         debugShowCheckedModeBanner: false,
         title: 'Find Dream Hotel',
         theme: ThemeData(primarySwatch: Colors.blue),
@@ -60,7 +60,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    ConfigApp.myGoogleMapService.getLocation();
+    // ConfigApp.myGoogleMapService.getLocation();
   }
 
   @override
@@ -70,19 +70,19 @@ class _AppState extends State<App> {
       create: (context) => AuthBloc()..add(AppStartedEvent()),
       child: BlocListener<AuthBloc, AuthBlocState>(
         listener: (context, state) {
-          if (state is AuthenticatedState) {
-            debugPrint("AuthenticatedState");
-            Navigator.of(context)
-                .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return DrawerDashBoard();
-            }));
-          } else if (state is UnauthenticatedState) {
-            debugPrint("UnauthenticatedState");
-            Navigator.of(context)
-                .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return IntroPage();
-            }));
-          }
+          // if (state is AuthenticatedState) {
+          //   debugPrint("AuthenticatedState");
+          //   Navigator.of(context)
+          //       .pushReplacement(new MaterialPageRoute(builder: (context) {
+          //     return DrawerDashBoard();
+          //   }));
+          // } else if (state is UnauthenticatedState) {
+          //   debugPrint("UnauthenticatedState");
+          //   Navigator.of(context)
+          //       .pushReplacement(new MaterialPageRoute(builder: (context) {
+          //     return IntroPage();
+          //   }));
+          // }  
         },
         child: BlocBuilder<AuthBloc, AuthBlocState>(
           builder: (context, state) {
