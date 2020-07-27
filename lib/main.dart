@@ -6,6 +6,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/intro/view/intro_screen.dart';
 import 'package:findingmotels/services/firebase_service.dart';
+import 'package:findingmotels/test/pickerMap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +47,7 @@ Future<void> main() async {
         home: App(),
         // home: MapSample(),
         // home: MyHomePage(),
+        // home: MapLocationPicker(),
       ),
     ),
   );
