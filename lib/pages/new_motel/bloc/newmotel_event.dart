@@ -23,6 +23,11 @@ class OnTapSelectImgEvent extends NewmotelEvent {
   OnTapSelectImgEvent(this.image);
 }
 
+class OnSelectAddressEvent extends NewmotelEvent {
+  final BuildContext context;
+  OnSelectAddressEvent(this.context);
+}
+
 class OnTapCreateEvent extends NewmotelEvent {
   final int districtId;
   final String title;

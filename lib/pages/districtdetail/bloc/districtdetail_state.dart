@@ -21,3 +21,8 @@ class GoToDetailState extends DistrictdetailState {
   final MotelModel motelModel;
   GoToDetailState(this.motelModel);
 }
+
+class OnTapDirectionState extends DistrictdetailState {
+    final MotelModel motelModel;
+  OnTapDirectionState(this.motelModel);
+}

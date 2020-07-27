@@ -40,8 +40,8 @@ class _NewMotelPageState extends State<NewMotelPage> {
     descriptionTextEditingController = TextEditingController();
     phoneTextEditingController =
         TextEditingController(text: ConfigUserInfo.phone);
-    addressTextEditingController =
-        TextEditingController();
+    addressTextEditingController = TextEditingController();
+    priceTextEditingController = TextEditingController();
   }
 
   @override
@@ -66,6 +66,10 @@ class _NewMotelPageState extends State<NewMotelPage> {
       showToast(state.errorMessage);
     } else if (state is OnTapCreatePostSucessState) {
       Navigator.of(context).pop();
+    } else if (state is ChangeAddressEditState) {
+      addressTextEditingController.text = state.address;
+      location =
+          Location(lat: state.latLng.latitude, lng: state.latLng.longitude);
     }
   }
 
@@ -132,7 +136,7 @@ class _NewMotelPageState extends State<NewMotelPage> {
                       ? districList.indexOf(district)
                       : null,
                   amenities: _listAmenity,
-                  price: priceTextEditingController.text.trim(),
+                  price: priceTextEditingController.text??"",
                   phoneNumber: ConfigUserInfo.phone ?? "",
                   location: location,
                   title: titleTextEditingController.text.trim(),
@@ -187,7 +191,11 @@ class _NewMotelPageState extends State<NewMotelPage> {
                     topMargin: 10.0),
                 _customTextField(
                     hintext: "Address",
-                    // readOnly: false,
+                    readOnly: true,
+                    onTap: () {
+                      BlocProvider.of<NewmotelBloc>(_globalKey.currentContext)
+                          .add(OnSelectAddressEvent(_globalKey.currentContext));
+                    },
                     keyboardStyle: TextInputType.text,
                     iconData: Icons.location_city,
                     textEditingController: addressTextEditingController,
@@ -347,6 +355,7 @@ class _NewMotelPageState extends State<NewMotelPage> {
           {double topMargin = 10,
           bool readOnly = false,
           TextStyle textStyle,
+          Function onTap,
           TextInputType keyboardStyle = TextInputType.text,
           IconData iconData,
           String title,
@@ -361,9 +370,7 @@ class _NewMotelPageState extends State<NewMotelPage> {
             keyboardType: keyboardStyle,
             readOnly: readOnly,
             onTap: () {
-              if (readOnly) {
-                print('onTap');
-              }
+              if (onTap != null) onTap();
             },
             decoration: InputDecoration(
                 prefixIcon: iconData != null ? Icon(iconData) : null,

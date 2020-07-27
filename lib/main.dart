@@ -3,10 +3,11 @@ import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/mainData.dart';
+import 'package:findingmotels/mainDemoMap.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/intro/view/intro_screen.dart';
 import 'package:findingmotels/services/firebase_service.dart';
-import 'package:findingmotels/test/pickerMap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,8 +46,8 @@ Future<void> main() async {
         title: 'Find Dream Hotel',
         theme: ThemeData(primarySwatch: Colors.blue),
         home: App(),
+        // home: CreateDataPage(),
         // home: MapSample(),
-        // home: MyHomePage(),
         // home: MapLocationPicker(),
       ),
     ),
