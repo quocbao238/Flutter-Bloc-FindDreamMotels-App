@@ -10,8 +10,8 @@ class AppSetting {
   // Firebase Android
   //Key
   static String directionKey = 'AIzaSyBaE3VU4GTpO7jXeyDBRySvk5ioqGQcXa0';
-  static String googleMapId  = 'AIzaSyBlyck9ashJqWq37Fw0a-jErDAhQIyD0FU';
-
+  static String googleMapId = 'AIzaSyBlyck9ashJqWq37Fw0a-jErDAhQIyD0FU';
+  static String keySearchMapp = "AIzaSyCB7nFyzK1rrgBHJAFu7Oa--UcU59ib6E4";
   static const googleAppID = '1:3663369339:android:4124010180d7cca2413ede';
   static const gcmSenderID = '3663369339';
   static const apiKey = 'AIzaSyDOd_bLI0b3UGQ-tk41ePuVJVVezN3QGKw';

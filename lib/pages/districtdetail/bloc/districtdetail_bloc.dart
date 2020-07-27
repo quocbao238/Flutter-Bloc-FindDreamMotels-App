@@ -25,7 +25,10 @@ class DistrictdetailBloc
           : DistrictdetailError();
     } else if (event is GoToDetailEvent) {
       yield GoToDetailState(event.model);
+    } else if (event is OnTapDirectionEvent) {
+      yield OnTapDirectionState(event.model);
     }
+    yield DistrictdetailInitial();
   }
 
   Future<List<MotelModel>> featchMotelList(String id) async {

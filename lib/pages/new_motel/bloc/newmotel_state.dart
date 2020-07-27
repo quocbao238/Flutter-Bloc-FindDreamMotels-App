@@ -8,7 +8,7 @@ abstract class NewmotelState extends Equatable {
 
 class NewmotelInitial extends NewmotelState {}
 
-class LoadingState extends NewmotelState{}
+class LoadingState extends NewmotelState {}
 
 class OnTapSelectDistrictSucessState extends NewmotelState {
   final String district;
@@ -36,4 +36,10 @@ class OnTapCreatePostSucessState extends NewmotelState {}
 class OnTapCreatePostFailState extends NewmotelState {
   final String errorMessage;
   OnTapCreatePostFailState({this.errorMessage});
+}
+
+class ChangeAddressEditState extends NewmotelState {
+  final String address;
+  final LatLng  latLng;
+  ChangeAddressEditState(this.address, this.latLng);
 }

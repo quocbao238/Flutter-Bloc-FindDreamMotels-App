@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -69,6 +69,10 @@ dependencies:
   google_maps_flutter: 0.5.28+1
   google_map_location_picker: 3.3.3
   location: 3.0.0
+
+  #bottomSheet
+  modal_bottom_sheet: 0.2.0+1
+
 
  
 

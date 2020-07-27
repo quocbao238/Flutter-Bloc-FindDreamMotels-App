@@ -11,6 +11,12 @@ class GoToDetailEvent extends DistrictdetailEvent {
   GoToDetailEvent(this.model);
 }
 
+class OnTapDirectionEvent extends DistrictdetailEvent {
+  final MotelModel model;
+  OnTapDirectionEvent(this.model);
+}
+
+
 class FeatchMotelDistrict extends DistrictdetailEvent {
   final String id;
   FeatchMotelDistrict(this.id);

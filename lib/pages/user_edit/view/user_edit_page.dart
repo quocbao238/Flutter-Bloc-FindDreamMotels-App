@@ -56,6 +56,8 @@ class _UserEditPageState extends State<UserEditPage> {
       _addressController = TextEditingController(text: state.userInfo.address);
       _birthdayController =
           TextEditingController(text: state.userInfo.birthday);
+    } else if (state is ChangeAddressEditState) {
+        _addressController.text = state.address;
     } else if (state is ChangeStatusEditState) {
       isEdit = state.isEdit;
     } else if (state is EditProfileSucessState) {

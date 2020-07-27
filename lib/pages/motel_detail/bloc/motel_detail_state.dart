@@ -29,3 +29,8 @@ class FailState extends MotelDetailState {
   final String errorString;
   FailState(this.errorString);
 }
+
+class OnTapMapState extends MotelDetailState {
+  final MotelModel motelModel;
+  OnTapMapState(this.motelModel);
+}

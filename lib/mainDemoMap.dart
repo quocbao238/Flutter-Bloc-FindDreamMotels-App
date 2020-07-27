@@ -32,7 +32,6 @@ class MapSampleState extends State<MapSample> {
   );
 
   BitmapDescriptor customIcon;
-
   Future<void> _onAddMarkerButtonPressed() async {
     customIcon = await Helper.getAssetIcon(context);
     _polyline = await ConfigApp.myGoogleMapService

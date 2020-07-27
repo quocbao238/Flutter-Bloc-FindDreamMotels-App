@@ -16,3 +16,8 @@ class FeatchDataEvent extends MotelDetailEvent {
   final MotelModel motelModel;
   FeatchDataEvent(this.motelModel);
 }
+
+class OnTapMapEvent extends MotelDetailEvent {
+  final MotelModel motelModel;
+  OnTapMapEvent(this.motelModel);
+}

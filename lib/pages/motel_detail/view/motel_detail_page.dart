@@ -5,14 +5,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/models/motel_model.dart';
+import 'package:findingmotels/pages/map/moteldirection.dart';
 import 'package:findingmotels/pages/motel_detail/bloc/motel_detail_bloc.dart';
+import 'package:findingmotels/pages/widgets/modal_will_scope.dart';
 import 'package:findingmotels/widgets/empty/empty_widget.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class MotelDetailPage extends StatefulWidget {
@@ -51,10 +55,9 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     initialCameraPosition = CameraPosition(
       target: LatLng(
           widget.motelModel.location.lat, widget.motelModel.location.lng),
-      zoom: 15.4746,
+      zoom: 14.5,
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // _markers.add(await ConfigApp.myGoogleMapService.setMakerIcon(context));
       _asyncMaker();
     });
   }
@@ -82,6 +85,14 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
       _isFv = !state.isFv;
     } else if (state is OnTapFavoriteSucessState) {
       _isFv = state.isFv;
+    } else if (state is OnTapMapState) {
+      Navigator.of(context).push(
+        new MaterialPageRoute(
+          builder: (context) {
+            return MapMotelDirection(motelModel: state.motelModel);
+          },
+        ),
+      );
     }
   }
 
@@ -107,64 +118,114 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               sliderImg(),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: Size.getHeight * 0.02,
-                    left: Size.getWidth * 0.02,
-                    right: Size.getWidth * 0.02,
-                    bottom: Size.getHeight * 0.02,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        buildTitile(),
-                        SizedBox(height: Size.getHeight * 0.01),
-                        buildRating(),
-                        SizedBox(height: Size.getHeight * 0.02),
-                        _title('Amenities'),
-                        SizedBox(height: Size.getHeight * 0.01),
-                        buildAmentitesList(),
-                        SizedBox(height: Size.getHeight * 0.02),
-                        _title('Description'),
-                        SizedBox(height: Size.getHeight * 0.01),
-                        Text(
-                          widget.motelModel.description,
-                          style: StyleText.subhead16Black,
-                        ),
-                        SizedBox(height: Size.getHeight * 0.02),
-                        _title('Location'),
-                        SizedBox(height: Size.getHeight * 0.01),
-                        _map()
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              _body(),
               // buildBottomCallandBooking(),
             ],
           ),
         ),
       );
 
+  Widget _body() {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: Size.getHeight * 0.02,
+          left: Size.getWidth * 0.02,
+          right: Size.getWidth * 0.02,
+          bottom: Size.getHeight * 0.02,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              buildTitile(),
+              SizedBox(height: Size.getHeight * 0.01),
+              buildRating(),
+              SizedBox(height: Size.getHeight * 0.02),
+              _title('Amenities'),
+              SizedBox(height: Size.getHeight * 0.01),
+              buildAmentitesList(),
+              SizedBox(height: Size.getHeight * 0.02),
+              _title('Description'),
+              SizedBox(height: Size.getHeight * 0.01),
+              Text(widget.motelModel.description,
+                  style: StyleText.subhead16Black),
+              SizedBox(height: Size.getHeight * 0.02),
+              _location(),
+              SizedBox(height: Size.getHeight * 0.01),
+              _map(),
+              _reserve()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _location() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          'Location',
+          style: StyleText.header20BlackW500,
+        ),
+        InkWell(
+          onTap: () {
+            BlocProvider.of<MotelDetailBloc>(globalKey.currentContext)
+                .add(OnTapMapEvent(widget.motelModel));
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(6, 10, 16, 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColor.colorClipPath.withOpacity(0.7),
+            ),
+            child: Center(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Icon(
+                    Entypo.location_pin,
+                    size: 20.0,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 4.0,
+                  ),
+                  Text(
+                    'Direction',
+                    style: StyleText.header20White,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
   Widget _map() => Container(
         height: Size.getHeight * 0.35,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25), color: Colors.white),
-        child: GoogleMap(
-          mapType: MapType.normal,
-          zoomControlsEnabled: false,
-          zoomGesturesEnabled: false,
-          markers: _markers,
-          initialCameraPosition: initialCameraPosition,
-          onMapCreated: (GoogleMapController controller) {},
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30.0),
+          child: GoogleMap(
+            mapType: MapType.normal,
+            zoomControlsEnabled: false,
+            zoomGesturesEnabled: false,
+            markers: _markers,
+            initialCameraPosition: initialCameraPosition,
+            onMapCreated: (GoogleMapController controller) {},
+          ),
         ),
       );
 
   Widget sliderImg() => Container(
-        height: Size.getHeight * 0.4,
+        height: Size.getHeight * 0.3,
         child: Carousel(
             boxFit: BoxFit.cover,
             autoplay: true,
@@ -399,5 +460,28 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
             ),
           ),
         ));
+  }
+
+  Widget _reserve() {
+    return InkWell(
+      onTap: () {
+        showCupertinoModalBottomSheet(
+          expand: true,
+          context: context,
+          backgroundColor: Colors.transparent,
+          builder: (context, scrollController) =>
+              ReserveModal(scrollController: scrollController),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(
+            horizontal: Size.getHeight * 0.01, vertical: Size.getHeight * 0.02),
+        padding: EdgeInsets.symmetric(vertical: 12.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: AppColor.colorClipPath),
+        child: Center(child: Text('Reserve', style: StyleText.header24BWhite)),
+      ),
+    );
   }
 }

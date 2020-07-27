@@ -36,10 +36,12 @@ class MotelDetailBloc extends Bloc<MotelDetailEvent, MotelDetailState> {
       } else {
         //Add New
         bool isFv = await addToListFavorite(event.motel);
-        
+
         // bool isFv = await demoAddFavorite(event.motel);
         yield OnTapFavoriteSucessState(isFv);
       }
+    } else if (event is OnTapMapEvent) {
+      yield OnTapMapState(event.motelModel);
     }
     yield MotelDetailInitial();
   }

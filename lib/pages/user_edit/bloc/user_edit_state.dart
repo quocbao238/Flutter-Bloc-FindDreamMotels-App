@@ -19,6 +19,11 @@ class ChangeStatusEditState extends UserEditState {
   ChangeStatusEditState(this.isEdit);
 }
 
+class ChangeAddressEditState extends UserEditState {
+  final String address;
+  ChangeAddressEditState(this.address);
+}
+
 class FeatchDataSucessState extends UserEditState {
   final UserInfoModel userInfo;
   FeatchDataSucessState(this.userInfo);

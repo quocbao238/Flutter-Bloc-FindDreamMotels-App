@@ -1,6 +1,8 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
+import 'package:findingmotels/models/motel_model.dart';
+import 'package:findingmotels/pages/widgets/district_item.dart';
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
@@ -68,14 +70,12 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
         event.context,
         AppSetting.googleMapId,
         initialCenter: ConfigApp.mylatLng,
+        appBarColor: Color(0xFF6184D8),
         myLocationButtonEnabled: true,
-        layersButtonEnabled: true,
       );
-      print(result.address);
-      print(result.latLng);
-
-      // yield OnSelectAddressSucessState();
-      // yield OnSelectAddressFailState();
+      if (result.address != null) {
+        yield ChangeAddressEditState(result.address);
+      }
     }
 
     yield UserEditInitial();
