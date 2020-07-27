@@ -70,6 +70,9 @@ dependencies:
   google_map_location_picker: 3.3.3
   location: 3.0.0
 
+  #bottomSheet
+  modal_bottom_sheet: 0.2.0+1
+
 
  
 
