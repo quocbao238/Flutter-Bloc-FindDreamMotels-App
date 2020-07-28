@@ -31,6 +31,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
   GlobalKey globalKey;
   CameraPosition initialCameraPosition;
   bool _isFv = false;
+  bool isShowBottomSheet;
   Set<Marker> _markers = {};
 
   @override
@@ -60,6 +61,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMaker();
     });
+    isShowBottomSheet = false;
   }
 
   _asyncMaker() async {
@@ -442,36 +444,42 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
         top: 8,
         left: 8,
         child: SafeArea(
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              width: 40,
-              height: 40,
-              color: Colors.black.withOpacity(0.6),
-              child: Center(
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-              ),
-            ),
-          ),
+          child: !isShowBottomSheet
+              ? InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    color: Colors.black.withOpacity(0.6),
+                    child: Center(
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 30.0,
+                      ),
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ));
   }
 
   Widget _reserve() {
     return InkWell(
-      onTap: () {
-        showCupertinoModalBottomSheet(
+      onTap: () async {
+        setState(() => isShowBottomSheet = true);
+        var data = await showCupertinoModalBottomSheet(
           expand: true,
           context: context,
           backgroundColor: Colors.transparent,
-          builder: (context, scrollController) =>
-              ReserveModal(scrollController: scrollController),
+          builder: (context, scrollController) => ReserveModal(
+            scrollController: scrollController,
+            motelModel: widget.motelModel,
+          ),
         );
+        setState(() => isShowBottomSheet = false);
       },
       child: Container(
         margin: EdgeInsets.symmetric(
