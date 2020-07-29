@@ -22,6 +22,8 @@ class _ReserveModalState extends State<ReserveModal> {
   bool travelForWork;
   bool isMyBooking;
   List<Availability> listAvailability = [];
+  String timeStart;
+  String time
 
   void initState() {
     super.initState();
@@ -39,24 +41,7 @@ class _ReserveModalState extends State<ReserveModal> {
       _checkboxLooking(),
       !isMyBooking ? bookingForUser(title: 'Guest Name') : SizedBox(),
       _title('Check-in date'),
-      Container(
-        margin: EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-                height: 30.0,
-                width: 30.0,
-                child: SvgPicture.asset(AppSetting.eventIcon)),
-            SizedBox(width: 8.0),
-            Text(
-              'Select Time Check-in',
-              style: StyleText.subhead16Black500,
-            )
-          ],
-        ),
-      ),
+      _timeSelect(),
       _title('Check-out date'),
       _title('Availability'),
       ListView.builder(
@@ -198,6 +183,35 @@ class _ReserveModalState extends State<ReserveModal> {
               children: children2,
             ),
           )),
+    );
+  }
+
+  Widget _timeSelect({
+    Function onTap,
+    String timeSelect,
+  }) {
+    return InkWell(
+      onTap: () {
+        if (onTap != null) onTap();
+      },
+      child: Container(
+        margin: EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+                height: 30.0,
+                width: 30.0,
+                child: SvgPicture.asset(AppSetting.eventIcon)),
+            SizedBox(width: 8.0),
+            Text(
+              timeSelect,
+              style: StyleText.subhead16Black500,
+            )
+          ],
+        ),
+      ),
     );
   }
 
