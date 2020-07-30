@@ -66,6 +66,7 @@ class AppSetting {
   static String dbpopular = 'popular';
   static String dbuser = 'user';
   static String dbfavorite = 'favorite';
+  static String dbBooking = 'booking';
 }
 
 String errorMessage = 'An error occurred, please try again later';

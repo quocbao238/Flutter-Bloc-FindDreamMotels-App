@@ -55,7 +55,7 @@ class _ReserveModalState extends State<ReserveModal> {
         color: app.AppColor.backgroundColor,
         child: ListView(
             controller: widget.scrollController,
-            padding: EdgeInsets.only(left: 10, right: 10, top: 8),
+            padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 15),
             children: <Widget>[
               _title('Are you traveling for work?'),
               _checkboxWork(),
@@ -129,7 +129,17 @@ class _ReserveModalState extends State<ReserveModal> {
                   },
                   timeSelect: timeEnd),
               _title('Availability'),
-              _listAvailability()
+              _listAvailability(),
+              Container(
+                  padding: EdgeInsets.fromLTRB(10, 10, 30, 10),
+                  height: 60,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColor.colorClipPath),
+                  child: Center(
+                    child: Text('I\'ll Reserve',
+                        style: StyleText.header20Whitew500),
+                  ))
             ]),
       );
 
