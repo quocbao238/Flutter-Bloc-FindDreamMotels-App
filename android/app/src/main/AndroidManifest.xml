@@ -12,7 +12,7 @@
     <uses-feature android:name="android.hardware.location.gps" android:required="false"  />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Find Accommodation"
+        android:label="Find Dream Hotel"
         android:icon="@mipmap/icon">
         <activity
             android:name=".MainActivity"

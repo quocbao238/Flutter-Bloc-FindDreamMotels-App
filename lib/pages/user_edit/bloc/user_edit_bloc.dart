@@ -109,6 +109,9 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     });
     if (_userInfo == null) _userInfo = await createUserData();
     ConfigUserInfo.phone = _userInfo.phone;
+    ConfigUserInfo.userOneSignalId =
+        await ConfigApp.oneSignalService.getOneSignalId();
+
     return _userInfo;
   }
 

@@ -16,6 +16,9 @@ class AppSetting {
   static const gcmSenderID = '3663369339';
   static const apiKey = 'AIzaSyDOd_bLI0b3UGQ-tk41ePuVJVVezN3QGKw';
   static const projectID = 'find-accommodation-b2e61';
+  static const oneSingalKey = 'd8ce3ee5-56c8-4075-b127-03d2e04f70d5';
+  static const oneSingalRestApiKey =
+      'MDgzZThjNTctYThjOS00MGMyLTkwZDItZmRlN2QwZjEwOGRl';
   //Firebase IOS
 
   //Image test app
