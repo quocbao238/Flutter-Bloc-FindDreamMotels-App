@@ -77,7 +77,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
         child: BlocListener<MotelDetailBloc, MotelDetailState>(
             listener: (context, state) => blocListener(state, context),
             child: BlocBuilder<MotelDetailBloc, MotelDetailState>(
-                builder: (context, state) => _scaffold(state))));
+                builder: (context, state) => scaffold(state))));
   }
 
   void blocListener(MotelDetailState state, BuildContext context) {
@@ -98,14 +98,14 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     }
   }
 
-  Widget _scaffold(MotelDetailState state) => Stack(
+  Widget scaffold(MotelDetailState state) => Stack(
         children: <Widget>[
           Scaffold(
             key: globalKey,
             body: Stack(
               children: <Widget>[
-                buildPageView(),
-                buildButtonBack(),
+                _pageView(),
+                _buttonBack(),
               ],
             ),
           ),
@@ -113,51 +113,49 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
         ],
       );
 
-  Widget buildPageView() => Positioned.fill(
+  Widget _pageView() => Positioned.fill(
         child: Container(
           color: AppColor.backgroundColor.withOpacity(0.6),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              sliderImg(),
-              _body(),
+              __sliderImg(),
+              __body(),
               // buildBottomCallandBooking(),
             ],
           ),
         ),
       );
 
-  Widget _body() {
+  Widget __body() {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(
-          top: Size.getHeight * 0.02,
-          left: Size.getWidth * 0.02,
-          right: Size.getWidth * 0.02,
-          bottom: Size.getHeight * 0.02,
-        ),
+            top: Size.getHeight * 0.02,
+            left: Size.getWidth * 0.02,
+            right: Size.getWidth * 0.02,
+            bottom: Size.getHeight * 0.02),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              buildTitile(),
-              SizedBox(height: Size.getHeight * 0.01),
-              buildRating(),
-              SizedBox(height: Size.getHeight * 0.02),
-              _title('Amenities'),
-              SizedBox(height: Size.getHeight * 0.01),
-              buildAmentitesList(),
-              SizedBox(height: Size.getHeight * 0.02),
-              _title('Description'),
-              SizedBox(height: Size.getHeight * 0.01),
-              Text(widget.motelModel.description,
-                  style: StyleText.subhead16Black),
-              SizedBox(height: Size.getHeight * 0.02),
-              _location(),
-              SizedBox(height: Size.getHeight * 0.01),
-              _map(),
-              _reserve()
+              ___header(),
+              ___padding(Size.getHeight * 0.01),
+              ___rating(),
+              ___padding(Size.getHeight * 0.02),
+              ___title('Amenities'),
+              ___padding(Size.getHeight * 0.01),
+              ___listAmentites(),
+              ___padding(Size.getHeight * 0.02),
+              ___title('Description'),
+              ___padding(Size.getHeight * 0.01),
+              ___description(),
+              ___padding(Size.getHeight * 0.02),
+              ___location(),
+              ___padding(Size.getHeight * 0.01),
+              ___map(),
+              ___reserve()
             ],
           ),
         ),
@@ -165,7 +163,12 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     );
   }
 
-  Widget _location() {
+  Widget ___description() =>
+      Text(widget.motelModel.description, style: StyleText.subhead16Black);
+
+  Widget ___padding(double height) => SizedBox(height: height);
+
+  Widget ___location() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -211,7 +214,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     );
   }
 
-  Widget _map() => Container(
+  Widget ___map() => Container(
         height: Size.getHeight * 0.35,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30.0),
@@ -226,7 +229,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
         ),
       );
 
-  Widget sliderImg() => Container(
+  Widget __sliderImg() => Container(
         height: Size.getHeight * 0.3,
         child: Carousel(
             boxFit: BoxFit.cover,
@@ -243,17 +246,17 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
             images: images),
       );
 
-  Widget buildAmentitesList() => Container(
+  Widget ___listAmentites() => Container(
         height: Size.getHeight * 0.12,
         width: Size.getWidth,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: widget.motelModel.amenities.length,
-          itemBuilder: (context, index) => _itemAmentites(index),
+          itemBuilder: (context, index) => ____itemAmentites(index),
         ),
       );
 
-  Widget _itemAmentites(index) => widget.motelModel.amenities[index].isHave
+  Widget ____itemAmentites(index) => widget.motelModel.amenities[index].isHave
       ? Container(
           // width: Size.getWidth * 0.20,
           margin: EdgeInsets.only(right: Size.getWidth * 0.1),
@@ -283,11 +286,11 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
         )
       : SizedBox();
 
-  Widget _title(String title) => Text(
+  Widget ___title(String title) => Text(
         title,
         style: StyleText.header20BlackW500,
       );
-  Widget buildRating() {
+  Widget ___rating() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -316,7 +319,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     );
   }
 
-  Widget buildTitile() {
+  Widget ___header() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -397,49 +400,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     );
   }
 
-  Widget buildBottomCallandBooking() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          color: AppColor.colorClipPath),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              color: AppColor.colorBlue156,
-            ),
-            child: Center(
-              child: Icon(
-                Icons.phone_iphone,
-                size: 16.0,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          SizedBox(width: 16.0),
-          Container(
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0), color: Colors.red),
-            child: Center(
-              child: Text(
-                "Booking rent",
-                style: StyleText.subhead16White500,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget buildButtonBack() {
+  Widget _buttonBack() {
     return Positioned(
         top: 8,
         left: 8,
@@ -466,7 +427,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
         ));
   }
 
-  Widget _reserve() {
+  Widget ___reserve() {
     return InkWell(
       onTap: () async {
         setState(() => isShowBottomSheet = true);

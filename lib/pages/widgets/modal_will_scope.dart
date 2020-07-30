@@ -1,13 +1,16 @@
 import 'package:findingmotels/config_app/setting.dart';
+import 'package:findingmotels/models/availability_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:findingmotels/config_app/sizeScreen.dart' as app;
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/widgets/circle_checkbox.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:intl/intl.dart';
+import 'package:oktoast/oktoast.dart';
 
 class ReserveModal extends StatefulWidget {
   final MotelModel motelModel;
@@ -23,198 +26,253 @@ class _ReserveModalState extends State<ReserveModal> {
   bool isMyBooking;
   List<Availability> listAvailability = [];
   String timeStart;
+  String timeEnd;
+  int dateBooking;
 
   void initState() {
     super.initState();
     travelForWork = false;
     isMyBooking = true;
+    timeStart = 'Select time Check-in';
+    timeEnd = 'Select time Check-out';
     listAvailability = getListAvailabiity(widget.motelModel);
   }
 
   @override
-  Widget build(BuildContext context) {
-    var children2 = <Widget>[
-      _title('Are you traveling for work?'),
-      _checkboxWork(),
-      _title('What are you looking for?'),
-      _checkboxLooking(),
-      !isMyBooking ? bookingForUser(title: 'Guest Name') : SizedBox(),
-      _title('Check-in date'),
-      _timeSelect(),
-      _title('Check-out date'),
-      _title('Availability'),
-      ListView.builder(
-          shrinkWrap: true,
-          itemCount: listAvailability.length,
-          itemBuilder: (context, index) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        listAvailability[index].typeRoom,
-                        style: StyleText.subhead18GreenMixBlue,
-                      ),
-                      Spacer(),
-                      Icon(Icons.supervisor_account, size: 24.0),
-                      index == 2
-                          ? Icon(Icons.supervisor_account, size: 24.0)
-                          : SizedBox(),
-                    ],
-                  ),
-                  SizedBox(height: 8.0),
-                  Row(
-                    children: <Widget>[
-                      Text('Today\'s Price: ',
-                          style: StyleText.subhead18Black87w400),
-                      Text(
-                        listAvailability[index].price.toString().length > 5
-                            ? listAvailability[index]
-                                .price
-                                .toString()
-                                .substring(0, 5)
-                            : listAvailability[index].price.toString(),
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 18.0 * Size.scaleTxt,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(' \$', style: StyleText.subhead18Red87w400),
-                      Spacer(),
-                      DropdownButton(
-                          value: listAvailability[index].value,
-                          items: [
-                            DropdownMenuItem(
-                                child: Text(
-                                    listAvailability[index].listDropbox[0]),
-                                value: 0),
-                            DropdownMenuItem(
-                                child: Text(
-                                    listAvailability[index].listDropbox[1]),
-                                value: 1),
-                            DropdownMenuItem(
-                                child: Text(
-                                    listAvailability[index].listDropbox[2]),
-                                value: 2),
-                            DropdownMenuItem(
-                                child: Text(
-                                    listAvailability[index].listDropbox[3]),
-                                value: 3),
-                            DropdownMenuItem(
-                                child: Text(
-                                    listAvailability[index].listDropbox[4]),
-                                value: 4),
-                            DropdownMenuItem(
-                                child: Text(
-                                    listAvailability[index].listDropbox[5]),
-                                value: 5)
-                          ],
-                          onChanged: (value) {
+  Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.transparent,
+        body: NestedScrollView(
+            controller: ScrollController(),
+            physics: ScrollPhysics(parent: PageScrollPhysics()),
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[headerSliver(context)];
+            },
+            body: body()),
+      );
+
+  Widget body() => Ink(
+        color: app.AppColor.backgroundColor,
+        child: ListView(
+            controller: widget.scrollController,
+            padding: EdgeInsets.only(left: 10, right: 10, top: 8),
+            children: <Widget>[
+              _title('Are you traveling for work?'),
+              _checkboxWork(),
+              _title('What are you looking for?'),
+              _checkboxLooking(),
+              !isMyBooking ? _bookingForUser(title: 'Guest Name') : SizedBox(),
+              _title('Check-in date'),
+              _timeSelect(
+                  onTap: () async {
+                    await DatePicker.showDatePicker(
+                      context,
+                      showTitleActions: true,
+                      minTime: DateTime.now(),
+                      maxTime: DateTime.now().add(new Duration(days: 360)),
+                      onChanged: (date) {},
+                      onConfirm: (date) {
+                        if (timeEnd == 'Select time Check-out') {
+                          setState(() => timeStart =
+                              DateFormat('dd-MM-yyyy').format(date));
+                        } else {
+                          if (DateFormat('dd-MM-yyyy')
+                                  .parse(timeEnd)
+                                  .difference(date)
+                                  .inDays <
+                              0) {
                             setState(() {
-                              listAvailability[index].value = value;
+                              timeEnd = 'Select time Check-out';
                             });
-                          }),
-                    ],
+                          }
+                          setState(() => timeStart =
+                              DateFormat('dd-MM-yyyy').format(date));
+                        }
+                      },
+                      currentTime: timeEnd == 'Select time Check-out'
+                          ? DateTime.now()
+                          : DateFormat('dd-MM-yyyy').parse(timeStart),
+                      locale: LocaleType.en,
+                    );
+                  },
+                  timeSelect: timeStart),
+              _title('Check-out date'),
+              _timeSelect(
+                  onTap: () async {
+                    if (timeStart == 'Select time Check-in') {
+                      showToast('Please select time check-in before');
+                    } else {
+                      await DatePicker.showDatePicker(context,
+                          showTitleActions: true,
+                          minTime: DateFormat('dd-MM-yyyy')
+                              .parse(timeStart)
+                              .add(new Duration(days: 1)),
+                          maxTime: DateFormat('dd-MM-yyyy')
+                              .parse(timeStart)
+                              .add(new Duration(days: 60)),
+                          onChanged: (date) {},
+                          onConfirm: (date) => setState(() =>
+                              timeEnd = DateFormat('dd-MM-yyyy').format(date)),
+                          currentTime: timeEnd != 'Select time Check-out'
+                              ? DateFormat('dd-MM-yyyy').parse(timeEnd)
+                              : DateFormat('dd-MM-yyyy')
+                                  .parse(timeStart)
+                                  .add(new Duration(days: 1)),
+                          locale: LocaleType.en);
+
+                      dateBooking = DateFormat('dd-MM-yyyy')
+                          .parse(timeEnd)
+                          .difference(DateFormat('dd-MM-yyyy').parse(timeStart))
+                          .inDays;
+                      print(dateBooking);
+                    }
+                  },
+                  timeSelect: timeEnd),
+              _title('Availability'),
+              _listAvailability()
+            ]),
+      );
+
+  Widget headerSliver(BuildContext context) => SliverList(
+        delegate: SliverChildListDelegate(
+          [
+            Material(
+              color: Colors.transparent,
+              child: Container(
+                height: 50,
+                margin: EdgeInsets.only(
+                    top: app.Size.getHeight * 0.24 - app.Size.statusBar),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
-                ],
-              )),
-      Placeholder(),
-      Placeholder(),
-    ];
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: NestedScrollView(
-          controller: ScrollController(),
-          physics: ScrollPhysics(parent: PageScrollPhysics()),
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Material(
-                      color: Colors.transparent,
-                      child: Container(
-                        height: 50,
-                        margin: EdgeInsets.only(
-                            top:
-                                app.Size.getHeight * 0.24 - app.Size.statusBar),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                          color: app.AppColor.colorClipPath,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            IconButton(
-                                icon: Icon(LineIcons.times_circle,
-                                    size: 30.0, color: Colors.transparent),
-                                onPressed: () {}),
-                            Text(
-                              'Enter your details',
-                              style: app.StyleText.header24BWhite,
-                            ),
-                            IconButton(
-                                icon: Icon(LineIcons.times_circle,
-                                    size: 30.0, color: Colors.white),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                }),
-                          ],
-                        ),
-                      ),
-                    )
+                  color: app.AppColor.colorClipPath,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                        icon: Icon(LineIcons.times_circle,
+                            size: 30.0, color: Colors.transparent),
+                        onPressed: () {}),
+                    Text(
+                      'Enter your details',
+                      style: app.StyleText.header24BWhite,
+                    ),
+                    IconButton(
+                        icon: Icon(LineIcons.times_circle,
+                            size: 30.0, color: Colors.white),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        }),
                   ],
                 ),
               ),
-            ];
-          },
-          body: Ink(
-            color: app.AppColor.backgroundColor,
-            child: ListView(
-              controller: widget.scrollController,
-              padding: EdgeInsets.only(left: 10, right: 10, top: 8),
-              children: children2,
-            ),
-          )),
-    );
-  }
-
-  Widget _timeSelect({
-    Function onTap,
-    String timeSelect,
-  }) {
-    return InkWell(
-      onTap: () {
-        if (onTap != null) onTap();
-      },
-      child: Container(
-        margin: EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-                height: 30.0,
-                width: 30.0,
-                child: SvgPicture.asset(AppSetting.eventIcon)),
-            SizedBox(width: 8.0),
-            Text(
-              timeSelect,
-              style: StyleText.subhead16Black500,
             )
           ],
         ),
-      ),
+      );
+
+  Widget _listAvailability() => ListView.builder(
+      shrinkWrap: true,
+      itemCount: listAvailability.length,
+      itemBuilder: (context, index) => __itemAvailability(index));
+
+  Widget __itemAvailability(int index) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ___nameIcon(index),
+        SizedBox(height: 8.0),
+        ___priceSelect(index)
+      ],
     );
   }
 
-  Widget bookingForUser({String title, TextEditingController controller}) =>
+  Widget ___priceSelect(int index) => Row(
+        children: <Widget>[
+          Text('Today\'s Price: ', style: StyleText.subhead18Black87w400),
+          Text(
+            listAvailability[index].price.toString().length > 5
+                ? listAvailability[index].price.toString().substring(0, 5)
+                : listAvailability[index].price.toString(),
+            style: TextStyle(
+              color: Colors.black87,
+              fontSize: 18.0 * Size.scaleTxt,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          Text(' \$', style: StyleText.subhead18Red87w400),
+          Spacer(),
+          DropdownButton(
+              value: listAvailability[index].value,
+              items: [
+                DropdownMenuItem(
+                    child: Text(listAvailability[index].listDropbox[0]),
+                    value: 0),
+                DropdownMenuItem(
+                    child: Text(listAvailability[index].listDropbox[1]),
+                    value: 1),
+                DropdownMenuItem(
+                    child: Text(listAvailability[index].listDropbox[2]),
+                    value: 2),
+                DropdownMenuItem(
+                    child: Text(listAvailability[index].listDropbox[3]),
+                    value: 3),
+                DropdownMenuItem(
+                    child: Text(listAvailability[index].listDropbox[4]),
+                    value: 4),
+                DropdownMenuItem(
+                    child: Text(listAvailability[index].listDropbox[5]),
+                    value: 5)
+              ],
+              onChanged: (value) =>
+                  setState(() => listAvailability[index].value = value)),
+        ],
+      );
+
+  Widget ___nameIcon(int index) {
+    return Row(
+      children: <Widget>[
+        Text(
+          listAvailability[index].typeRoom,
+          style: StyleText.subhead18GreenMixBlue,
+        ),
+        Spacer(),
+        Icon(Icons.supervisor_account, size: 24.0),
+        index == 2 ? Icon(Icons.supervisor_account, size: 24.0) : SizedBox(),
+      ],
+    );
+  }
+
+  Widget _timeSelect({Function onTap, String timeSelect}) => InkWell(
+        onTap: () {
+          if (onTap != null) onTap();
+        },
+        child: Container(
+          margin: EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                  height: 30.0,
+                  width: 30.0,
+                  child: SvgPicture.asset(AppSetting.eventIcon)),
+              SizedBox(width: 8.0),
+              Text(
+                timeSelect,
+                style: StyleText.subhead16Black500,
+              )
+            ],
+          ),
+        ),
+      );
+
+  Widget _bookingForUser({String title, TextEditingController controller}) =>
       Padding(
         padding: EdgeInsets.only(bottom: 10.0),
         child: TextField(
@@ -270,87 +328,6 @@ class _ReserveModalState extends State<ReserveModal> {
         ]),
       );
 
-  Widget roundCheck(bool isChecked, String title, Function onTap) => Row(
-        children: <Widget>[
-          InkWell(
-            onTap: () {
-              if (onTap != null) onTap();
-            },
-            child: Ink(
-              color: Colors.transparent,
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 600),
-                curve: Curves.easeInOut,
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(width: 1, color: Colors.grey),
-                  color: isChecked ? Colors.green : Colors.transparent,
-                ),
-                child: Center(
-                    child: Icon(
-                  Icons.check,
-                  color: isChecked ? Colors.white : Colors.transparent,
-                )),
-              ),
-            ),
-          ),
-          SizedBox(width: 8.0),
-          Text(title, style: StyleText.subhead18Black87w400),
-        ],
-      );
-
   Widget _title(String title) =>
       Text(title, style: StyleText.header20BlackNormal);
-}
-
-class Availability {
-  List<String> listDropbox;
-  int value;
-  String typeRoom;
-  double price;
-  Availability({this.listDropbox, this.value, this.typeRoom, this.price});
-}
-
-List<Availability> getListAvailabiity(MotelModel motelModel) {
-  List<Availability> listAvailability = [
-    Availability(
-        listDropbox: [
-          '0',
-          '1  (${double.parse(motelModel.price)}\$)',
-          '2  (${double.parse(motelModel.price) * 2}\$)',
-          '3  (${double.parse(motelModel.price) * 3}\$)',
-          '4  (${double.parse(motelModel.price) * 4}\$)',
-          '5  (${double.parse(motelModel.price) * 5}\$)'
-        ],
-        price: double.parse(motelModel.price) * 1,
-        typeRoom: 'Deluxe Double Room',
-        value: 0),
-    Availability(
-        listDropbox: [
-          '0',
-          '1  (${double.parse(motelModel.price)}\$)',
-          '2  (${double.parse(motelModel.price) * 2}\$)',
-          '3  (${double.parse(motelModel.price) * 3}\$)',
-          '4  (${double.parse(motelModel.price) * 4}\$)',
-          '5  (${double.parse(motelModel.price) * 5}\$)'
-        ],
-        price: double.parse(motelModel.price) * 1.25,
-        typeRoom: 'Deluxe Double or Twin Room',
-        value: 0),
-    Availability(
-        listDropbox: [
-          '0',
-          '1  (${double.parse(motelModel.price)}\$)',
-          '2  (${double.parse(motelModel.price) * 2}\$)',
-          '3  (${double.parse(motelModel.price) * 3}\$)',
-          '4  (${double.parse(motelModel.price) * 4}\$)',
-          '5  (${double.parse(motelModel.price) * 5}\$)'
-        ],
-        price: double.parse(motelModel.price) * 1.35,
-        typeRoom: 'Large Double or Twin Room',
-        value: 0),
-  ];
-  return listAvailability;
 }
