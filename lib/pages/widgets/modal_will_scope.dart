@@ -23,7 +23,6 @@ class _ReserveModalState extends State<ReserveModal> {
   bool isMyBooking;
   List<Availability> listAvailability = [];
   String timeStart;
-  String time
 
   void initState() {
     super.initState();

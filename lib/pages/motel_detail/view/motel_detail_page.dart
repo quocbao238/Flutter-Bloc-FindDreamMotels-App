@@ -470,7 +470,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     return InkWell(
       onTap: () async {
         setState(() => isShowBottomSheet = true);
-        var data = await showCupertinoModalBottomSheet(
+        await showCupertinoModalBottomSheet(
           expand: true,
           context: context,
           backgroundColor: Colors.transparent,
