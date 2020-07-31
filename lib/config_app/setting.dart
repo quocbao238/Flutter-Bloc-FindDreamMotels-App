@@ -8,18 +8,22 @@ class AppSetting {
   static const notificationTitle = 'Notification';
 
   // Firebase Android
-  //Key
-  static String directionKey = 'AIzaSyBaE3VU4GTpO7jXeyDBRySvk5ioqGQcXa0';
-  static String googleMapId = 'AIzaSyBlyck9ashJqWq37Fw0a-jErDAhQIyD0FU';
-  static String keySearchMapp = "AIzaSyCB7nFyzK1rrgBHJAFu7Oa--UcU59ib6E4";
   static const googleAppID = '1:3663369339:android:4124010180d7cca2413ede';
   static const gcmSenderID = '3663369339';
   static const apiKey = 'AIzaSyDOd_bLI0b3UGQ-tk41ePuVJVVezN3QGKw';
   static const projectID = 'find-accommodation-b2e61';
+  //Firebase IOS
+
+  //Google Map
+  static String directionKey = 'AIzaSyBaE3VU4GTpO7jXeyDBRySvk5ioqGQcXa0';  // Keyfor Search GGMap
+  static String googleMapId = 'AIzaSyBlyck9ashJqWq37Fw0a-jErDAhQIyD0FU';
+
+  // OneSignal
+  static const oneSignalIcon =
+      'https://www.filepicker.io/api/file/1Cp0BzAKRMer436RhHtC';
   static const oneSingalKey = 'd8ce3ee5-56c8-4075-b127-03d2e04f70d5';
   static const oneSingalRestApiKey =
       'MDgzZThjNTctYThjOS00MGMyLTkwZDItZmRlN2QwZjEwOGRl';
-  //Firebase IOS
 
   //Image test app
   static const imageTest =

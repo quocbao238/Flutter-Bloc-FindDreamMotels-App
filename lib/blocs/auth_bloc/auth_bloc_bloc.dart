@@ -54,6 +54,7 @@ class AuthBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
     ConfigUserInfo.email = _userInfo.email;
     ConfigUserInfo.name = _userInfo.name;
     ConfigUserInfo.userOneSignalId = await ConfigApp.oneSignalService.getOneSignalId();
+    print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
     return _userInfo;
   }
 

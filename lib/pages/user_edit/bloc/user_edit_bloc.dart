@@ -111,7 +111,7 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     ConfigUserInfo.phone = _userInfo.phone;
     ConfigUserInfo.userOneSignalId =
         await ConfigApp.oneSignalService.getOneSignalId();
-
+    print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
     return _userInfo;
   }
 

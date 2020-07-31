@@ -72,6 +72,8 @@ Future<void> featchUserData() async {
   _userInfo = null;
   await ConfigApp.databaseReference
       .collection(AppSetting.dbuser)
+      .document(ConfigApp.fbuser.uid)
+      .collection('info')
       .getDocuments()
       .then((QuerySnapshot snapshot) {
     snapshot.documents.forEach((f) {
@@ -79,6 +81,11 @@ Future<void> featchUserData() async {
         _userInfo = UserInfoModel.fromJson(f.data);
     });
   });
+  if (_userInfo == null) _userInfo = await createUserData();
+  ConfigUserInfo.phone = _userInfo.phone;
+  ConfigUserInfo.userOneSignalId =
+      await ConfigApp.oneSignalService.getOneSignalId();
+  print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
   ConfigUserInfo.phone = _userInfo.phone;
   ConfigUserInfo.address = _userInfo.address;
   ConfigUserInfo.birthday = _userInfo.birthday;
@@ -86,4 +93,34 @@ Future<void> featchUserData() async {
   ConfigUserInfo.name = _userInfo.name;
   ConfigUserInfo.userOneSignalId =
       await ConfigApp.oneSignalService.getOneSignalId();
+  print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
+}
+
+Future<UserInfoModel> createUserData() async {
+  UserInfoModel _userInfo = UserInfoModel(
+      name: ConfigApp.fbuser.displayName,
+      photoUrl: ConfigApp.fbuser.photoUrl,
+      email: ConfigApp.fbuser.email,
+      address: ' ',
+      birthday: ' ',
+      phone: ' ',
+      role: '0');
+  await ConfigApp.databaseReference
+      .collection(AppSetting.dbuser)
+      .document(ConfigApp.fbuser.uid)
+      .collection('info')
+      .document(ConfigApp.fbuser.uid)
+      .setData(_userInfo.toJson());
+  await ConfigApp.databaseReference
+      .collection(AppSetting.dbuser)
+      .document(ConfigApp.fbuser.uid)
+      .collection('info')
+      .getDocuments()
+      .then((QuerySnapshot snapshot) {
+    snapshot.documents.forEach((f) {
+      if (f.documentID == ConfigApp.fbuser.uid)
+        _userInfo = UserInfoModel.fromJson(f.data);
+    });
+  });
+  return _userInfo;
 }

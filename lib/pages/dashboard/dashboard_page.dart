@@ -26,6 +26,17 @@ class _DashboardPageState extends State<DashboardPage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    ConfigApp.oneSignalService.notificationReceivedHandler((oSNotification) {
+      print(oSNotification.jsonRepresentation());
+    });
+    ConfigApp.oneSignalService.notificationOpenedHandler((result) {
+      print(result.toString());
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return _pageView(context, Size.getWidth, Size.getHeight);
   }
@@ -39,12 +50,12 @@ class _DashboardPageState extends State<DashboardPage> {
       );
 
   Widget _bottomNavigationBar() => Container(
-    // color: AppColor.backgroundColor,
+        // color: AppColor.backgroundColor,
         decoration: BoxDecoration(
           // color: AppColor.colorClipPath,
           // boxShadow: [
           //   BoxShadow(
-          //       blurRadius: 20, 
+          //       blurRadius: 20,
           //       color: AppColor.colorClipPath.withOpacity(0.3)),
           // ],
           borderRadius: BorderRadius.only(

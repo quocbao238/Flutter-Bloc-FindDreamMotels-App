@@ -44,8 +44,8 @@ Future<void> main() async {
         debugShowCheckedModeBanner: false,
         title: 'Find Dream Hotel',
         theme: ThemeData(primarySwatch: Colors.blue),
-        // home: App(),
-        home: OneSignalPage(),
+        home: App(),
+        // home: OneSignalPage(),
         // home: CreateDataPage(),
         // home: MapSample(),
         // home: MapLocationPicker(),
@@ -64,6 +64,8 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     ConfigApp.myGoogleMapService.getLocation();
+    ConfigApp.oneSignalService.oneSignalInit();
+    ConfigApp.oneSignalService.oneSingalListen();
   }
 
   @override
