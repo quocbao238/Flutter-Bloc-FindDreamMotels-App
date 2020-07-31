@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:findingmotels/models/motel_model.dart';
-import 'package:findingmotels/pages/widgets/district_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -111,6 +109,9 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     });
     if (_userInfo == null) _userInfo = await createUserData();
     ConfigUserInfo.phone = _userInfo.phone;
+    ConfigUserInfo.userOneSignalId =
+        await ConfigApp.oneSignalService.getOneSignalId();
+    print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
     return _userInfo;
   }
 

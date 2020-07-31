@@ -3,8 +3,7 @@ import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
-import 'package:findingmotels/mainData.dart';
-import 'package:findingmotels/mainDemoMap.dart';
+import 'package:findingmotels/onesignal.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/intro/view/intro_screen.dart';
 import 'package:findingmotels/services/firebase_service.dart';
@@ -45,7 +44,8 @@ Future<void> main() async {
         debugShowCheckedModeBanner: false,
         title: 'Find Dream Hotel',
         theme: ThemeData(primarySwatch: Colors.blue),
-        home: App(),
+        // home: App(),
+        home: OneSignalPage(),
         // home: CreateDataPage(),
         // home: MapSample(),
         // home: MapLocationPicker(),
@@ -63,7 +63,9 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    // ConfigApp.myGoogleMapService.getLocation();
+    ConfigApp.myGoogleMapService.getLocation();
+    ConfigApp.oneSignalService.oneSignalInit();
+    ConfigApp.oneSignalService.oneSingalListen();
   }
 
   @override

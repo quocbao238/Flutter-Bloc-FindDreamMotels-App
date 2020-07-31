@@ -155,6 +155,11 @@ class StyleText {
     fontSize: 18.0 * Size.scaleTxt,
     fontWeight: FontWeight.w400,
   );
+  static TextStyle subhead18Red87w400 = TextStyle(
+    color: Colors.red,
+    fontSize: 18.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w400,
+  );
 
   static TextStyle subhead18Grey400 = TextStyle(
     color: Colors.grey,

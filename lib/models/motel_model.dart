@@ -11,6 +11,7 @@ String motelModelToJson(MotelModel data) => json.encode(data.toJson());
 class MotelModel {
     MotelModel({
         this.userIdCreate,
+        this.oneSignalId,
         this.districtId,
         this.title,
         this.name,
@@ -29,6 +30,7 @@ class MotelModel {
 
     String userIdCreate;
     int districtId;
+    String oneSignalId;
     String title;
     String name;
     String documentId;
@@ -49,6 +51,7 @@ class MotelModel {
         title: json["title"] == null ? null : json["title"],
         name: json["name"] == null ? null : json["name"],
         documentId: json["documentId"] == null ? null : json["documentId"],
+        oneSignalId: json["oneSignalId"] == null ? null : json["oneSignalId"],
         email: json["email"] == null ? null : json["email"],
         timeUpdate: json["timeUpdate"] == null ? null : json["timeUpdate"].toDouble(),
         address: json["address"] == null ? null : json["address"],
@@ -68,6 +71,7 @@ class MotelModel {
         "name": name == null ? null : name,
         "documentId": documentId == null ? null : documentId,
         "email": email == null ? null : email,
+        "oneSignalId": oneSignalId == null ? null : oneSignalId,
         "timeUpdate": timeUpdate == null ? null : timeUpdate,
         "address": address == null ? null : address,
         "rating": rating == null ? null : rating,

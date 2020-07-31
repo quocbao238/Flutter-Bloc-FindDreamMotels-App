@@ -212,6 +212,7 @@ class NewmotelBloc extends Bloc<NewmotelEvent, NewmotelState> {
     int doucumentId = DateTime.now().millisecondsSinceEpoch;
     MotelModel _newmotel = MotelModel(
         address: address,
+        oneSignalId: ConfigUserInfo.userOneSignalId,
         amenities: amenities,
         description: description,
         districtId: districtId,

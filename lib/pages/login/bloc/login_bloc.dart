@@ -68,20 +68,59 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 }
 
 Future<void> featchUserData() async {
-    UserInfoModel _userInfo = UserInfoModel();
-    _userInfo = null;
-    await ConfigApp.databaseReference
-        .collection(AppSetting.dbuser)
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) {
-        if (f.documentID == ConfigApp.fbuser.uid)
-          _userInfo = UserInfoModel.fromJson(f.data);
-      });
+  UserInfoModel _userInfo = UserInfoModel();
+  _userInfo = null;
+  await ConfigApp.databaseReference
+      .collection(AppSetting.dbuser)
+      .document(ConfigApp.fbuser.uid)
+      .collection('info')
+      .getDocuments()
+      .then((QuerySnapshot snapshot) {
+    snapshot.documents.forEach((f) {
+      if (f.documentID == ConfigApp.fbuser.uid)
+        _userInfo = UserInfoModel.fromJson(f.data);
     });
-    ConfigUserInfo.phone = _userInfo.phone;
-    ConfigUserInfo.address = _userInfo.address;
-    ConfigUserInfo.birthday = _userInfo.birthday;
-    ConfigUserInfo.email = _userInfo.email;
-    ConfigUserInfo.name = _userInfo.name;
-  }
+  });
+  if (_userInfo == null) _userInfo = await createUserData();
+  ConfigUserInfo.phone = _userInfo.phone;
+  ConfigUserInfo.userOneSignalId =
+      await ConfigApp.oneSignalService.getOneSignalId();
+  print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
+  ConfigUserInfo.phone = _userInfo.phone;
+  ConfigUserInfo.address = _userInfo.address;
+  ConfigUserInfo.birthday = _userInfo.birthday;
+  ConfigUserInfo.email = _userInfo.email;
+  ConfigUserInfo.name = _userInfo.name;
+  ConfigUserInfo.userOneSignalId =
+      await ConfigApp.oneSignalService.getOneSignalId();
+  print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
+}
+
+Future<UserInfoModel> createUserData() async {
+  UserInfoModel _userInfo = UserInfoModel(
+      name: ConfigApp.fbuser.displayName,
+      photoUrl: ConfigApp.fbuser.photoUrl,
+      email: ConfigApp.fbuser.email,
+      address: ' ',
+      birthday: ' ',
+      phone: ' ',
+      role: '0');
+  await ConfigApp.databaseReference
+      .collection(AppSetting.dbuser)
+      .document(ConfigApp.fbuser.uid)
+      .collection('info')
+      .document(ConfigApp.fbuser.uid)
+      .setData(_userInfo.toJson());
+  await ConfigApp.databaseReference
+      .collection(AppSetting.dbuser)
+      .document(ConfigApp.fbuser.uid)
+      .collection('info')
+      .getDocuments()
+      .then((QuerySnapshot snapshot) {
+    snapshot.documents.forEach((f) {
+      if (f.documentID == ConfigApp.fbuser.uid)
+        _userInfo = UserInfoModel.fromJson(f.data);
+    });
+  });
+  return _userInfo;
+}

@@ -98,6 +98,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+    
+  onesignal_flutter: ^2.2.0
 flutter_icons:
   android: "icon"
   ios: true
