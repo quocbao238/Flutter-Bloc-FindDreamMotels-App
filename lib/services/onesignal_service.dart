@@ -63,7 +63,6 @@ class OneSignalService {
     var status = await OneSignal.shared.getPermissionSubscriptionState();
     if (status.subscriptionStatus.userId != ConfigApp.fbuser.uid) {
       // await OneSignal.shared.setExternalUserId(ConfigApp.fbuser.uid);
-
       await OneSignal.shared.setExternalUserId('5BMDfV3RzwdwBqWSHSfrXpFkUPn1');
     }
     var newStatus = await OneSignal.shared.getPermissionSubscriptionState();
@@ -71,26 +70,9 @@ class OneSignalService {
     return newStatus.subscriptionStatus.userId;
   }
 
-  void sendNotifyToManagerHotel(MotelModel motelModel) async {
-    OSCreateNotification notification = OSCreateNotification(
-        playerIds: ['5BMDfV3RzwdwBqWSHSfrXpFkUPn1'],
-        content: "Bao booking your Hotel",
-        heading: "Heading title asd}",
-        androidSmallIcon: AppSetting.oneSignalIcon,
-        androidLargeIcon: AppSetting.oneSignalIcon);
-    await OneSignal.shared.postNotification(notification);
+  Future<void> setOneSignalId() async {
+    var data = await OneSignal.shared
+        .setExternalUserId('5BMDfV3RzwdwBqWSHSfrXpFkUPn1');
+    ConfigUserInfo.userOneSignalId = '5BMDfV3RzwdwBqWSHSfrXpFkUPn1';
   }
-
-  // void sendNotifyToManagerHotel(MotelModel motelModel) async {
-  //   OSCreateNotification notification = OSCreateNotification(
-  //       playerIds: ['5BMDfV3RzwdwBqWSHSfrXpFkUPn1'],
-  //       // playerIds: ['${motelModel.oneSignalId}'],
-  //       content: "${ConfigUserInfo.name} booking your Hotel",
-  //       heading: "${motelModel.title}",
-  //       // iosAttachments: {"id1": motelModel.imageMotel[0].imageUrl},
-  //       // subtitle: : motelModel.imageMotel[0].imageUrl,
-  //       androidSmallIcon: AppSetting.oneSignalIcon,
-  //       androidLargeIcon: AppSetting.oneSignalIcon);
-  //   await OneSignal.shared.postNotification(notification);
-  // }
 }

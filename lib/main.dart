@@ -44,8 +44,8 @@ Future<void> main() async {
         debugShowCheckedModeBanner: false,
         title: 'Find Dream Hotel',
         theme: ThemeData(primarySwatch: Colors.blue),
-        // home: App(),
-        home: OneSignalPage(),
+        home: App(),
+        // home: OneSignalPage(),
         // home: CreateDataPage(),
         // home: MapSample(),
         // home: MapLocationPicker(),
@@ -75,19 +75,19 @@ class _AppState extends State<App> {
       create: (context) => AuthBloc()..add(AppStartedEvent()),
       child: BlocListener<AuthBloc, AuthBlocState>(
         listener: (context, state) {
-          // if (state is AuthenticatedState) {
-          //   debugPrint("AuthenticatedState");
-          //   Navigator.of(context)
-          //       .pushReplacement(new MaterialPageRoute(builder: (context) {
-          //     return DrawerDashBoard();
-          //   }));
-          // } else if (state is UnauthenticatedState) {
-          //   debugPrint("UnauthenticatedState");
-          //   Navigator.of(context)
-          //       .pushReplacement(new MaterialPageRoute(builder: (context) {
-          //     return IntroPage();
-          //   }));
-          // }  
+          if (state is AuthenticatedState) {
+            debugPrint("AuthenticatedState");
+            Navigator.of(context)
+                .pushReplacement(new MaterialPageRoute(builder: (context) {
+              return DrawerDashBoard();
+            }));
+          } else if (state is UnauthenticatedState) {
+            debugPrint("UnauthenticatedState");
+            Navigator.of(context)
+                .pushReplacement(new MaterialPageRoute(builder: (context) {
+              return IntroPage();
+            }));
+          }  
         },
         child: BlocBuilder<AuthBloc, AuthBlocState>(
           builder: (context, state) {
