@@ -3,18 +3,14 @@ import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
-import 'package:findingmotels/onesignal.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/intro/view/intro_screen.dart';
-import 'package:findingmotels/services/firebase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:google_map_location_picker/generated/i18n.dart'
-    as location_picker;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

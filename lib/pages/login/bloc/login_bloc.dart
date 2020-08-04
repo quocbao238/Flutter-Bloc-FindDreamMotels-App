@@ -83,17 +83,11 @@ Future<void> featchUserData() async {
   });
   if (_userInfo == null) _userInfo = await createUserData();
   ConfigUserInfo.phone = _userInfo.phone;
-  ConfigUserInfo.userOneSignalId =
-      await ConfigApp.oneSignalService.getOneSignalId();
-  print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
   ConfigUserInfo.phone = _userInfo.phone;
   ConfigUserInfo.address = _userInfo.address;
   ConfigUserInfo.birthday = _userInfo.birthday;
   ConfigUserInfo.email = _userInfo.email;
   ConfigUserInfo.name = _userInfo.name;
-  ConfigUserInfo.userOneSignalId =
-      await ConfigApp.oneSignalService.getOneSignalId();
-  print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
 }
 
 Future<UserInfoModel> createUserData() async {

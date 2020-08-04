@@ -1,6 +1,5 @@
-import 'package:findingmotels/config_app/configApp.dart';
+
 import 'package:findingmotels/config_app/setting.dart';
-import 'package:findingmotels/models/motel_model.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class OneSignalService {
@@ -59,20 +58,18 @@ class OneSignalService {
   Future<bool> checkPermission() =>
       OneSignal.shared.promptUserForPushNotificationPermission();
 
-  Future<String> getOneSignalId() async {
-    var status = await OneSignal.shared.getPermissionSubscriptionState();
-    if (status.subscriptionStatus.userId != ConfigApp.fbuser.uid) {
-      // await OneSignal.shared.setExternalUserId(ConfigApp.fbuser.uid);
-      await OneSignal.shared.setExternalUserId('5BMDfV3RzwdwBqWSHSfrXpFkUPn1');
-    }
-    var newStatus = await OneSignal.shared.getPermissionSubscriptionState();
-    print('Debugggggg\: OneSignalId: ${newStatus.subscriptionStatus.userId}');
-    return newStatus.subscriptionStatus.userId;
-  }
+  // Future<String> getOneSignalId() async {
+  //   var status = await OneSignal.shared.getPermissionSubscriptionState();
+  //   if (status.subscriptionStatus.userId != ConfigApp.fbuser.uid) {
+  //     await OneSignal.shared.setExternalUserId('5BMDfV3RzwdwBqWSHSfrXpFkUPn1');
+  //   }
+  //   var newStatus = await OneSignal.shared.getPermissionSubscriptionState();
+  //   print('Debugggggg\: OneSignalId: ${newStatus.subscriptionStatus.userId}');
+  //   return newStatus.subscriptionStatus.userId;
+  // }
 
-  Future<void> setOneSignalId() async {
-    var data = await OneSignal.shared
-        .setExternalUserId('5BMDfV3RzwdwBqWSHSfrXpFkUPn1');
-    ConfigUserInfo.userOneSignalId = '5BMDfV3RzwdwBqWSHSfrXpFkUPn1';
+  Future<bool> setOneSignalId(String uId) async {
+    var data = await OneSignal.shared.setExternalUserId(uId);
+    return data != null ? true : false;
   }
 }
