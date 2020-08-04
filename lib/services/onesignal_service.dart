@@ -1,5 +1,7 @@
 
+import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
+import 'package:findingmotels/models/motel_model.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class OneSignalService {
@@ -72,4 +74,19 @@ class OneSignalService {
     var data = await OneSignal.shared.setExternalUserId(uId);
     return data != null ? true : false;
   }
+
+    void sendNotifyToManagerHotel(MotelModel motelModel) async {
+    OSCreateNotification notification = OSCreateNotification(
+        playerIds: ['${motelModel.userIdCreate??"5BMDfV3RzwdwBqWSHSfrXpFkUPn1"}'],
+        // playerIds: ['${motelModel.oneSignalId}'],
+        content: "${ConfigUserInfo.name??'Quoc Bao'} booking your Hotel",
+        heading: "${motelModel.title?? "DemosendData"}",
+        iosAttachments: {"id1": motelModel.imageMotel[0].imageUrl},
+        subtitle:  motelModel.imageMotel[0].imageUrl,
+        androidSmallIcon: AppSetting.oneSignalIcon,
+        androidLargeIcon: AppSetting.oneSignalIcon
+        );
+    await OneSignal.shared.postNotification(notification);
+  }
+  // }
 }

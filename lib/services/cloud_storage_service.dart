@@ -1,5 +1,8 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/config_app/setting.dart';
+import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -74,5 +77,80 @@ class CloudStorageService {
       print(e.toString());
     }
     return null;
+  }
+
+  Future<UserInfoModel> featchUserData() async {
+    UserInfoModel _userInfo = UserInfoModel();
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.documentID == ConfigApp.fbuser.uid)
+          _userInfo = UserInfoModel.fromJson(f.data);
+      });
+    });
+    if (_userInfo == null) _userInfo = await createUserData();
+    ConfigUserInfo.phone = _userInfo.phone;
+    ConfigUserInfo.address = _userInfo.address;
+    ConfigUserInfo.birthday = _userInfo.birthday;
+    ConfigUserInfo.email = _userInfo.email;
+    ConfigUserInfo.name = _userInfo.name;
+    ConfigApp.oneSignalService.setOneSignalId(ConfigApp.fbuser.uid);
+    print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
+    return _userInfo;
+  }
+
+  Future<UserInfoModel> createUserData() async {
+    UserInfoModel _userInfo = UserInfoModel(
+        name: ConfigApp.fbuser.displayName,
+        photoUrl: ConfigApp.fbuser.photoUrl,
+        email: ConfigApp.fbuser.email,
+        address: ' ',
+        birthday: ' ',
+        phone: ' ',
+        role: '0');
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
+        .document(ConfigApp.fbuser.uid)
+        .setData(_userInfo.toJson());
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.documentID == ConfigApp.fbuser.uid)
+          _userInfo = UserInfoModel.fromJson(f.data);
+      });
+    });
+    return _userInfo;
+  }
+
+  Future<UserInfoModel> updateDataToClound(UserInfoModel _userInfo) async {
+    UserInfoModel userInfoModel = UserInfoModel();
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
+        .document(ConfigApp.fbuser.uid)
+        .setData(_userInfo.toJson());
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('info')
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.documentID == ConfigApp.fbuser.uid)
+          userInfoModel = UserInfoModel.fromJson(f.data);
+      });
+    });
+    return userInfoModel;
   }
 }

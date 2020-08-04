@@ -433,6 +433,10 @@ PODS:
     - nanopb/encode (= 1.30905.0)
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
+  - OneSignal (2.14.3)
+  - onesignal_flutter (2.6.0):
+    - Flutter
+    - OneSignal (= 2.14.3)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -476,6 +480,7 @@ DEPENDENCIES:
   - location_permissions (from `.symlinks/plugins/location_permissions/ios`)
   - location_web (from `.symlinks/plugins/location_web/ios`)
   - multi_image_picker (from `.symlinks/plugins/multi_image_picker/ios`)
+  - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - path_provider_linux (from `.symlinks/plugins/path_provider_linux/ios`)
@@ -517,6 +522,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - OneSignal
     - PromisesObjC
 
 EXTERNAL SOURCES:
@@ -566,6 +572,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/location_web/ios"
   multi_image_picker:
     :path: ".symlinks/plugins/multi_image_picker/ios"
+  onesignal_flutter:
+    :path: ".symlinks/plugins/onesignal_flutter/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider:
@@ -637,6 +645,8 @@ SPEC CHECKSUMS:
   location_web: b94e7433cfe28c0f7c8923c2ee482824b32e55a7
   multi_image_picker: 7968ace12b658a9ee51be6514473f5ee5501ea80
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
+  OneSignal: 7dfe466265c05f02b95a274b9c997a0619ad2117
+  onesignal_flutter: 129551f13dc887d88aaf837e2cd823e1926e8159
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   path_provider_linux: 4d630dc393e1f20364f3e3b4a2ff41d9674a84e4

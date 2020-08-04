@@ -13,7 +13,6 @@ class _OneSignalPageState extends State<OneSignalPage> {
     super.initState();
     ConfigApp.oneSignalService.oneSignalInit();
     ConfigApp.oneSignalService.oneSingalListen();
-    ConfigApp.oneSignalService.setOneSignalId();
     ConfigApp.oneSignalService.notificationReceivedHandler((oSNotification) {
       setState(() {
         print(oSNotification.jsonRepresentation());
@@ -39,7 +38,7 @@ class _OneSignalPageState extends State<OneSignalPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // ConfigApp.oneSignalService.sendNotifyToManagerHotel(null);
+          ConfigApp.oneSignalService.sendNotifyToManagerHotel(null);
         },
       ),
     );

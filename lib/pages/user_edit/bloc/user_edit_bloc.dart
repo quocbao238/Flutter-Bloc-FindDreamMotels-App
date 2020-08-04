@@ -44,7 +44,7 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
 // FeatchData
     } else if (event is FeatchDataEvent) {
       yield LoadingState();
-      UserInfoModel _userInfo = await featchUserData();
+      UserInfoModel _userInfo = await ConfigApp.fbCloudStorage.featchUserData();
       yield _userInfo != null
           ? FeatchDataSucessState(_userInfo)
           : FeatchDataFailState();
@@ -56,7 +56,7 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
       var fbUser = await updateUserToFirebaseAuth(
           imgUrl: null, name: event.userInfoModel.name);
       //Update firebase cloud;
-      var userInfoModel = await updateDataToClound(event.userInfoModel);
+      var userInfoModel = await ConfigApp.fbCloudStorage.updateDataToClound(event.userInfoModel);
       if (fbUser != null && userInfoModel != null) {
         ConfigApp.fbuser = fbUser;
         yield EditProfileSucessState(fbUser);
@@ -92,76 +92,4 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     return userSend;
   }
 
-// Featch Data innit
-  Future<UserInfoModel> featchUserData() async {
-    UserInfoModel _userInfo = UserInfoModel();
-    _userInfo = null;
-    await ConfigApp.databaseReference
-        .collection(AppSetting.dbuser)
-        .document(ConfigApp.fbuser.uid)
-        .collection('info')
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) {
-        if (f.documentID == ConfigApp.fbuser.uid)
-          _userInfo = UserInfoModel.fromJson(f.data);
-      });
-    });
-    if (_userInfo == null) _userInfo = await createUserData();
-    ConfigUserInfo.phone = _userInfo.phone;
-    return _userInfo;
-  }
-
-//Create userData if userInfo = null
-  Future<UserInfoModel> createUserData() async {
-    UserInfoModel _userInfo = UserInfoModel(
-        name: ConfigApp.fbuser.displayName,
-        photoUrl: ConfigApp.fbuser.photoUrl,
-        email: ConfigApp.fbuser.email,
-        address: ' ',
-        birthday: ' ',
-        phone: ' ',
-        role: '0');
-    await ConfigApp.databaseReference
-        .collection(AppSetting.dbuser)
-        .document(ConfigApp.fbuser.uid)
-        .collection('info')
-        .document(ConfigApp.fbuser.uid)
-        .setData(_userInfo.toJson());
-    await ConfigApp.databaseReference
-        .collection(AppSetting.dbuser)
-        .document(ConfigApp.fbuser.uid)
-        .collection('info')
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) {
-        if (f.documentID == ConfigApp.fbuser.uid)
-          _userInfo = UserInfoModel.fromJson(f.data);
-      });
-    });
-    return _userInfo;
-  }
-
-// Update
-  Future<UserInfoModel> updateDataToClound(UserInfoModel _userInfo) async {
-    UserInfoModel userInfoModel = UserInfoModel();
-    await ConfigApp.databaseReference
-        .collection(AppSetting.dbuser)
-        .document(ConfigApp.fbuser.uid)
-        .collection('info')
-        .document(ConfigApp.fbuser.uid)
-        .setData(_userInfo.toJson());
-    await ConfigApp.databaseReference
-        .collection(AppSetting.dbuser)
-        .document(ConfigApp.fbuser.uid)
-        .collection('info')
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) {
-        if (f.documentID == ConfigApp.fbuser.uid)
-          userInfoModel = UserInfoModel.fromJson(f.data);
-      });
-    });
-    return userInfoModel;
-  }
 }
