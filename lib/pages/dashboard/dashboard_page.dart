@@ -89,8 +89,8 @@ class _DashboardPageState extends State<DashboardPage> {
                       text: 'Favorite',
                     ),
                     GButton(
-                      icon: LineIcons.bell,
-                      text: 'Notify',
+                      icon: LineIcons.history,
+                      text: 'History',
                     ),
                     GButton(
                       icon: LineIcons.user,
