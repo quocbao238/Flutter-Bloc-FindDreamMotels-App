@@ -135,6 +135,8 @@ class _ReserveModalState extends State<ReserveModal> {
                 onTap: () async {
                   var checkSend = await ConfigApp.oneSignalService
                       .sendNotifyToManagerHotel(widget.motelModel);
+                  await ConfigApp.fbCloudStorage
+                      .updateHistoryToClound(widget.motelModel);
                   print(checkSend.toString());
                 },
                 child: Container(

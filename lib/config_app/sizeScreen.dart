@@ -226,6 +226,12 @@ class StyleText {
     fontWeight: FontWeight.w400,
   );
 
+  static TextStyle content14Grey400 = TextStyle(
+    color: Colors.grey[400],
+    fontSize: 14.0 * Size.scaleTxt,
+    fontWeight: FontWeight.w400,
+  );
+
   static TextStyle content14White60w400 = TextStyle(
     color: Colors.white60,
     fontSize: 14.0 * Size.scaleTxt,

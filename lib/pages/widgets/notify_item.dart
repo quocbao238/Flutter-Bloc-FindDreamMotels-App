@@ -1,14 +1,16 @@
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
+import 'package:findingmotels/models/history_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 class NotifyItem extends StatelessWidget {
   final int index;
-  final bool isMessage;
+  final HistoryModel historyModel;
   final Function onTap;
 
-  NotifyItem({this.index, this.isMessage, this.onTap});
+  NotifyItem({this.historyModel, this.onTap, this.index});
   @override
   Widget build(BuildContext context) {
     return _item();
@@ -57,16 +59,27 @@ class NotifyItem extends StatelessWidget {
 
   Widget _itemMessage() => Container(
         margin: EdgeInsets.only(left: 16.0),
-        child: Text(
-          'You have Message',
-          style: StyleText.subhead16GreenMixBlue,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Booking ${historyModel.motelBooking.title}',
+              style: StyleText.subhead16GreenMixBlue,
+            ),
+            SizedBox(height: 2.0),
+            Text(
+              '${DateFormat('HH:mm dd-MM-yyyy').format(DateTime.fromMillisecondsSinceEpoch(int.parse(historyModel.timeBooking)))}',
+              style: StyleText.content14Grey400,
+            ),
+          ],
         ),
       );
 
   Widget _itemImage() => Container(
         height: 48.0,
         width: 48.0,
-        child: SvgPicture.asset(
-            isMessage ? AppSetting.messageIconSvg : AppSetting.favoriteIconSvg),
+        child: SvgPicture.asset(historyModel.type == 0
+            ? AppSetting.favoriteIconSvg
+            : AppSetting.messageIconSvg),
       );
 }

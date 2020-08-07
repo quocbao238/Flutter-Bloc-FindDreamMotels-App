@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
+import 'package:findingmotels/models/history_model.dart';
+import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -103,9 +105,6 @@ class CloudStorageService {
     return _userInfo;
   }
 
-
-
-
   Future<UserInfoModel> createUserData() async {
     UserInfoModel _userInfo = UserInfoModel(
         name: ConfigApp.fbuser.displayName,
@@ -157,5 +156,54 @@ class CloudStorageService {
     return userInfoModel;
   }
 
+  Future<bool> updateHistoryToClound(MotelModel motel) async {
+    //type 0 -> History
+    //type 1 -> Booking
+    String _timeNow = DateTime.now().millisecondsSinceEpoch.toString();
+    HistoryModel _historyModelBooking = HistoryModel(
+        timeBooking: _timeNow,
+        type: 1,
+        userBookingId: ConfigApp.fbuser.uid,
+        userBookingName: ConfigUserInfo.name,
+        motelBooking: motel);
 
+    HistoryModel _historyModelHistory = HistoryModel(
+        timeBooking: _timeNow,
+        type: 0,
+        userBookingId: ConfigApp.fbuser.uid,
+        userBookingName: ConfigUserInfo.name,
+        motelBooking: motel);
+
+    //Booking
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(motel.userIdCreate)
+        .collection('history')
+        .document(_timeNow)
+        .setData(_historyModelBooking.toJson());
+
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('history')
+        .document(_timeNow)
+        .setData(_historyModelHistory.toJson());
+    return true;
+  }
+
+  Future<List<HistoryModel>> getListHistory() async {
+    List<HistoryModel> _listHistory = [];
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbuser)
+        .document(ConfigApp.fbuser.uid)
+        .collection('history')
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        var _history = HistoryModel.fromJson(f.data);
+        _listHistory.add(_history);
+      });
+    });
+    return _listHistory;
+  }
 }
