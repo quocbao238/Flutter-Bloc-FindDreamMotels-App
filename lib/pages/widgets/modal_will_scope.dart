@@ -1,3 +1,4 @@
+import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/models/availability_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
@@ -130,16 +131,23 @@ class _ReserveModalState extends State<ReserveModal> {
                   timeSelect: timeEnd),
               _title('Availability'),
               _listAvailability(),
-              Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 30, 10),
-                  height: 60,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: AppColor.colorClipPath),
-                  child: Center(
-                    child: Text('I\'ll Reserve',
-                        style: StyleText.header20Whitew500),
-                  ))
+              GestureDetector(
+                onTap: () async {
+                  var checkSend = await ConfigApp.oneSignalService
+                      .sendNotifyToManagerHotel(widget.motelModel);
+                  print(checkSend.toString());
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(10, 10, 30, 10),
+                    height: 60,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColor.colorClipPath),
+                    child: Center(
+                      child: Text('I\'ll Reserve',
+                          style: StyleText.header20Whitew500),
+                    )),
+              )
             ]),
       );
 

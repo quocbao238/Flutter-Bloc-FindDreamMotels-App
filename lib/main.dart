@@ -74,12 +74,12 @@ class _AppState extends State<App> {
         listener: (context, state) {
           if (state is AuthenticatedState) {
             debugPrint("AuthenticatedState");
-            // Navigator.of(context)
-            //     .pushReplacement(new MaterialPageRoute(builder: (context) {
-            //   return DrawerDashBoard();
-               Navigator.of(context)
+            Navigator.of(context)
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
-              return OneSignalPage();
+              return DrawerDashBoard();
+              //  Navigator.of(context)
+              //   .pushReplacement(new MaterialPageRoute(builder: (context) {
+              // return OneSignalPage();
             }));
           } else if (state is UnauthenticatedState) {
             debugPrint("UnauthenticatedState");
@@ -87,7 +87,7 @@ class _AppState extends State<App> {
                 .pushReplacement(new MaterialPageRoute(builder: (context) {
               return IntroPage();
             }));
-          }  
+          }
         },
         child: BlocBuilder<AuthBloc, AuthBlocState>(
           builder: (context, state) {

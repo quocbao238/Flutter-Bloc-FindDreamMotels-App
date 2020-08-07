@@ -99,9 +99,12 @@ class CloudStorageService {
     ConfigUserInfo.email = _userInfo.email;
     ConfigUserInfo.name = _userInfo.name;
     ConfigApp.oneSignalService.setOneSignalId(ConfigApp.fbuser.uid);
-    print('QB\: OneSignalId: ${ConfigUserInfo.userOneSignalId}');
+    print('QB\: OneSignalId: ${ConfigApp.fbuser.uid}');
     return _userInfo;
   }
+
+
+
 
   Future<UserInfoModel> createUserData() async {
     UserInfoModel _userInfo = UserInfoModel(
@@ -153,4 +156,6 @@ class CloudStorageService {
     });
     return userInfoModel;
   }
+
+
 }

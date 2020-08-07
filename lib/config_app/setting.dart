@@ -15,15 +15,17 @@ class AppSetting {
   //Firebase IOS
 
   //Google Map
-  static String directionKey = 'AIzaSyBaE3VU4GTpO7jXeyDBRySvk5ioqGQcXa0';  // Keyfor Search GGMap
+  static String directionKey =
+      'AIzaSyBaE3VU4GTpO7jXeyDBRySvk5ioqGQcXa0'; // Keyfor Search GGMap
   static String googleMapId = 'AIzaSyBlyck9ashJqWq37Fw0a-jErDAhQIyD0FU';
 
   // OneSignal
-  static const oneSignalIcon =
-      'https://www.filepicker.io/api/file/1Cp0BzAKRMer436RhHtC';
-  static const oneSingalKey = 'd8ce3ee5-56c8-4075-b127-03d2e04f70d5';
-  static const oneSingalRestApiKey =
+  static const oneSignalImage =
+      'https://www.filepicker.io/api/file/trVsOtgXSKC0VyE9L1Aa';
+  static const oneSingalAppId = 'd8ce3ee5-56c8-4075-b127-03d2e04f70d5';
+  static const oneSingalResApiKey =
       'MDgzZThjNTctYThjOS00MGMyLTkwZDItZmRlN2QwZjEwOGRl';
+  static const oneSingalSendApi = 'https://onesignal.com/api/v1/notifications';
 
   //Image test app
   static const imageTest =

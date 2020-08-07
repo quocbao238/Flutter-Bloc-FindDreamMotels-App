@@ -64,6 +64,7 @@ dependencies:
   flutter_icons: 1.1.0
   flutter_typeahead: 1.8.6
   flutter_range_slider: 1.4.0
+  http: 0.12.2
 
   #Map
   google_maps_flutter: 0.5.28+1

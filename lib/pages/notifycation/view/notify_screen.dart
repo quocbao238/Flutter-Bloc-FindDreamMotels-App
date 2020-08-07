@@ -63,7 +63,7 @@ class _NotifyPageState extends State<NotifyPage> {
 Widget _appBar() => Container(
       padding: EdgeInsets.only(top: 32.0),
       margin: EdgeInsets.only(bottom: Size.getHeight * 0.02),
-      child: Text('Notification',
+      child: Text('History',
           textAlign: TextAlign.center,
           style: GoogleFonts.vidaloka(
               color: Colors.white, fontSize: 24 * Size.scaleTxt)),
