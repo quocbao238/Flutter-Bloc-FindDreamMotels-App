@@ -81,7 +81,7 @@ class CloudStorageService {
     return null;
   }
 
-  Future<UserInfoModel> featchUserData() async {
+  Future<UserInfoModel> featchUserData({String userName = ""}) async {
     UserInfoModel _userInfo = UserInfoModel();
     await ConfigApp.databaseReference
         .collection(AppSetting.dbuser)
@@ -94,7 +94,8 @@ class CloudStorageService {
           _userInfo = UserInfoModel.fromJson(f.data);
       });
     });
-    if (_userInfo == null) _userInfo = await createUserData();
+    if (_userInfo.name == null)
+      _userInfo = await createUserData(userName: userName);
     ConfigUserInfo.phone = _userInfo.phone;
     ConfigUserInfo.address = _userInfo.address;
     ConfigUserInfo.birthday = _userInfo.birthday;
@@ -105,9 +106,9 @@ class CloudStorageService {
     return _userInfo;
   }
 
-  Future<UserInfoModel> createUserData() async {
+  Future<UserInfoModel> createUserData({String userName}) async {
     UserInfoModel _userInfo = UserInfoModel(
-        name: ConfigApp.fbuser.displayName,
+        name: userName != "" ? ConfigApp.fbuser.displayName : userName,
         photoUrl: ConfigApp.fbuser.photoUrl,
         email: ConfigApp.fbuser.email,
         address: ' ',
@@ -131,6 +132,7 @@ class CloudStorageService {
           _userInfo = UserInfoModel.fromJson(f.data);
       });
     });
+    print("Run serviceCloudStorageService.createUserData");
     return _userInfo;
   }
 

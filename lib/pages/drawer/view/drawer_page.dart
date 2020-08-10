@@ -47,7 +47,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
 
   @override
   Widget build(BuildContext context) {
-    getSizeApp(context);
+    // getSizeApp(context);
     return BlocProvider(
         create: (context) => DrawerBloc(),
         child: BlocListener<DrawerBloc, DrawerState>(
@@ -275,11 +275,9 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
         margin: EdgeInsets.only(top: 8.0, left: 8.0),
         width: Size.getWidth * 0.42,
         child: Center(
-          child: FittedBox(
-            child: Text(
-              text,
-              style: textStyle,
-            ),
+          child: Text(
+            text,
+            style: textStyle,
           ),
         ),
       );
@@ -358,7 +356,7 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
         height: Size.getWidth / 3.2,
         child: Center(
           child: CachedNetworkImage(
-            imageUrl: ConfigApp?.fbuser?.photoUrl ?? "",
+            imageUrl: ConfigApp?.fbuser?.photoUrl ?? "https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar-320x320.png",
             imageBuilder: (context, imageProvider) =>
                 _dataAvatar(imageProvider, null),
             placeholder: (context, url) =>

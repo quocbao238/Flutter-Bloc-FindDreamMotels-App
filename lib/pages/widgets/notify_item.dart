@@ -33,14 +33,15 @@ class NotifyItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               _itemImage(),
-              _itemMessage(),
-              Spacer(),
+              Expanded(child: _itemMessage()),
+              // Spacer(),
               _itemArrow(),
             ],
           ),
         ),
       );
   Widget _itemArrow() => Container(
+        margin: EdgeInsets.only(left: 20.0),
         padding: EdgeInsets.all(10.0),
         height: 48.0,
         width: 48.0,
@@ -62,14 +63,22 @@ class NotifyItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'Booking ${historyModel.motelBooking.title}',
-              style: StyleText.subhead16GreenMixBlue,
-            ),
+            Text('${historyModel.motelBooking.title}',
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: StyleText.subhead16GreenMixBlue),
             SizedBox(height: 2.0),
-            Text(
-              '${DateFormat('HH:mm dd-MM-yyyy').format(DateTime.fromMillisecondsSinceEpoch(int.parse(historyModel.timeBooking)))}',
-              style: StyleText.content14Grey400,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                // Text(
+                //     historyModel.type==0 ? 'Deluxe Room' : "${historyModel.userBookingName Booking your hotel}",
+                //     style: StyleText.content14Grey400),
+                Text(
+                    '${DateFormat('HH:mm dd-MM-yyyy').format(DateTime.fromMillisecondsSinceEpoch(int.parse(historyModel.timeBooking)))}',
+                    style: StyleText.content14Grey400),
+              ],
             ),
           ],
         ),

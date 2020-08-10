@@ -31,7 +31,7 @@ class UserregBloc extends Bloc<UserregEvent, UserregState> {
               if (user != null) {
                 FirebaseUser userSend = await updateUser(event, user);
                 ConfigApp.fbuser = userSend;
-                await ConfigApp.fbCloudStorage.featchUserData();
+                await ConfigApp.fbCloudStorage.featchUserData(userName: event.userName);
                 yield UserRegSuccessful(userSend);
               } else {
                 yield UserRegFailure(
