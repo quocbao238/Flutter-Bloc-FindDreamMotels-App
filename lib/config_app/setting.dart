@@ -56,7 +56,11 @@ class AppSetting {
   static const googleIcon = 'assets/icon/googleIcon.png';
   static const wifiIcon = 'assets/icon/wifiIcon.png';
 
-  //svg icon
+  //svg icon 
+  static const guestIconSvg = 'assets/icon/guest.svg';
+  static const relaxIconSvg = 'assets/icon/relax.svg';
+  static const workIconSvg = 'assets/icon/work.svg';
+  static const typeRoomSvg = 'assets/icon/typeRoom.svg';
   static const messageIconSvg = 'assets/icon/messageSvg.svg';
   static const historyIconSvg = 'assets/icon/history.svg';
   static const flightIcon = 'assets/icon/flightIcon.svg';

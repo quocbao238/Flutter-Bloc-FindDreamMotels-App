@@ -42,9 +42,7 @@ class NotifyItem extends StatelessWidget {
         ),
       );
   Widget _itemArrow() => InkWell(
-        onTap: () {
-          print('OnTap');
-        },
+        onTap: () => onTap(),
         child: Container(
           margin: EdgeInsets.only(left: 20.0),
           padding: EdgeInsets.all(10.0),

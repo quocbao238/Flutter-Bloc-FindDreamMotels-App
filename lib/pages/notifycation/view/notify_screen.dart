@@ -1,5 +1,6 @@
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/history_model.dart';
+import 'package:findingmotels/pages/history_detail/view/history_detail_screen.dart';
 import 'package:findingmotels/pages/notifycation/bloc/notify_bloc.dart';
 import 'package:findingmotels/pages/widgets/notify_item.dart';
 import 'package:findingmotels/widgets/clip_path_custom/loginClipPath.dart';
@@ -67,7 +68,16 @@ class _NotifyPageState extends State<NotifyPage> {
           itemBuilder: (context, index) => NotifyItem(
                 index: index,
                 historyModel: listHistory[index],
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    new MaterialPageRoute(
+                      builder: (context) {
+                        return HistoryDetailPage(
+                            historyModel: listHistory[index]);
+                      },
+                    ),
+                  );
+                },
               )),
     );
     Widget empty = Expanded(child: EmptyWidget());
