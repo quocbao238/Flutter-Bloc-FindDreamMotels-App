@@ -58,7 +58,7 @@ class AppSetting {
 
   //svg icon
   static const messageIconSvg = 'assets/icon/messageSvg.svg';
-  static const favoriteIconSvg = 'assets/icon/favoriteSvg.svg';
+  static const historyIconSvg = 'assets/icon/history.svg';
   static const flightIcon = 'assets/icon/flightIcon.svg';
   static const hotelIcon = 'assets/icon/holidayIcon.svg';
   static const holidayIcon = 'assets/icon/hotelIcon.svg';

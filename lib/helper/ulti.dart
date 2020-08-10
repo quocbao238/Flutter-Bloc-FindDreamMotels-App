@@ -30,4 +30,14 @@ class Helper {
     lisAvailability.forEach((it) => sum += it.totalPrice);
     return sum;
   }
+
+  static String getTypeRoom(HistoryModel historyModel) {
+    String _typeRoom = "";
+    historyModel.detailBooking.availability.forEach((item) {
+      if (item.total > 0) {
+        _typeRoom = item.typeRoom;
+      }
+    });
+    return _typeRoom;
+  }
 }
