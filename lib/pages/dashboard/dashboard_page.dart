@@ -50,14 +50,7 @@ class _DashboardPageState extends State<DashboardPage> {
       );
 
   Widget _bottomNavigationBar() => Container(
-        // color: AppColor.backgroundColor,
         decoration: BoxDecoration(
-          // color: AppColor.colorClipPath,
-          // boxShadow: [
-          //   BoxShadow(
-          //       blurRadius: 20,
-          //       color: AppColor.colorClipPath.withOpacity(0.3)),
-          // ],
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),

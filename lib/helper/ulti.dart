@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
-
+import 'package:findingmotels/models/history_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,8 +12,7 @@ class Helper {
     BuildContext context,
   ) async {
     Completer<BitmapDescriptor> bitmapIcon = Completer<BitmapDescriptor>();
-    ImageConfiguration config =
-        createLocalImageConfiguration(context);
+    ImageConfiguration config = createLocalImageConfiguration(context);
     AssetImage('assets/logo/makerIcon128.png')
         .resolve(config)
         .addListener(ImageStreamListener((ImageInfo image, bool sync) async {
@@ -24,5 +23,11 @@ class Helper {
       bitmapIcon.complete(bitmap);
     }));
     return await bitmapIcon.future;
+  }
+
+  static double getTotalPriceHistory(List<Availability> lisAvailability) {
+    double sum = 0.0;
+    lisAvailability.forEach((it) => sum += it.totalPrice);
+    return sum;
   }
 }

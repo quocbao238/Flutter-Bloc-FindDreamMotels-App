@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/search/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
@@ -170,19 +171,21 @@ class _SearchPageState extends State<SearchPage> {
         showValueIndicator: true,
         valueIndicatorMaxDecimals: 2,
         onChanged: (double newLowerValue, double newUpperValue) {
-          setState(() {
-            _lowerValue = newLowerValue;
-            _upperValue = newUpperValue;
-          });
+          if (!ConfigApp.drawerShow)
+            setState(() {
+              _lowerValue = newLowerValue;
+              _upperValue = newUpperValue;
+            });
         },
         onChangeStart: (double startLowerValue, double startUpperValue) {
           print('Started with values: $startLowerValue and $startUpperValue');
         },
         onChangeEnd: (double newLowerValue, double newUpperValue) {
-          setState(() {
-            randomAveragePrice = _lowerValue.toInt() +
-                Random().nextInt(_upperValue.toInt() - _lowerValue.toInt());
-          });
+          if (!ConfigApp.drawerShow)
+            setState(() {
+              randomAveragePrice = _lowerValue.toInt() +
+                  Random().nextInt(_upperValue.toInt() - _lowerValue.toInt());
+            });
         },
       ),
     );
@@ -209,7 +212,7 @@ class _SearchPageState extends State<SearchPage> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              if (onFind != null) onFind();
+              if (!ConfigApp.drawerShow) if (onFind != null) onFind();
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
@@ -239,8 +242,9 @@ class _SearchPageState extends State<SearchPage> {
           color: AppColor.whiteColor.withOpacity(0.8)),
       child: InkWell(
         onTap: () {
-          BlocProvider.of<SearchBloc>(globalKey.currentContext)
-              .add(ShowBottomSheetEvent(globalKey.currentContext));
+          if (!ConfigApp.drawerShow)
+            BlocProvider.of<SearchBloc>(globalKey.currentContext)
+                .add(ShowBottomSheetEvent(globalKey.currentContext));
         },
         child: Row(
           children: <Widget>[
@@ -289,6 +293,7 @@ class _SearchPageState extends State<SearchPage> {
                 fontWeight: FontWeight.w500,
                 color: AppColor.colorClipPath,
                 fontSize: 14 * Size.scaleTxt),
+            enabled: !ConfigApp.drawerShow ? false : true,
           ),
           suggestionsCallback: (pattern) async {
             return null;

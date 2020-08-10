@@ -159,13 +159,14 @@ class CloudStorageService {
     return userInfoModel;
   }
 
-  Future<bool> updateHistoryToClound(MotelModel motel) async {
+  Future<bool> updateHistoryToClound(MotelModel motel,DetailBooking detailBooking) async {
     //type 0 -> History
     //type 1 -> Booking
     String _timeNow = DateTime.now().millisecondsSinceEpoch.toString();
     HistoryModel _historyModelBooking = HistoryModel(
         timeBooking: _timeNow,
         type: 1,
+        detailBooking: detailBooking,
         userBookingId: ConfigApp.fbuser.uid,
         userBookingName: ConfigUserInfo.name,
         motelBooking: motel);
@@ -173,6 +174,7 @@ class CloudStorageService {
     HistoryModel _historyModelHistory = HistoryModel(
         timeBooking: _timeNow,
         type: 0,
+        detailBooking: detailBooking,
         userBookingId: ConfigApp.fbuser.uid,
         userBookingName: ConfigUserInfo.name,
         motelBooking: motel);

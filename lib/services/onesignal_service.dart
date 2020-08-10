@@ -73,9 +73,9 @@ class OneSignalService {
         headings:
             Contents(en: "${ConfigUserInfo?.name ?? ""} booking your Hotel"),
         contents:
-            Contents(en: "Deluxe Double Room\nTime: 08/08/2020 - 10/08/2020"),
+            Contents(en: "Deluxe Double Room\nFrom 08/08/2020 to 10/08/2020"),
         subtitle:
-            Contents(en: "Deluxe Double Room\nTime: 08/08/2020 - 10/08/2020"),
+            Contents(en: "Deluxe Double Room\nFrom 08/08/2020 to 10/08/2020"),
         includeExternalUserIds: [motelModel.userIdCreate],
         iosAttachments: IosAttachments(id1: AppSetting.oneSignalImage),
         largeIcon: AppSetting.oneSignalImage,
@@ -96,6 +96,7 @@ class OneSignalService {
       }
     } catch (e) {
       print("Catch OneSingalService  $e");
+      return false;
     }
   }
 

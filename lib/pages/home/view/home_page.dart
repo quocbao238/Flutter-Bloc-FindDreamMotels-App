@@ -149,10 +149,13 @@ class _HomePageState extends State<HomePage> {
                 itemCount: listMotels.length,
                 itemBuilder: (BuildContext context, int index) => HomeMotelItem(
                   motelModel: listMotels[index],
-                  onTap: () {
-                    BlocProvider.of<HomeBloc>(homeGlobalKey.currentContext)
-                        .add(OnClickListMotelssEvent(listMotels[index]));
-                  },
+                  onTap: !ConfigApp.drawerShow
+                      ? () {
+                          BlocProvider.of<HomeBloc>(
+                                  homeGlobalKey.currentContext)
+                              .add(OnClickListMotelssEvent(listMotels[index]));
+                        }
+                      : null,
                 ),
                 options: CarouselOptions(
                   autoPlay: true,
@@ -223,7 +226,7 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
       child: InkWell(
         onTap: () {
-          if (onTap != null) onTap();
+          if (onTap != null && !ConfigApp.drawerShow) onTap();
         },
         child: Container(
           height: 80,

@@ -1,4 +1,3 @@
-
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:flutter/material.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
@@ -11,7 +10,7 @@ class HomeMotelItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         if (onTap != null) onTap();
       },

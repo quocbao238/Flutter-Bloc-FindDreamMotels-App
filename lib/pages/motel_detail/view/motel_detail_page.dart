@@ -4,10 +4,11 @@ import 'package:basic_utils/basic_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/models/history_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
 import 'package:findingmotels/pages/map/moteldirection.dart';
 import 'package:findingmotels/pages/motel_detail/bloc/motel_detail_bloc.dart';
-import 'package:findingmotels/pages/widgets/modal_will_scope.dart';
+import 'package:findingmotels/pages/widgets/reserve_tiem.dart';
 import 'package:findingmotels/widgets/empty/empty_widget.dart';
 import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
   CameraPosition initialCameraPosition;
   bool _isFv = false;
   bool isShowBottomSheet;
+  DetailBooking detailBooking;
   Set<Marker> _markers = {};
 
   @override
@@ -62,6 +64,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
       _asyncMaker();
     });
     isShowBottomSheet = false;
+    detailBooking = DetailBooking();
   }
 
   _asyncMaker() async {
@@ -432,14 +435,19 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
       onTap: () async {
         setState(() => isShowBottomSheet = true);
         await showCupertinoModalBottomSheet(
-          expand: true,
-          context: context,
-          backgroundColor: Colors.transparent,
-          builder: (context, scrollController) => ReserveModal(
-            scrollController: scrollController,
-            motelModel: widget.motelModel,
-          ),
-        );
+            expand: true,
+            context: context,
+            backgroundColor: Colors.transparent,
+            builder: (context, scrollController) => ReserveModal(
+                  scrollController: scrollController,
+                  motelModel: widget.motelModel,
+                  detailBooking: detailBooking,
+                )).then((_detailBooking) {
+          if (_detailBooking != null) 
+          setState(() {
+            detailBooking = _detailBooking;
+          }); 
+        });
         setState(() => isShowBottomSheet = false);
       },
       child: Container(

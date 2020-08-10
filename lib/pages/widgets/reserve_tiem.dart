@@ -1,7 +1,9 @@
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
-import 'package:findingmotels/models/availability_model.dart';
+import 'package:findingmotels/helper/ulti.dart';
+import 'package:findingmotels/models/history_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
+import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart' as app;
@@ -15,27 +17,34 @@ import 'package:oktoast/oktoast.dart';
 
 class ReserveModal extends StatefulWidget {
   final MotelModel motelModel;
+  final DetailBooking detailBooking;
   final ScrollController scrollController;
-  const ReserveModal({Key key, this.scrollController, this.motelModel})
+  const ReserveModal(
+      {Key key, this.scrollController, this.motelModel, this.detailBooking})
       : super(key: key);
   @override
   _ReserveModalState createState() => _ReserveModalState();
 }
 
 class _ReserveModalState extends State<ReserveModal> {
-  bool travelForWork;
+  bool isTravelForWork;
   bool isMyBooking;
   List<Availability> listAvailability = [];
+  TextEditingController gustBookingController;
   String timeStart;
+  DetailBooking detailBooking;
   String timeEnd;
   int dateBooking;
+  bool isLoading = false;
 
   void initState() {
     super.initState();
-    travelForWork = false;
+    detailBooking = widget.detailBooking;
+    isTravelForWork = false;
     isMyBooking = true;
     timeStart = 'Select time Check-in';
     timeEnd = 'Select time Check-out';
+    gustBookingController = TextEditingController();
     listAvailability = getListAvailabiity(widget.motelModel);
   }
 
@@ -53,105 +62,153 @@ class _ReserveModalState extends State<ReserveModal> {
       );
 
   Widget body() => Ink(
-        color: app.AppColor.backgroundColor,
-        child: ListView(
-            controller: widget.scrollController,
-            padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 15),
-            children: <Widget>[
-              _title('Are you traveling for work?'),
-              _checkboxWork(),
-              _title('What are you looking for?'),
-              _checkboxLooking(),
-              !isMyBooking ? _bookingForUser(title: 'Guest Name') : SizedBox(),
-              _title('Check-in date'),
-              _timeSelect(
-                  onTap: () async {
-                    await DatePicker.showDatePicker(
-                      context,
-                      showTitleActions: true,
-                      minTime: DateTime.now(),
-                      maxTime: DateTime.now().add(new Duration(days: 360)),
-                      onChanged: (date) {},
-                      onConfirm: (date) {
-                        if (timeEnd == 'Select time Check-out') {
-                          setState(() => timeStart =
-                              DateFormat('dd-MM-yyyy').format(date));
-                        } else {
-                          if (DateFormat('dd-MM-yyyy')
-                                  .parse(timeEnd)
-                                  .difference(date)
-                                  .inDays <
-                              0) {
-                            setState(() {
-                              timeEnd = 'Select time Check-out';
-                            });
+      color: app.AppColor.backgroundColor,
+      child: Stack(
+        children: <Widget>[
+          ListView(
+              controller: widget.scrollController,
+              padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 15),
+              children: <Widget>[
+                _title('Are you traveling for work?'),
+                _checkboxWork(),
+                _title('What are you looking for?'),
+                _checkboxLooking(),
+                !isMyBooking
+                    ? _bookingForUser(
+                        title: 'Guest Name', controller: gustBookingController)
+                    : SizedBox(),
+                _title('Check-in date'),
+                _timeSelect(
+                    onTap: () async {
+                      await DatePicker.showDatePicker(
+                        context,
+                        showTitleActions: true,
+                        minTime: DateTime.now(),
+                        maxTime: DateTime.now().add(new Duration(days: 360)),
+                        onChanged: (date) {},
+                        onConfirm: (date) {
+                          if (timeEnd == 'Select time Check-out') {
+                            setState(() => timeStart =
+                                DateFormat('dd-MM-yyyy').format(date));
+                          } else {
+                            if (DateFormat('dd-MM-yyyy')
+                                    .parse(timeEnd)
+                                    .difference(date)
+                                    .inDays <
+                                0) {
+                              setState(() {
+                                timeEnd = 'Select time Check-out';
+                              });
+                            }
+                            setState(() => timeStart =
+                                DateFormat('dd-MM-yyyy').format(date));
                           }
-                          setState(() => timeStart =
-                              DateFormat('dd-MM-yyyy').format(date));
-                        }
-                      },
-                      currentTime: timeEnd == 'Select time Check-out'
-                          ? DateTime.now()
-                          : DateFormat('dd-MM-yyyy').parse(timeStart),
-                      locale: LocaleType.en,
-                    );
-                  },
-                  timeSelect: timeStart),
-              _title('Check-out date'),
-              _timeSelect(
-                  onTap: () async {
-                    if (timeStart == 'Select time Check-in') {
-                      showToast('Please select time check-in before');
-                    } else {
-                      await DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateFormat('dd-MM-yyyy')
-                              .parse(timeStart)
-                              .add(new Duration(days: 1)),
-                          maxTime: DateFormat('dd-MM-yyyy')
-                              .parse(timeStart)
-                              .add(new Duration(days: 60)),
-                          onChanged: (date) {},
-                          onConfirm: (date) => setState(() =>
-                              timeEnd = DateFormat('dd-MM-yyyy').format(date)),
-                          currentTime: timeEnd != 'Select time Check-out'
-                              ? DateFormat('dd-MM-yyyy').parse(timeEnd)
-                              : DateFormat('dd-MM-yyyy')
-                                  .parse(timeStart)
-                                  .add(new Duration(days: 1)),
-                          locale: LocaleType.en);
+                        },
+                        currentTime: timeEnd == 'Select time Check-out'
+                            ? DateTime.now()
+                            : DateFormat('dd-MM-yyyy').parse(timeStart),
+                        locale: LocaleType.en,
+                      );
+                    },
+                    timeSelect: timeStart),
+                _title('Check-out date'),
+                _timeSelect(
+                    onTap: () async {
+                      if (timeStart == 'Select time Check-in') {
+                        showToast('Please select time check-in before');
+                      } else {
+                        await DatePicker.showDatePicker(context,
+                            showTitleActions: true,
+                            minTime: DateFormat('dd-MM-yyyy')
+                                .parse(timeStart)
+                                .add(new Duration(days: 1)),
+                            maxTime: DateFormat('dd-MM-yyyy')
+                                .parse(timeStart)
+                                .add(new Duration(days: 60)),
+                            onChanged: (date) {},
+                            onConfirm: (date) => setState(() => timeEnd =
+                                DateFormat('dd-MM-yyyy').format(date)),
+                            currentTime: timeEnd != 'Select time Check-out'
+                                ? DateFormat('dd-MM-yyyy').parse(timeEnd)
+                                : DateFormat('dd-MM-yyyy')
+                                    .parse(timeStart)
+                                    .add(new Duration(days: 1)),
+                            locale: LocaleType.en);
 
-                      dateBooking = DateFormat('dd-MM-yyyy')
-                          .parse(timeEnd)
-                          .difference(DateFormat('dd-MM-yyyy').parse(timeStart))
-                          .inDays;
-                      print(dateBooking);
+                        dateBooking = DateFormat('dd-MM-yyyy')
+                            .parse(timeEnd)
+                            .difference(
+                                DateFormat('dd-MM-yyyy').parse(timeStart))
+                            .inDays;
+                        print(dateBooking);
+                      }
+                    },
+                    timeSelect: timeEnd),
+                _title('Availability'),
+                _listAvailability(),
+                GestureDetector(
+                  onTap: () async {
+                    if (!isMyBooking) if (gustBookingController.text.trim() ==
+                        "") {
+                      showToast('Please input Gust name');
+                      return;
+                    }
+                    setState(() => isLoading = true);
+                    if (timeStart != 'Select time Check-in') {
+                      if (timeEnd != 'Select time Check-out') {
+                        double sum =
+                            Helper.getTotalPriceHistory(listAvailability);
+                        if (sum != 0) {
+                          detailBooking = DetailBooking(
+                            availability: listAvailability,
+                            checkIn: timeStart,
+                            checkOut: timeEnd,
+                            lookingFor: isMyBooking,
+                            travelWork: isTravelForWork,
+                            totalPrice:
+                                Helper.getTotalPriceHistory(listAvailability),
+                            gustName: gustBookingController.text.trim(),
+                          );
+                          print(detailBooking.toString());
+                          await ConfigApp.oneSignalService
+                              .sendNotifyToManagerHotel(widget.motelModel);
+                          await ConfigApp.fbCloudStorage.updateHistoryToClound(
+                              widget.motelModel, detailBooking);
+                          setState(() => isLoading = false);
+                          Navigator.of(context).pop(detailBooking);
+                        } else {
+                          showToast('Please Select Room');
+                          setState(() => isLoading = false);
+                        }
+                      } else {
+                        showToast('Please Select time Check-out');
+                        setState(() => isLoading = false);
+                      }
+                    } else {
+                      showToast('Please Select time Check-in');
+                      setState(() => isLoading = false);
                     }
                   },
-                  timeSelect: timeEnd),
-              _title('Availability'),
-              _listAvailability(),
-              GestureDetector(
-                onTap: () async {
-                  var checkSend = await ConfigApp.oneSignalService
-                      .sendNotifyToManagerHotel(widget.motelModel);
-                  await ConfigApp.fbCloudStorage
-                      .updateHistoryToClound(widget.motelModel);
-                  print(checkSend.toString());
-                },
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(10, 10, 30, 10),
-                    height: 60,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColor.colorClipPath),
-                    child: Center(
-                      child: Text('I\'ll Reserve',
-                          style: StyleText.header20Whitew500),
-                    )),
-              )
-            ]),
-      );
+                  child: Container(
+                      padding: EdgeInsets.fromLTRB(10, 10, 30, 10),
+                      height: 60,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColor.colorClipPath),
+                      child: Center(
+                        child: Text('I\'ll Reserve',
+                            style: StyleText.header20Whitew500),
+                      )),
+                )
+              ]),
+          isLoading
+              ? Positioned.fill(
+                  child: Container(
+                      color: Colors.grey.withOpacity(0.5),
+                      child: Center(child: LoadingWidget())))
+              : SizedBox(),
+        ],
+      ));
 
   Widget headerSliver(BuildContext context) => SliverList(
         delegate: SliverChildListDelegate(
@@ -228,7 +285,7 @@ class _ReserveModalState extends State<ReserveModal> {
           Text(' \$', style: StyleText.subhead18Red87w400),
           Spacer(),
           DropdownButton(
-              value: listAvailability[index].value,
+              value: listAvailability[index].total,
               items: [
                 DropdownMenuItem(
                     child: Text(listAvailability[index].listDropbox[0]),
@@ -249,8 +306,12 @@ class _ReserveModalState extends State<ReserveModal> {
                     child: Text(listAvailability[index].listDropbox[5]),
                     value: 5)
               ],
-              onChanged: (value) =>
-                  setState(() => listAvailability[index].value = value)),
+              onChanged: (value) => setState(() {
+                    listAvailability[index].total = value;
+                    listAvailability[index].totalPrice =
+                        listAvailability[index].total.toDouble() *
+                            listAvailability[index].price;
+                  })),
         ],
       );
 
@@ -320,14 +381,14 @@ class _ReserveModalState extends State<ReserveModal> {
         padding: EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0),
         child: Row(children: <Widget>[
           RoundCheckBox(
-              isChecked: travelForWork,
+              isChecked: isTravelForWork,
               title: 'Yes',
-              onTap: () => setState(() => travelForWork = !travelForWork)),
+              onTap: () => setState(() => isTravelForWork = !isTravelForWork)),
           SizedBox(width: 16.0),
           RoundCheckBox(
-            isChecked: !travelForWork,
+            isChecked: !isTravelForWork,
             title: 'No',
-            onTap: () => setState(() => travelForWork = !travelForWork),
+            onTap: () => setState(() => isTravelForWork = !isTravelForWork),
           ),
         ]),
       );

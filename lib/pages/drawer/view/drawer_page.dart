@@ -127,25 +127,15 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
                         context,
                         MaterialPageRoute(
                             builder: (context) => UserEditPage()))),
-                _item(
-                    icon: Icons.chat,
-                    title: 'Chat',
-                    onTap: () => showToast('Chat')),
+                // _item(icon: Icons.chat, title: 'Chat', onTap: () {}),
                 Spacer(),
                 _rateApp(),
                 _communicate(),
-                _item(
-                    icon: Icons.lock,
-                    title: 'Privacy Policy',
-                    onTap: () => showToast('Privacy Policy')),
+                _item(icon: Icons.lock, title: 'Privacy Policy', onTap: () => showToast('Contact Us')),
                 _item(
                     icon: Icons.call,
                     title: 'Contact Us',
                     onTap: () => showToast('Contact Us')),
-                // _item(
-                //     icon: Icons.error,
-                //     title: 'About App',
-                //     onTap: () => showToast('About App')),
                 _item(
                     icon: Icons.error,
                     title: 'Version ${AppSetting.version}',
@@ -285,8 +275,8 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
   Widget _item({String title, IconData icon, Function onTap}) => InkWell(
         onTap: () {
           if (onTap != null) {
-            BlocProvider.of<DrawerBloc>(_globalKey.currentContext)
-                .add(MenuEvent(false));
+            // BlocProvider.of<DrawerBloc>(_globalKey.currentContext)
+            //     .add(MenuEvent(false));
             onTap();
           }
         },
@@ -356,7 +346,8 @@ class _DrawerDashBoardState extends State<DrawerDashBoard>
         height: Size.getWidth / 3.2,
         child: Center(
           child: CachedNetworkImage(
-            imageUrl: ConfigApp?.fbuser?.photoUrl ?? "https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar-320x320.png",
+            imageUrl: ConfigApp?.fbuser?.photoUrl ??
+                "https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar-320x320.png",
             imageBuilder: (context, imageProvider) =>
                 _dataAvatar(imageProvider, null),
             placeholder: (context, url) =>

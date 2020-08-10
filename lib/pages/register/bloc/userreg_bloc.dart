@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
-import 'package:findingmotels/pages/login/bloc/login_bloc.dart';
 import 'package:findingmotels/validator/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
