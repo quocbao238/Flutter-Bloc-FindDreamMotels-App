@@ -94,13 +94,14 @@ class CloudStorageService {
           _userInfo = UserInfoModel.fromJson(f.data);
       });
     });
-    if (_userInfo.name == null)
+    if (_userInfo.name == null || _userInfo.name == "")
       _userInfo = await createUserData(userName: userName);
     ConfigUserInfo.phone = _userInfo.phone;
     ConfigUserInfo.address = _userInfo.address;
     ConfigUserInfo.birthday = _userInfo.birthday;
     ConfigUserInfo.email = _userInfo.email;
     ConfigUserInfo.name = _userInfo.name;
+    ConfigUserInfo.roleId = _userInfo.role;
     ConfigApp.oneSignalService.setOneSignalId(ConfigApp.fbuser.uid);
     print('QB\: OneSignalId: ${ConfigApp.fbuser.uid}');
     return _userInfo;
@@ -108,7 +109,7 @@ class CloudStorageService {
 
   Future<UserInfoModel> createUserData({String userName}) async {
     UserInfoModel _userInfo = UserInfoModel(
-        name: userName != "" ? ConfigApp.fbuser.displayName : userName,
+        name: userName == "" ? ConfigApp.fbuser.displayName : userName,
         photoUrl: ConfigApp.fbuser.photoUrl,
         email: ConfigApp.fbuser.email,
         address: ' ',

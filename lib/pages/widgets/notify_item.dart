@@ -62,19 +62,29 @@ class NotifyItem extends StatelessWidget {
         margin: EdgeInsets.only(left: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('${historyModel.motelBooking.title}',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: StyleText.subhead16GreenMixBlue),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 2,
+                  child: Text('${historyModel.motelBooking.title}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: StyleText.subhead16GreenMixBlue),
+                ),
+                Text(historyModel.type == 1 ? "Booking" : "History",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: StyleText.content14Grey400),
+              ],
+            ),
             SizedBox(height: 2.0),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                // Text(
-                //     historyModel.type==0 ? 'Deluxe Room' : "${historyModel.userBookingName Booking your hotel}",
-                //     style: StyleText.content14Grey400),
+                Text('Deluxe Room', style: StyleText.content14Grey400),
                 Text(
                     '${DateFormat('HH:mm dd-MM-yyyy').format(DateTime.fromMillisecondsSinceEpoch(int.parse(historyModel.timeBooking)))}',
                     style: StyleText.content14Grey400),
@@ -87,7 +97,7 @@ class NotifyItem extends StatelessWidget {
   Widget _itemImage() => Container(
         height: 48.0,
         width: 48.0,
-        child: SvgPicture.asset(historyModel.type == 0
+        child: SvgPicture.asset(historyModel.type == 1
             ? AppSetting.favoriteIconSvg
             : AppSetting.messageIconSvg),
       );

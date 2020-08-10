@@ -39,6 +39,7 @@ class ConfigUserInfo {
   static String email;
   static String address;
   static String userOneSignalId;
+  static String roleId;
 
   
 }
