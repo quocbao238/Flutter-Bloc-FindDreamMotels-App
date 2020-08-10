@@ -57,6 +57,8 @@ class _FavoritePageState extends State<FavoritePage> {
         BlocProvider.of<FavoriteBloc>(globalKey.currentContext)
             .add(FeatchFavoriteListEvent());
       });
+    } else if (state is OnFailState) {
+      isHaveData = true;
     }
   }
 
@@ -95,7 +97,7 @@ class _FavoritePageState extends State<FavoritePage> {
                 onTapDirect: () {},
               ),
             )
-          : isHaveData ? Expanded(child: EmptyWidget()) : SizedBox());
+          : isHaveData ? EmptyWidget() : SizedBox());
 
   Widget _appBar() => Container(
         padding: EdgeInsets.only(top: 32.0),
