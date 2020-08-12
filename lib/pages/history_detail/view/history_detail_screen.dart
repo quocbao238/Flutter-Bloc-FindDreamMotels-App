@@ -57,21 +57,52 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
   Widget _appBar() => Container(
         height: Size.getHeight * 0.35,
         width: Size.getWidth,
-        color: AppColor.colorClipPath,
-        child: CachedNetworkImage(
-          imageUrl: widget.historyModel.motelBooking.imageMotel[0].imageUrl,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => Center(child: SpinKitFadingCircle(
-            itemBuilder: (BuildContext context, int index) {
-              return DecoratedBox(
-                decoration: BoxDecoration(
-                    color: index.isEven ? Colors.red : Colors.green),
-              );
-            },
-          )),
-          errorWidget: (context, url, error) => Center(child: EmptyWidget()),
+        child: Stack(
+          children: <Widget>[_appBarImage(), _appBarbuttonBack()],
         ),
       );
+
+  Widget _appBarImage() {
+    return Positioned.fill(
+      child: CachedNetworkImage(
+        imageUrl: widget.historyModel.motelBooking.imageMotel[0].imageUrl,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => Center(child: SpinKitFadingCircle(
+          itemBuilder: (BuildContext context, int index) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                  color: index.isEven ? Colors.red : Colors.green),
+            );
+          },
+        )),
+        errorWidget: (context, url, error) => Center(child: EmptyWidget()),
+      ),
+    );
+  }
+
+  Widget _appBarbuttonBack() {
+    return Positioned(
+      top: MediaQuery.of(context).padding.top + 10,
+      left: 0,
+      child: GestureDetector(
+        onTap: () => Navigator.of(context).pop(),
+        child: Container(
+          width: 80.0,
+          height: 50.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
+            color: Colors.grey.withOpacity(0.6),
+          ),
+          child: Center(
+              child:
+                  Icon(Icons.arrow_back_ios, size: 30.0, color: Colors.white)),
+        ),
+      ),
+    );
+  }
 
   Widget _page() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,13 +117,31 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
                   _travelForWork(),
                   _guest(),
                   _timeInOut(),
-                  _typeRoomPrice()
+                  _typeRoomPrice(),
+                  Spacer(),
+                  widget.historyModel.type == 0 ? _reviewButton() : SizedBox(),
                 ],
               ),
             ),
           )
         ],
       );
+
+  Widget _reviewButton() {
+    return Container(
+      height: 50.0,
+      margin: EdgeInsets.only(left: 15.0, right: 15.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: AppColor.colorClipPath2),
+      child: Center(
+        child: Text(
+          'Review',
+          style: StyleText.subhead18White500,
+        ),
+      ),
+    );
+  }
 
   Widget _typeRoomPrice() {
     return Container(
@@ -193,8 +242,8 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
           SizedBox(width: 8.0),
           Text(
             widget.historyModel.detailBooking.travelWork
-                ? 'You traveling for work'
-                : "You traveling for Getaway",
+                ? 'Traveling for work'
+                : "Traveling for Getaway",
             style: StyleText.subhead18Black87w400,
           )
         ],
@@ -239,9 +288,9 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.8),
-                    spreadRadius: 5,
-                    blurRadius: 5,
+                    color: Colors.black26,
+                    spreadRadius: 4,
+                    blurRadius: 4,
                     offset: Offset(0, 2), // changes position of shadow
                   ),
                 ]),

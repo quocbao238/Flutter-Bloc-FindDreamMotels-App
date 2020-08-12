@@ -3,7 +3,7 @@
 My App Create with Flutter
 
 #### Tính năng
- + Login with Google Auth
+ + Login & Register with Google Auth
  + Đăng bài viết
  + Yêu thích bài viết
  + Tạo bài viết theo quận huyện
@@ -13,11 +13,13 @@ My App Create with Flutter
  + Tìm đường đi với ggMap
  + Push noti 
  + Booking Room
- + History Booking
+ + List History Booking
+ + Detail History Booking Room
+ + 
 
 #### Đang phát triển
 
- + Detail Booking Room ?
+ + Review Hotels afther checkout
 
 #### Chưa phát triển
  + Fight Đặt vé máy bay

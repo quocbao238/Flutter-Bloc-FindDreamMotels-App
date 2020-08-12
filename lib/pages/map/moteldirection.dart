@@ -71,33 +71,58 @@ class _MapMotelDirectionState extends State<MapMotelDirection> {
       body: Stack(
         children: <Widget>[
           _map(),
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 10,
-            left: 0,
-            child: Container(
-              height: 50.0,
-              width: 80.0,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(25),
-                      bottomRight: Radius.circular(25)),
-                  color: Colors.grey.withOpacity(0.5)),
-              child: Center(
-                child: IconButton(
-                  padding: EdgeInsets.only(right: 10.0),
-                  icon: Icon(
-                    Icons.arrow_back,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-            ),
-          ),
+          _buttonBack(),
+          // Positioned(
+          //   top: MediaQuery.of(context).padding.top + 10,
+          //   left: 0,
+          //   child: Container(
+          //     height: 50.0,
+          //     width: 80.0,
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.only(
+          //             topRight: Radius.circular(25),
+          //             bottomRight: Radius.circular(25)),
+          //         color: Colors.grey.withOpacity(0.5)),
+          //     child: Center(
+          //       child: IconButton(
+          //         padding: EdgeInsets.only(right: 10.0),
+          //         icon: Icon(
+          //           Icons.arrow_back,
+          //           size: 30,
+          //           color: Colors.white,
+          //         ),
+          //         onPressed: () {
+          //           Navigator.of(context).pop();
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
+      ),
+    );
+  }
+
+  Widget _buttonBack() {
+    return Positioned(
+      top: MediaQuery.of(context).padding.top + 10,
+      left: 0,
+      child: GestureDetector(
+        onTap: () => Navigator.of(context).pop(),
+        child: Container(
+          width: 80.0,
+          height: 50.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
+            color: Colors.grey.withOpacity(0.6),
+          ),
+          child: Center(
+              child:
+                  Icon(Icons.arrow_back_ios, size: 30.0, color: Colors.white)),
+        ),
       ),
     );
   }

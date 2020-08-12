@@ -405,29 +405,26 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
 
   Widget _buttonBack() {
     return Positioned(
-        top: 8,
-        left: 8,
-        child: SafeArea(
-          child: !isShowBottomSheet
-              ? InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    color: Colors.black.withOpacity(0.6),
-                    child: Center(
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                        size: 30.0,
-                      ),
-                    ),
-                  ),
-                )
-              : SizedBox(),
-        ));
+      top: MediaQuery.of(context).padding.top + 10,
+      left: 0,
+      child: GestureDetector(
+        onTap: () => Navigator.of(context).pop(),
+        child: Container(
+          width: 80.0,
+          height: 50.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
+            color: Colors.grey.withOpacity(0.6),
+          ),
+          child: Center(
+              child:
+                  Icon(Icons.arrow_back_ios, size: 30.0, color: Colors.white)),
+        ),
+      ),
+    );
   }
 
   Widget ___reserve() {
@@ -443,10 +440,10 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
                   motelModel: widget.motelModel,
                   detailBooking: detailBooking,
                 )).then((_detailBooking) {
-          if (_detailBooking != null) 
-          setState(() {
-            detailBooking = _detailBooking;
-          }); 
+          if (_detailBooking != null)
+            setState(() {
+              detailBooking = _detailBooking;
+            });
         });
         setState(() => isShowBottomSheet = false);
       },

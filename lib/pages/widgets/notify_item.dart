@@ -89,10 +89,16 @@ class NotifyItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(Helper.getTypeRoom(historyModel),
-                    style: StyleText.content14Grey400),
-                Text(
+                    style: StyleText.content14Grey400,
+                    overflow: TextOverflow.ellipsis),
+                Expanded(
+                  child: Text(
                     '${DateFormat('HH:mm dd-MM-yyyy').format(DateTime.fromMillisecondsSinceEpoch(int.parse(historyModel.timeBooking)))}',
-                    style: StyleText.content14Grey400),
+                    style: StyleText.content14Grey400,
+                    textAlign: TextAlign.end,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
           ],
