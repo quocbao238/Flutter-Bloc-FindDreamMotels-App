@@ -4,6 +4,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/helper/ulti.dart';
 import 'package:findingmotels/models/history_model.dart';
 import 'package:findingmotels/pages/history_detail/bloc/historydetail_bloc.dart';
+import 'package:findingmotels/pages/widgets/dialog_custom/comment_dialog.dart';
 import 'package:findingmotels/pages/widgets/empty/empty_widget.dart';
 import 'package:findingmotels/pages/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -104,33 +105,41 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
     );
   }
 
-  Widget _page() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _motelDetail(),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _travelForWork(),
-                  _guest(),
-                  _timeInOut(),
-                  _typeRoomPrice(),
-                  Spacer(),
-                  widget.historyModel.type == 0 ? _reviewButton() : SizedBox(),
-                ],
-              ),
-            ),
-          )
-        ],
+  Widget _page() => SingleChildScrollView(
+        child: Container(
+          height: Size.getHeight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _motelDetail(),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      _travelForWork(),
+                      _guest(),
+                      _timeInOut(),
+                      _typeRoomPrice(),
+                      Spacer(),
+                      widget.historyModel.type == 0
+                          ? _ratingButton()
+                          : SizedBox(),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       );
 
-  Widget _reviewButton() {
+  Widget _ratingButton() {
     return GestureDetector(
-      onTap: () {
-        
+      onTap: () async {
+        await commentDialog(
+            context: context, historyModel: widget.historyModel);
       },
       child: Container(
         height: 50.0,
@@ -140,7 +149,7 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
             color: AppColor.colorClipPath2),
         child: Center(
           child: Text(
-            'Review',
+            'Rating',
             style: StyleText.subhead18White500,
           ),
         ),

@@ -71,6 +71,9 @@ class AppSetting {
   static const modelbottomFavorite = 'assets/icon/modelbottomFavorite.svg';
   static const modelbottomHotel = 'assets/icon/modelbottomHotel.svg';
   static const modelbottomReview = 'assets/icon/modelbottomReview.svg';
+  static const reviewIcon = 'assets/icon/review.svg';
+
+
 
   //Database
   static String dbdistricList = 'districList';
