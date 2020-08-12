@@ -1,6 +1,28 @@
-# findingmotels
+# Find Dream Hotels 
 
-A new Flutter project.
+My App Create with Flutter
+
+#### Tính năng
+ + Đăng bài viết
+ + Yêu thích bài viết
+ + Tạo bài viết theo quận huyện
+ + List Yêu thích
+ + Cập nhật thông tin User
+ + Điều hướng với Google Map
+ + Tìm đường đi với ggMap
+ + Push noti
+ + History Booking
+
+#### Đang phát triển
+
+ + Detail Booking Room ?
+
+#### Chưa phát triển
+ + Fight Đặt vé máy bay
+ + Holiday ??
+ + Event ??
+
+
 
 ## Getting Started
 
