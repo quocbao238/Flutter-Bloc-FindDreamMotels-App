@@ -83,7 +83,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                     GButton(
                       icon: LineIcons.history,
-                      text: 'Booking History'
+                      text: 'History'
                     ),
                     GButton(
                       icon: LineIcons.user,
