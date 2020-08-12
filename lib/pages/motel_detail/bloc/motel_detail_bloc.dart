@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/models/motel_model.dart';
+import 'package:findingmotels/models/rate_model.dart';
 
 part 'motel_detail_event.dart';
 part 'motel_detail_state.dart';
@@ -21,11 +22,13 @@ class MotelDetailBloc extends Bloc<MotelDetailEvent, MotelDetailState> {
     if (event is FeatchDataEvent) {
       yield LoadingState();
       var listMotelFv = await featchListFavorite();
+      var listComment =
+          await ConfigApp.fbCloudStorage.getListRating(event.motelModel);
       if (listMotelFv.length > 0) {
         bool isfv = await checkFavorite(listMotelFv, event.motelModel);
-        yield FeatchDataSucessState(isfv);
+        yield FeatchDataSucessState(isfv, listComment);
       } else {
-        yield FeatchDataSucessState(false);
+        yield FeatchDataSucessState(false, listComment);
       }
     } else if (event is OnTapFavoriteEvent) {
       yield LoadingState();

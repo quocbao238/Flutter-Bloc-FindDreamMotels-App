@@ -12,7 +12,8 @@ class LoadingState extends MotelDetailState {}
 
 class FeatchDataSucessState extends MotelDetailState {
   final bool isFv;
-  FeatchDataSucessState(this.isFv);
+  final List<RateModel> listComment;
+  FeatchDataSucessState(this.isFv, this.listComment);
 }
 
 class OnTapFavoriteSucessState extends MotelDetailState {

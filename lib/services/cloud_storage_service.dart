@@ -301,7 +301,6 @@ class CloudStorageService {
         listRateModel.add(rateModel);
       });
     });
-
     return listRateModel;
   }
 }
