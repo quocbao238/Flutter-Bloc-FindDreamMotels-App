@@ -3,14 +3,16 @@
 My App Create with Flutter
 
 #### Tính năng
+ + Login with Google Auth
  + Đăng bài viết
  + Yêu thích bài viết
  + Tạo bài viết theo quận huyện
- + List Yêu thích
+ + Danh sách Yêu thích
  + Cập nhật thông tin User
  + Điều hướng với Google Map
  + Tìm đường đi với ggMap
- + Push noti
+ + Push noti 
+ + Booking Room
  + History Booking
 
 #### Đang phát triển
