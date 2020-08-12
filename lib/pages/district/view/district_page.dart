@@ -3,7 +3,7 @@ import 'package:findingmotels/models/district_model.dart';
 import 'package:findingmotels/pages/district/bloc/district_bloc.dart';
 import 'package:findingmotels/pages/districtdetail/view/district_detail_page.dart';
 import 'package:findingmotels/pages/widgets/district_item.dart';
-import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
+import 'package:findingmotels/pages/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';

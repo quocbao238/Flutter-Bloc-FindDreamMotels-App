@@ -7,7 +7,7 @@ import 'package:findingmotels/pages/drawer/bloc/drawer_bloc.dart';
 import 'package:findingmotels/pages/drawer/view/mydrawer.dart';
 import 'package:findingmotels/pages/new_motel/view/new_motel_screen.dart';
 import 'package:findingmotels/pages/user_edit/view/user_edit_page.dart';
-import 'package:findingmotels/widgets/dialog_custom/logout_dialog.dart';
+import 'package:findingmotels/pages/widgets/dialog_custom/logout_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

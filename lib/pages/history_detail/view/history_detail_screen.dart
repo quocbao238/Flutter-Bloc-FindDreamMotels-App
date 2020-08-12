@@ -4,8 +4,8 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/helper/ulti.dart';
 import 'package:findingmotels/models/history_model.dart';
 import 'package:findingmotels/pages/history_detail/bloc/historydetail_bloc.dart';
-import 'package:findingmotels/widgets/empty/empty_widget.dart';
-import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
+import 'package:findingmotels/pages/widgets/empty/empty_widget.dart';
+import 'package:findingmotels/pages/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -128,16 +128,21 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
       );
 
   Widget _reviewButton() {
-    return Container(
-      height: 50.0,
-      margin: EdgeInsets.only(left: 15.0, right: 15.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: AppColor.colorClipPath2),
-      child: Center(
-        child: Text(
-          'Review',
-          style: StyleText.subhead18White500,
+    return GestureDetector(
+      onTap: () {
+        
+      },
+      child: Container(
+        height: 50.0,
+        margin: EdgeInsets.only(left: 15.0, right: 15.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: AppColor.colorClipPath2),
+        child: Center(
+          child: Text(
+            'Review',
+            style: StyleText.subhead18White500,
+          ),
         ),
       ),
     );

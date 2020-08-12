@@ -3,7 +3,6 @@ import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/helper/ulti.dart';
 import 'package:findingmotels/models/history_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
-import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart' as app;
@@ -14,6 +13,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:oktoast/oktoast.dart';
+
+import 'loadingWidget/loading_widget.dart';
 
 class ReserveModal extends StatefulWidget {
   final MotelModel motelModel;

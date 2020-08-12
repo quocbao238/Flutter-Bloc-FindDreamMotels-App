@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:findingmotels/widgets/loadingWidget/loading_widget.dart';
+import 'package:findingmotels/pages/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
 
 class ImageCacheNetwork extends StatelessWidget {
