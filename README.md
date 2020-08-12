@@ -68,9 +68,22 @@
 
 <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/13.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/14.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/15.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/16.png" width="220"/> 
 
-- List District Page & District Detail
+- List District Page & District Detail && Hotels Detail Page
 
-<img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/20ng" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/21png" width="220"/> <img 
+<img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/20.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/21.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/22.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/23.png" width="220"/> 
+
+- Reserve and Google Map Direction
+
+<img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/25.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/26.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/27.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/24.png" width="220"/> 
+
+- History Detail Booking Page and Rating Dialog 
+
+<img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/31.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/32.png" width="220"/>
+
+- Rating Dialog 
+
+<img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/33.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/34.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/35.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/36.png" width="220"/> 
+
 
 
 
@@ -79,21 +92,7 @@
  + Holiday
  + Event
 ### Version
-Android Version 8.0 or up
-IOS Version 13.0 or up
++ Android Version 8.0 or up
++ IOS Version 13.0 or up
 ### Contact
 If you have any copyright issues please contact us via email: baobondev@gmail.com
-
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
