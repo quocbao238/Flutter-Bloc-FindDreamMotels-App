@@ -6,6 +6,7 @@ import 'package:findingmotels/helper/ulti.dart';
 import 'package:findingmotels/models/history_model.dart';
 import 'package:findingmotels/models/rate_model.dart';
 import 'package:findingmotels/pages/history_detail/bloc/historydetail_bloc.dart';
+import 'package:findingmotels/pages/motel_detail/view/motel_detail_page.dart';
 import 'package:findingmotels/pages/widgets/dialog_custom/comment_dialog.dart';
 // import 'package:findingmotels/pages/widgets/dialog_custom/comment_dialog.dart';
 import 'package:findingmotels/pages/widgets/empty/empty_widget.dart';
@@ -52,18 +53,13 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
         ]),
       );
   Widget _body(HistorydetailState state) => Stack(
-        children: <Widget>[_appBar(), _page()],
+        children: <Widget>[_appBar(), _page(), _appBarbuttonBack()],
       );
 
   Widget _appBar() => Container(
         height: Size.getHeight * 0.35,
         width: Size.getWidth,
-        child: Stack(
-          children: <Widget>[
-            _appBarImage(),
-            _appBarbuttonBack()
-          ],
-        ),
+        child: _appBarImage(),
       );
 
   Widget _appBarImage() {
@@ -90,7 +86,7 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
       top: MediaQuery.of(context).padding.top + 10,
       left: 0,
       child: InkWell(
-        onTap: () => print('onTap'),
+        onTap: () => Navigator.of(_globalKey.currentContext).pop(),
         child: Container(
             width: 80.0,
             height: 50.0,
@@ -306,109 +302,118 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
       );
 
   Widget _motelDetail() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(top: Size.getHeight * 0.22),
-          height: Size.getHeight * 0.26,
-          width: Size.getWidth * 0.8,
-          child: Container(
-            padding: EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    spreadRadius: 4,
-                    blurRadius: 4,
-                    offset: Offset(0, 2), // changes position of shadow
-                  ),
-                ]),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: Size.getHeight * 0.12,
-                      height: Size.getHeight * 0.12,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15.0),
-                        child: CachedNetworkImage(
-                          imageUrl: widget
-                              .historyModel.motelBooking.imageMotel[1].imageUrl,
-                          fit: BoxFit.fill,
-                          placeholder: (context, url) =>
-                              Center(child: SpinKitFadingCircle(
-                            itemBuilder: (BuildContext context, int index) {
-                              return DecoratedBox(
-                                decoration: BoxDecoration(
-                                    color: index.isEven
-                                        ? Colors.red
-                                        : Colors.green),
-                              );
-                            },
-                          )),
-                          errorWidget: (context, url, error) =>
-                              Center(child: EmptyWidget()),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MotelDetailPage(
+                    motelModel: widget.historyModel.motelBooking)));
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: Size.getHeight * 0.22),
+            height: Size.getHeight * 0.26,
+            width: Size.getWidth * 0.8,
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      spreadRadius: 4,
+                      blurRadius: 4,
+                      offset: Offset(0, 2), // changes position of shadow
+                    ),
+                  ]),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                      child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: Size.getHeight * 0.12,
+                        height: Size.getHeight * 0.12,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: CachedNetworkImage(
+                            imageUrl: widget.historyModel.motelBooking
+                                .imageMotel[1].imageUrl,
+                            fit: BoxFit.fill,
+                            placeholder: (context, url) =>
+                                Center(child: SpinKitFadingCircle(
+                              itemBuilder: (BuildContext context, int index) {
+                                return DecoratedBox(
+                                  decoration: BoxDecoration(
+                                      color: index.isEven
+                                          ? Colors.red
+                                          : Colors.green),
+                                );
+                              },
+                            )),
+                            errorWidget: (context, url, error) =>
+                                Center(child: EmptyWidget()),
+                          ),
                         ),
                       ),
+                      Expanded(
+                          child: Padding(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Text(
+                              widget.historyModel.motelBooking.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: StyleText.subhead16GreenMixBlue,
+                            ),
+                            SmoothStarRating(
+                              rating: widget.historyModel.motelBooking.rating,
+                              isReadOnly: true,
+                              size: 16.0,
+                              filledIconData: Icons.star,
+                              halfFilledIconData: Icons.star_half,
+                              defaultIconData: Icons.star_border,
+                              starCount: 5,
+                              allowHalfRating: true,
+                              spacing: 2.0,
+                              onRated: (value) {},
+                              color: Colors.amber,
+                              borderColor: Colors.transparent,
+                            ),
+                            Text(
+                              widget.historyModel.motelBooking.address,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: StyleText.content14Grey400,
+                            ),
+                          ],
+                        ),
+                      )),
+                    ],
+                  )),
+                  Container(height: 8.0),
+                  Expanded(
+                      child: Container(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text(
+                      widget.historyModel.motelBooking.description,
+                      maxLines: 4,
+                      style: StyleText.content14Black400,
                     ),
-                    Expanded(
-                        child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text(
-                            widget.historyModel.motelBooking.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: StyleText.subhead16GreenMixBlue,
-                          ),
-                          SmoothStarRating(
-                            rating: widget.historyModel.motelBooking.rating,
-                            isReadOnly: true,
-                            size: 16.0,
-                            filledIconData: Icons.star,
-                            halfFilledIconData: Icons.star_half,
-                            defaultIconData: Icons.star_border,
-                            starCount: 5,
-                            allowHalfRating: true,
-                            spacing: 2.0,
-                            onRated: (value) {},
-                            color: Colors.amber,
-                            borderColor: Colors.transparent,
-                          ),
-                          Text(
-                            widget.historyModel.motelBooking.address,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: StyleText.content14Grey400,
-                          ),
-                        ],
-                      ),
-                    )),
-                  ],
-                )),
-                Container(height: 8.0),
-                Expanded(
-                    child: Container(
-                  padding: EdgeInsets.all(4.0),
-                  child: Text(
-                    widget.historyModel.motelBooking.description,
-                    maxLines: 4,
-                    style: StyleText.content14Black400,
-                  ),
-                ))
-              ],
+                  ))
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
