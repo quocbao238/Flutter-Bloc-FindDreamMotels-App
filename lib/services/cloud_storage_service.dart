@@ -4,6 +4,7 @@ import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/models/history_model.dart';
 import 'package:findingmotels/models/motel_model.dart';
+import 'package:findingmotels/models/rate_model.dart';
 import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -159,10 +160,8 @@ class CloudStorageService {
     return userInfoModel;
   }
 
-  Future<UserInfoModel> setRatingHistoryMotelClound(
-      HistoryModel historyModel, double rating, String comment) async {
-    bool isRating = false;
-
+  Future<RateModel> checkRatingHotels(HistoryModel historyModel) async {
+    RateModel rateModel;
     await ConfigApp.databaseReference
         .collection(AppSetting.dbData)
         .document(AppSetting.locationHCM)
@@ -172,24 +171,65 @@ class CloudStorageService {
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {
-        if (f.documentID == historyModel.motelBooking.documentId)
-          isRating = true;
+        if (f.documentID == historyModel.motelBooking.documentId) {
+          rateModel = RateModel.fromJson(f.data);
+        }
       });
     });
-    if (!isRating)
-      await ConfigApp.databaseReference
-          .collection(AppSetting.dbData)
-          .document(AppSetting.locationHCM)
-          .collection(historyModel.motelBooking.districtId.toString())
-          .document(historyModel.motelBooking.documentId)
-          .collection(AppSetting.userComment)
-          .document(historyModel.motelBooking.documentId)
-          .updateData({
-        'userId': ConfigApp.fbuser.uid,
-        'userName': ConfigUserInfo.name,
-        'comment': comment,
-        'rating': rating
+    return rateModel;
+  }
+
+  Future<double> getStartRatingHotels(HistoryModel historyModel) async {
+    double ratingApp = 0.0;
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbData)
+        .document(AppSetting.locationHCM)
+        .collection(historyModel.motelBooking.districtId.toString())
+        .document(historyModel.motelBooking.documentId)
+        .collection(AppSetting.userComment)
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.documentID == historyModel.motelBooking.documentId) {
+          ratingApp = f.data['rating'].toDouble();
+        }
       });
+    });
+    return ratingApp;
+  }
+
+  Future<bool> setRatingHotels(HistoryModel historyModel, double rating) async {
+    bool isSucess = false;
+
+    RateModel rateModel = RateModel(
+        userId: ConfigApp.fbuser.uid,
+        comment: "",
+        rating: rating,
+        userName: ConfigUserInfo.name);
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbData)
+        .document(AppSetting.locationHCM)
+        .collection(historyModel.motelBooking.districtId.toString())
+        .document(historyModel.motelBooking.documentId)
+        .collection(AppSetting.userComment)
+        .document(historyModel.motelBooking.documentId)
+        .setData(rateModel.toJson())
+        .then((value) => isSucess = true);
+    return isSucess;
+  }
+
+  Future<bool> writeCommentRatingHotels(
+      HistoryModel historyModel, String comment) async {
+    bool sucess = false;
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbData)
+        .document(AppSetting.locationHCM)
+        .collection(historyModel.motelBooking.districtId.toString())
+        .document(historyModel.motelBooking.documentId)
+        .collection(AppSetting.userComment)
+        .document(historyModel.motelBooking.documentId)
+        .updateData({'comment': comment}).then((value) => sucess = true);
+    return sucess;
   }
 
   Future<bool> updateHistoryToClound(

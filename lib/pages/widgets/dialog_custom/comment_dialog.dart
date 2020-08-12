@@ -10,10 +10,15 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
 
-Future commentDialog({BuildContext context, HistoryModel historyModel}) {
+Future commentDialog(
+    {BuildContext context,
+    HistoryModel historyModel,
+    int type,
+    double vrating,
+    String txtComment}) {
   TextEditingController reviewEditingController = TextEditingController();
-  int isRating = 0;
-  double rating = 0.0;
+  int isRating = type;
+  double rating = vrating;
 
   Widget _checkRating(
       HistoryModel historyModel, BuildContext context, StateSetter setState) {
@@ -121,12 +126,18 @@ Future commentDialog({BuildContext context, HistoryModel historyModel}) {
               Container(width: 1.0, color: Colors.grey),
               Expanded(
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
                     if (rating != 0.0) {
-                      setState(() {
-                        isRating = 1;
+                      await ConfigApp.fbCloudStorage
+                          .setRatingHotels(historyModel, rating)
+                          .then((isSucess) {
+                        if (isSucess) {
+                          setState(() {
+                            isRating = 1;
+                          });
+                        }
                       });
-                    } else if (rating < 3.0) {
+                    } else {
                       showToast('Please tap start to select start Rate');
                     }
                     print(rating.toString());
@@ -237,7 +248,7 @@ Future commentDialog({BuildContext context, HistoryModel historyModel}) {
               // padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
               child: Center(
                 child: Text(
-                  "Write a Review",
+                  "Write a Reviews",
                   style: StyleText.subhead18GreenMixBlue
                       .copyWith(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
@@ -278,6 +289,170 @@ Future commentDialog({BuildContext context, HistoryModel historyModel}) {
     );
   }
 
+  Widget _isRated(
+      HistoryModel historyModel, BuildContext context, StateSetter setState) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          height: 160.0,
+          width: 160.0,
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(15.0),
+              topLeft: Radius.circular(15.0),
+            ),
+            child: Container(
+              height: 160.0,
+              width: 160.0,
+              child: CachedNetworkImage(
+                  imageUrl: historyModel.motelBooking.imageMotel[1].imageUrl,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                      Center(child: SpinKitFadingCircle(
+                        itemBuilder: (BuildContext context, int index) {
+                          return DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: index.isEven
+                                      ? Colors.red
+                                      : Colors.green));
+                        },
+                      )),
+                  errorWidget: (context, url, error) =>
+                      Center(child: EmptyWidget())),
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
+          child: Center(
+            child: Text(
+              'Thanks for your feedback',
+              style: StyleText.header20Black,
+            ),
+          ),
+        ),
+        Container(
+          child: Center(
+            child: FlutterRatingBar(
+              itemSize: 30.0,
+              fillColor: Colors.amber,
+              borderColor: AppColor.colorClipPath2,
+              initialRating: rating,
+              onRatingUpdate: null,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(bottom: 8.0, top: 8.0),
+          child: Center(
+            child: Text(
+              txtComment,
+              style: StyleText.subhead16Black500,
+              textAlign: TextAlign.center,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+        Container(
+            margin: EdgeInsets.only(top: 4), height: 1.0, color: Colors.grey),
+        Container(
+          height: 50,
+          width: Size.getWidth,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+              ),
+              color: AppColor.colorClipPath2),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: Center(
+                child: Text(
+                  "Close",
+                  style: StyleText.subhead18GreenMixBlue.copyWith(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _isReview(
+      TextEditingController reviewEditingController, BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        _widgetAvatar(),
+        _review(reviewEditingController),
+        Container(
+            margin: EdgeInsets.only(top: 16.0),
+            height: 1.0,
+            color: Colors.grey),
+        GestureDetector(
+          onTap: () {
+            Navigator.pop(context, true);
+          },
+          child: Container(
+            height: 50.0,
+            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(15),
+                  bottomLeft: Radius.circular(15)),
+            ),
+            child: Center(
+              child: Text("Not now",
+                  style: StyleText.subhead18GreenMixBlue
+                      .copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center),
+            ),
+          ),
+        ),
+        Container(height: 1.0, color: Colors.grey),
+        GestureDetector(
+          onTap: () async {
+            if (reviewEditingController.text.trim().length > 3) {
+              await ConfigApp.fbCloudStorage.writeCommentRatingHotels(
+                  historyModel, reviewEditingController.text.trim());
+              Navigator.of(context).pop();
+            } else {
+              showToast('Reviews cannot be less than 3 characters');
+            }
+          },
+          child: Container(
+            height: 50.0,
+            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(15),
+                  bottomLeft: Radius.circular(15)),
+            ),
+            child: Center(
+              child: Text("Submit Reviews",
+                  style: StyleText.subhead18GreenMixBlue
+                      .copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -295,68 +470,14 @@ Future commentDialog({BuildContext context, HistoryModel historyModel}) {
                   ? _checkRating(historyModel, context, setState)
                   : isRating == 1
                       ? _confirm(historyModel, context, setState)
-                      : _isReview(reviewEditingController, context),
+                      : isRating == 2
+                          ? _isReview(reviewEditingController, context)
+                          : _isRated(historyModel, context, setState),
               // : _isRating(reviewEditingController, context),
             );
           }),
         ));
       });
-}
-
-Widget _isReview(
-    TextEditingController reviewEditingController, BuildContext context) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
-      _widgetAvatar(),
-      _review(reviewEditingController),
-      Container(
-          margin: EdgeInsets.only(top: 16.0), height: 1.0, color: Colors.grey),
-      GestureDetector(
-        onTap: () {
-          Navigator.pop(context, true);
-        },
-        child: Container(
-          height: 50.0,
-          padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15)),
-          ),
-          child: Center(
-            child: Text("Not now",
-                style: StyleText.subhead18GreenMixBlue
-                    .copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center),
-          ),
-        ),
-      ),
-      Container(height: 1.0, color: Colors.grey),
-      GestureDetector(
-        onTap: () {
-          Navigator.pop(context, true);
-        },
-        child: Container(
-          height: 50.0,
-          padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15)),
-          ),
-          child: Center(
-            child: Text("Submit Review",
-                style: StyleText.subhead18GreenMixBlue
-                    .copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center),
-          ),
-        ),
-      ),
-    ],
-  );
 }
 
 Widget _review(TextEditingController reviewEditingController) {
@@ -399,34 +520,8 @@ Widget _widgetAvatar() {
             width: 24.0,
             child: SvgPicture.asset(AppSetting.reviewIcon)),
         SizedBox(width: 4.0),
-        Text('Write Review', style: StyleText.subhead18GreenMixBlue)
+        Text('Write Reviews', style: StyleText.subhead18GreenMixBlue)
       ],
     ),
-  );
-}
-
-Widget _avatar() {
-  Widget _dataAvatar(ImageProvider imageProvider, String errorImg) => Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(60),
-          image: DecorationImage(
-              image: imageProvider != null
-                  ? imageProvider
-                  : NetworkImage(errorImg),
-              fit: BoxFit.cover),
-        ),
-      );
-
-  return Container(
-    width: 24.0,
-    height: 24.0,
-    child: CachedNetworkImage(
-        imageUrl: ConfigApp?.fbuser?.photoUrl ?? AppSetting.defaultAvatarImg,
-        imageBuilder: (context, imageProvider) =>
-            _dataAvatar(imageProvider, null),
-        placeholder: (context, url) =>
-            Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) =>
-            _dataAvatar(null, AppSetting.defaultAvatarImg)),
   );
 }

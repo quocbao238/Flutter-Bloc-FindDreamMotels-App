@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/helper/ulti.dart';
 import 'package:findingmotels/models/history_model.dart';
+import 'package:findingmotels/models/rate_model.dart';
 import 'package:findingmotels/pages/history_detail/bloc/historydetail_bloc.dart';
 import 'package:findingmotels/pages/widgets/dialog_custom/comment_dialog.dart';
+// import 'package:findingmotels/pages/widgets/dialog_custom/comment_dialog.dart';
 import 'package:findingmotels/pages/widgets/empty/empty_widget.dart';
 import 'package:findingmotels/pages/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -49,22 +52,23 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
         ]),
       );
   Widget _body(HistorydetailState state) => Stack(
-        children: <Widget>[
-          _appBar(),
-          _page(),
-        ],
+        children: <Widget>[_appBar(), _page()],
       );
 
   Widget _appBar() => Container(
         height: Size.getHeight * 0.35,
         width: Size.getWidth,
         child: Stack(
-          children: <Widget>[_appBarImage(), _appBarbuttonBack()],
+          children: <Widget>[
+            _appBarImage(),
+            _appBarbuttonBack()
+          ],
         ),
       );
 
   Widget _appBarImage() {
-    return Positioned.fill(
+    return Container(
+      width: Size.getWidth,
       child: CachedNetworkImage(
         imageUrl: widget.historyModel.motelBooking.imageMotel[0].imageUrl,
         fit: BoxFit.cover,
@@ -85,22 +89,19 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
     return Positioned(
       top: MediaQuery.of(context).padding.top + 10,
       left: 0,
-      child: GestureDetector(
-        onTap: () => Navigator.of(context).pop(),
+      child: InkWell(
+        onTap: () => print('onTap'),
         child: Container(
-          width: 80.0,
-          height: 50.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(25),
-              topRight: Radius.circular(25),
-            ),
-            color: Colors.grey.withOpacity(0.6),
-          ),
-          child: Center(
-              child:
-                  Icon(Icons.arrow_back_ios, size: 30.0, color: Colors.white)),
-        ),
+            width: 80.0,
+            height: 50.0,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(25),
+                    topRight: Radius.circular(25)),
+                color: Colors.grey.withOpacity(0.5)),
+            child: Center(
+                child: Icon(Icons.arrow_back_ios,
+                    size: 30.0, color: Colors.white))),
       ),
     );
   }
@@ -138,8 +139,25 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
   Widget _ratingButton() {
     return GestureDetector(
       onTap: () async {
+        int type = 0;
+        double rating = 0.0;
+        String txtComment = "";
+        RateModel rateModel = await ConfigApp.fbCloudStorage
+            .checkRatingHotels(widget.historyModel);
+        if (rateModel != null) {
+          type = 1;
+          rating = rateModel.rating;
+          if (rateModel.comment != "") {
+            type = 3;
+            txtComment = rateModel.comment;
+          }
+        }
         await commentDialog(
-            context: context, historyModel: widget.historyModel);
+            context: context,
+            historyModel: widget.historyModel,
+            type: type,
+            vrating: rating,
+            txtComment: txtComment);
       },
       child: Container(
         height: 50.0,
