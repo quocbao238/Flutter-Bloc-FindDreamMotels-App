@@ -285,4 +285,23 @@ class CloudStorageService {
     });
     return _listHistory;
   }
+
+  Future<List<RateModel>> getListRating(MotelModel motelModel) async {
+    List<RateModel> listRateModel = [];
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbData)
+        .document(AppSetting.locationHCM)
+        .collection(motelModel.districtId.toString())
+        .document(motelModel.documentId)
+        .collection(AppSetting.userComment)
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        var rateModel = RateModel.fromJson(f.data);
+        listRateModel.add(rateModel);
+      });
+    });
+
+    return listRateModel;
+  }
 }

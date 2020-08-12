@@ -81,7 +81,6 @@ class OneSignalService {
         largeIcon: AppSetting.oneSignalImage,
         smallIcon: AppSetting.oneSignalImage);
     try {
-      // var client = http.Client();
       Response response = await http.post(AppSetting.oneSingalSendApi,
           headers: {
             "Authorization": "Basic ${AppSetting.oneSingalResApiKey}",
