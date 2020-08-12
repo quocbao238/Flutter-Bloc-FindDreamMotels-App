@@ -99,17 +99,4 @@ class OneSignalService {
       return false;
     }
   }
-
-  // void sendNotifyToManagerHotel(MotelModel motelModel) async {
-  //   OSCreateNotification notification = OSCreateNotification(
-  //       playerIds: ["5BMDfV3RzwdwBqWSHSfrXpFkUPn1"],
-  //       content: "Quoc Bao booking your Hotel",
-  //       heading: "DemosendData",
-  //       iosAttachments: {"id1": ""},
-  //       subtitle: "",
-  //       androidSmallIcon: AppSetting.oneSignalIcon,
-  //       androidLargeIcon: AppSetting.oneSignalIcon);
-  // await OneSignal.shared.postNotification(notification);
-  // }
-  // }
 }

@@ -26,21 +26,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       } else {
         yield FeatchDataFailState();
       }
-      // }
-      // else if (event is OnClickListDistrictsEvent) {
-      //   yield LoadingMotels();
-      //   var listMotel =
-      //       await featchMotelList(int.parse(event.districtModel.districtId));
-      //   yield listMotel != null
-      //       ? OnClickListDistrictsState(
-      //           selectMotel: event.districtModel, listMotel: listMotel)
-      //       : OnClickListDistrictsState(
-      //           selectMotel: event.districtModel, listMotel: []);
     } else if (event is OnClickListMotelssEvent) {
       yield OnClickListMotelssState(event.motelModel);
     } else if (event is NewMotelEvent) {
       yield NewMotelState();
-    } else if(event is OnTapHotelsEvent){
+    } else if (event is OnTapHotelsEvent) {
       yield OnTapHotelsState();
     }
     yield HomeInitial();
@@ -64,35 +54,3 @@ Future<List<MotelModel>> featchMotelPopular() async {
       .compareTo(double.parse(b.timeUpdate.toString())));
   return listMotel;
 }
-
-// Future<List<MotelModel>> featchMotelList(int id) async {
-//   List<MotelModel> listMotel = [];
-//   await ConfigApp.databaseReference
-//       .collection(id.toString())
-//       .getDocuments()
-//       .then((QuerySnapshot snapshot) {
-//     snapshot.documents.forEach((f) {
-//       var motel = MotelModel.fromJson(f.data);
-//       listMotel.add(motel);
-//     });
-//   });
-//   listMotel.sort((a, b) => double.parse(a.timeUpdate.toString())
-//       .compareTo(double.parse(b.timeUpdate.toString())));
-//   return listMotel;
-// }
-
-// Future<List<DistrictModel>> featchDistrictLst() async {
-//   List<DistrictModel> listDistrict = [];
-//   await ConfigApp.databaseReference
-//       .collection(AppSetting.dbdistricList)
-//       .getDocuments()
-//       .then((QuerySnapshot snapshot) {
-//     snapshot.documents.forEach((f) {
-//       var district = DistrictModel.fromJson(f.data);
-//       listDistrict.add(district);
-//     });
-//   });
-//   listDistrict.sort(
-//       (a, b) => int.parse(a.districtId).compareTo(int.parse(b.districtId)));
-//   return listDistrict;
-// }
