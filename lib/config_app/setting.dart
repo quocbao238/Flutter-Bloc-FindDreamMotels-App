@@ -78,6 +78,7 @@ class AppSetting {
   //Database
   static String dbdistricList = 'districList';
   static String locationHCM = 'hcm';
+  static String userComment = 'userComment';
   static String dbData = 'data';
   static String dbpopular = 'popular';
   static String dbuser = 'user';

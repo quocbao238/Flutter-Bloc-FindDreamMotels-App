@@ -137,7 +137,7 @@ class CloudStorageService {
     return _userInfo;
   }
 
-  Future<UserInfoModel> updateDataToClound(UserInfoModel _userInfo) async {
+  Future<UserInfoModel> setDataToClound(UserInfoModel _userInfo) async {
     UserInfoModel userInfoModel = UserInfoModel();
     await ConfigApp.databaseReference
         .collection(AppSetting.dbuser)
@@ -159,7 +159,41 @@ class CloudStorageService {
     return userInfoModel;
   }
 
-  Future<bool> updateHistoryToClound(MotelModel motel,DetailBooking detailBooking) async {
+  Future<UserInfoModel> setRatingHistoryMotelClound(
+      HistoryModel historyModel, double rating, String comment) async {
+    bool isRating = false;
+
+    await ConfigApp.databaseReference
+        .collection(AppSetting.dbData)
+        .document(AppSetting.locationHCM)
+        .collection(historyModel.motelBooking.districtId.toString())
+        .document(historyModel.motelBooking.documentId)
+        .collection(AppSetting.userComment)
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.documentID == historyModel.motelBooking.documentId)
+          isRating = true;
+      });
+    });
+    if (!isRating)
+      await ConfigApp.databaseReference
+          .collection(AppSetting.dbData)
+          .document(AppSetting.locationHCM)
+          .collection(historyModel.motelBooking.districtId.toString())
+          .document(historyModel.motelBooking.documentId)
+          .collection(AppSetting.userComment)
+          .document(historyModel.motelBooking.documentId)
+          .updateData({
+        'userId': ConfigApp.fbuser.uid,
+        'userName': ConfigUserInfo.name,
+        'comment': comment,
+        'rating': rating
+      });
+  }
+
+  Future<bool> updateHistoryToClound(
+      MotelModel motel, DetailBooking detailBooking) async {
     //type 0 -> History
     //type 1 -> Booking
     String _timeNow = DateTime.now().millisecondsSinceEpoch.toString();

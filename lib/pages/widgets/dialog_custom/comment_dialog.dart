@@ -27,9 +27,8 @@ Future commentDialog({BuildContext context, HistoryModel historyModel}) {
           width: 120.0,
           child: ClipRRect(
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15.0),
-              topLeft: Radius.circular(15.0),
-            ),
+                topRight: Radius.circular(15.0),
+                topLeft: Radius.circular(15.0)),
             child: Container(
               height: 120.0,
               width: 120.0,
