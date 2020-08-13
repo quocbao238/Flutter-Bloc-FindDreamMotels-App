@@ -200,11 +200,11 @@ class CloudStorageService {
 
   Future<bool> setRatingHotels(HistoryModel historyModel, double rating) async {
     bool isSucess = false;
-
     RateModel rateModel = RateModel(
         userId: ConfigApp.fbuser.uid,
         comment: "",
         rating: rating,
+        avatar: ConfigApp.fbuser.photoUrl,
         userName: ConfigUserInfo.name);
     await ConfigApp.databaseReference
         .collection(AppSetting.dbData)
