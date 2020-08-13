@@ -83,19 +83,23 @@ class _RegisterPageState extends State<RegisterPage> {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              FadeAnimation(0.1, buildTitleImage(height)),
-              FadeAnimation(0.2, buildTitleUserName(width, height)),
-              FadeAnimation(0.3, buildTFFUser(width)),
-              FadeAnimation(0.4, buildTitleEmail(width)),
-              FadeAnimation(0.5, buildTFFEmail(width)),
-              FadeAnimation(0.6, buildTitlePass(width)),
-              FadeAnimation(0.8, buildTFFPass(width)),
-              FadeAnimation(0.10, buildRegisterEmail(width, height)),
-              FadeAnimation(1.2, buildLoginText(height))
-            ],
+          child: Container(
+            height: Size.getHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FadeAnimation(0.1, buildTitleImage(height)),
+                FadeAnimation(0.2, buildTitleUserName(width, height)),
+                FadeAnimation(0.3, buildTFFUser(width)),
+                FadeAnimation(0.4, buildTitleEmail(width)),
+                FadeAnimation(0.5, buildTFFEmail(width)),
+                FadeAnimation(0.6, buildTitlePass(width)),
+                FadeAnimation(0.8, buildTFFPass(width)),
+                Spacer(),
+                FadeAnimation(0.10, buildRegisterEmail(width, height)),
+                FadeAnimation(1.2, buildLoginText(height))
+              ],
+            ),
           ),
         ),
       ),
@@ -284,9 +288,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: FadeAnimation(
             0.1,
             ClipPath(
-              child: Container(
-                color: AppColor.colorClipPath
-              ),
+              child: Container(color: AppColor.colorClipPath),
               clipper: RegisterClipPath(),
             )),
       ),

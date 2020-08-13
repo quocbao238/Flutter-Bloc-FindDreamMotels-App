@@ -84,21 +84,25 @@ class _LoginPageState extends State<LoginPage> {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              FadeAnimation(0.1, _image(height)),
-              FadeAnimation(0.2, _btnGoogleFacebook(height, width)),
-              FadeAnimation(0.3, _titleLogin()),
-              FadeAnimation(0.4, _titleEmail(width)),
-              FadeAnimation(0.5, _tffmail(width)),
-              FadeAnimation(0.6, _titlepaw(width)),
-              FadeAnimation(0.7, _tffpaw(width)),
-              FadeAnimation(0.8, _forgotpaw(width, height)),
-              FadeAnimation(0.9, _btnlogin(height, width)),
-              FadeAnimation(1, _btnsignup(height)),
-            ],
+          child: Container(
+            height: Size.getHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                FadeAnimation(0.1, _image(height)),
+                FadeAnimation(0.2, _btnGoogleFacebook(height, width)),
+                FadeAnimation(0.3, _titleLogin()),
+                FadeAnimation(0.4, _titleEmail(width)),
+                FadeAnimation(0.5, _tffmail(width)),
+                FadeAnimation(0.6, _titlepaw(width)),
+                FadeAnimation(0.7, _tffpaw(width)),
+                FadeAnimation(0.8, _forgotpaw(width, height)),
+                Spacer(),
+                FadeAnimation(0.9, _btnlogin(height, width)),
+                FadeAnimation(1, _btnsignup(height)),
+              ],
+            ),
           ),
         ),
       ));
@@ -287,7 +291,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _btnsignup(double height) => InkWell(
         child: Container(
-          margin: EdgeInsets.only(top: height * 0.02, bottom: height * 0.03),
+          margin: EdgeInsets.only(top: height * 0.02, bottom: height * 0.02),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -298,8 +302,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         onTap: () {
-          // Navigator.push(
-          //     context, MaterialPageRoute(builder: (context) => RegisterPage()));
           Navigator.of(context).pushReplacement(
             new MaterialPageRoute(
               builder: (context) {
@@ -311,7 +313,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   Widget _btnGoogleFacebook(double height, double width) => Container(
-        margin: EdgeInsets.only(top: height * 0.075 + Size.statusBar / 2),
+        margin: EdgeInsets.only(top: height * 0.08 + Size.statusBar / 2),
         height: height * 0.06,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
