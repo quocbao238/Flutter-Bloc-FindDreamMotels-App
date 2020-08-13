@@ -1,9 +1,12 @@
 import 'package:findingmotels/config_app/configApp.dart';
+import 'package:findingmotels/models/user_fb_model.dart';
 import 'package:findingmotels/repository/error_codes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:http/http.dart' as http;
 
 class FirebaseAuthServices {
   FirebaseAuth firebaseAuth;
@@ -11,11 +14,38 @@ class FirebaseAuthServices {
     this.firebaseAuth = FirebaseAuth.instance;
   }
 
+  Future<FirebaseUser> loginWithFB() async {
+    final facebookLogin = FacebookLogin();
+    final result = await facebookLogin.logInWithReadPermissions(['email']);
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        final token = result.accessToken.token;
+        final graphResponse = await http.get(
+            'https://graph.facebook.com/v2.12/me?fields=name,picture.width(800).height(800),email&access_token=$token');
+        // final profile = JSON.jsonDecode(graphResponse.body);
+        var facebookUser = userFacebookModelFromJson(graphResponse.body);
+        AuthCredential authCredential =
+            FacebookAuthProvider.getCredential(accessToken: token);
+        print(authCredential.toString());
+        ConfigApp.fbuser =
+            (await firebaseAuth.signInWithCredential(authCredential)).user;
+        return await updateUserToFirebaseAuth(
+            imgUrl: facebookUser.picture.data.url);
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        return null;
+        break;
+      case FacebookLoginStatus.error:
+        return null;
+        break;
+    }
+    return ConfigApp.fbuser;
+  }
+
   Future<FirebaseUser> loginWithGoogle() async {
     try {
       GoogleSignIn googleSignIn = GoogleSignIn();
       GoogleSignInAccount account = await googleSignIn.signIn();
-  
       if (account == null) return null;
       AuthResult res = await firebaseAuth
           .signInWithCredential(GoogleAuthProvider.getCredential(
@@ -24,11 +54,8 @@ class FirebaseAuthServices {
       ));
       if (res.user != null) {
         ConfigApp.fbuser = await firebaseAuth.currentUser();
-        // ConfigApp.googleSignIn = googleSignIn;
-        // ConfigApp.googleSignInAccount = account;
         return res.user;
       } else {
-        // print("Google signIn fail");
         return null;
       }
     } catch (e) {
@@ -36,6 +63,18 @@ class FirebaseAuthServices {
       print("Error logging with google");
       return null;
     }
+  }
+
+  Future<FirebaseUser> updateUserToFirebaseAuth(
+      {String imgUrl, String name}) async {
+    UserUpdateInfo updateInfo = UserUpdateInfo();
+    updateInfo.displayName =
+        (name == null) ? ConfigApp.fbuser.displayName : name;
+    updateInfo.photoUrl = (imgUrl == null) ? ConfigApp.fbuser.photoUrl : imgUrl;
+    await ConfigApp.fbuser.updateProfile(updateInfo);
+    await ConfigApp.fbuser.reload();
+    var userSend = await ConfigApp.firebaseAuth.getCurrentUser();
+    return userSend;
   }
 
   // sign up with email

@@ -12,9 +12,9 @@ class LoginButtonPressedEvent extends LoginEvent {
   LoginButtonPressedEvent({this.email, this.password});
 }
 
-class GoogleOnClickEvent extends LoginEvent {
-  
-}
+class GoogleOnClickEvent extends LoginEvent {}
+
+class FacebookOnClickEvent extends LoginEvent {}
 
 class GotoSignUpPageEvent extends LoginEvent {}
 

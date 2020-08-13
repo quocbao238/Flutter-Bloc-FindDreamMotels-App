@@ -25,7 +25,8 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
       String url = await ConfigApp.fbCloudStorage
           .updateAvatar(uuid: ConfigApp.fbuser.uid);
       if (url != null) {
-        var fbUser = updateUserToFirebaseAuth(imgUrl: url, name: null);
+        var fbUser = ConfigApp.firebaseAuth
+            .updateUserToFirebaseAuth(imgUrl: url, name: null);
         if (fbUser != null) {
           ConfigApp.fbuser = await fbUser;
           showToast('Update Avatar successful!');
@@ -52,10 +53,11 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     else if (event is EditProfileEVent) {
       yield LoadingState();
       //Update firebase auth
-      var fbUser = await updateUserToFirebaseAuth(
-          imgUrl: null, name: event.userInfoModel.name);
+      var fbUser = await ConfigApp.firebaseAuth.updateUserToFirebaseAuth(
+          imgUrl: null, name: event.userInfoModel.name)``;
       //Update firebase cloud;
-      var userInfoModel = await ConfigApp.fbCloudStorage.setDataToClound(event.userInfoModel);
+      var userInfoModel =
+          await ConfigApp.fbCloudStorage.setDataToClound(event.userInfoModel);
       if (fbUser != null && userInfoModel != null) {
         ConfigApp.fbuser = fbUser;
         yield EditProfileSucessState(fbUser);
@@ -77,18 +79,4 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
 
     yield UserEditInitial();
   }
-
-// Update to firebase auth
-  Future<FirebaseUser> updateUserToFirebaseAuth(
-      {String imgUrl, String name}) async {
-    UserUpdateInfo updateInfo = UserUpdateInfo();
-    updateInfo.displayName =
-        (name == null) ? ConfigApp.fbuser.displayName : name;
-    updateInfo.photoUrl = (imgUrl == null) ? ConfigApp.fbuser.photoUrl : imgUrl;
-    await ConfigApp.fbuser.updateProfile(updateInfo);
-    await ConfigApp.fbuser.reload();
-    var userSend = await ConfigApp.firebaseAuth.getCurrentUser();
-    return userSend;
-  }
-
 }

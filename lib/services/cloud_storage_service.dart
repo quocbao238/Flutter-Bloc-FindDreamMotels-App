@@ -198,6 +198,8 @@ class CloudStorageService {
     return ratingApp;
   }
 
+  
+
   Future<bool> setRatingHotels(HistoryModel historyModel, double rating) async {
     bool isSucess = false;
     RateModel rateModel = RateModel(

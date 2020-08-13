@@ -1,3 +1,4 @@
+import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
@@ -338,15 +339,23 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(width: width * 0.03),
-            Container(
-              width: width * 0.30,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30), color: Colors.white),
-              child: Center(
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  child: Image.asset(AppSetting.facebookIcon, fit: BoxFit.fill),
+            InkWell(
+              onTap: () {
+                BlocProvider.of<LoginBloc>(loginGlobalKey.currentContext)
+                    .add(FacebookOnClickEvent());
+              },
+              child: Container(
+                width: width * 0.30,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white),
+                child: Center(
+                  child: Container(
+                    width: 25,
+                    height: 25,
+                    child:
+                        Image.asset(AppSetting.facebookIcon, fit: BoxFit.fill),
+                  ),
                 ),
               ),
             ),
