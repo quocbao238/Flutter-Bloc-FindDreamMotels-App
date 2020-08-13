@@ -41,6 +41,7 @@
  + Simple Animation
  + RegexPattern
 ### Screenshot
+
  - Splash Page
 <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/1.png" width="220"/> 
 
@@ -48,9 +49,9 @@
  
 <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/2.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/3.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/4.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/5.png" width="220"/> 
 
- - Login Page & Register Page
+ - Login Page(Email - GoogleAccout - FacebookAccount) & Register Page
  
-<img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/6.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/7.png" width="220"/> 
+<img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/6.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/38.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/39.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/7.png" width="220"/> 
 
  - Home Page & Search Page & Favorite Page & History Page
  
