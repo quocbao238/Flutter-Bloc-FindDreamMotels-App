@@ -54,7 +54,7 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
       yield LoadingState();
       //Update firebase auth
       var fbUser = await ConfigApp.firebaseAuth.updateUserToFirebaseAuth(
-          imgUrl: null, name: event.userInfoModel.name)``;
+          imgUrl: null, name: event.userInfoModel.name);
       //Update firebase cloud;
       var userInfoModel =
           await ConfigApp.fbCloudStorage.setDataToClound(event.userInfoModel);

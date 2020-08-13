@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:findingmotels/services/cloud_storage_service.dart';
-import 'package:findingmotels/services/facebook_service.dart';
 import 'package:findingmotels/services/firebase_auth_service.dart';
 import 'package:findingmotels/services/google_map_service.dart';
 import 'package:findingmotels/services/onesignal_service.dart';
