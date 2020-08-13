@@ -20,8 +20,35 @@ Future commentDialog(
   int isRating = type;
   double rating = vrating;
 
-  Widget _checkRating(
-      HistoryModel historyModel, BuildContext context, StateSetter setState) {
+  Widget _review() {
+  return Container(
+    padding: EdgeInsets.only(left: 4.0, right: 4.0),
+    child: TextField(
+        style: StyleText.subhead16Black,
+        keyboardType: TextInputType.text,
+        onTap: () {},
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(16.0),
+            enabledBorder: OutlineInputBorder(
+              borderSide:
+                  BorderSide(color: AppColor.colorClipPath2, width: 1.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 1, color: AppColor.colorClipPath),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 1, color: AppColor.colorClipPath2),
+            ),
+            hintText: "Write review...",
+            hintStyle: StyleText.subhead16GreenMixBlue,
+            alignLabelWithHint: true,
+            labelStyle: StyleText.subhead16GreenMixBlue),
+        maxLines: 6,
+        controller: reviewEditingController),
+  );
+}
+
+  Widget _checkRating(HistoryModel historyModel, BuildContext context, StateSetter setState) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -162,8 +189,7 @@ Future commentDialog(
     );
   }
 
-  Widget _confirm(
-      HistoryModel historyModel, BuildContext context, StateSetter setState) {
+  Widget _confirm(HistoryModel historyModel, BuildContext context, StateSetter setState) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -245,14 +271,11 @@ Future commentDialog(
               setState(() => isRating = 2);
             },
             child: Container(
-              // padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
               child: Center(
-                child: Text(
-                  "Write a Reviews",
-                  style: StyleText.subhead18GreenMixBlue
-                      .copyWith(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
+                child: Text("Write a Reviews",
+                    style: StyleText.subhead18GreenMixBlue
+                        .copyWith(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center),
               ),
             ),
           ),
@@ -264,9 +287,8 @@ Future commentDialog(
           width: Size.getWidth,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-              ),
+                  bottomRight: Radius.circular(15),
+                  bottomLeft: Radius.circular(15)),
               color: Colors.white),
           child: InkWell(
             onTap: () {
@@ -289,8 +311,7 @@ Future commentDialog(
     );
   }
 
-  Widget _isRated(
-      HistoryModel historyModel, BuildContext context, StateSetter setState) {
+  Widget _isRated(HistoryModel historyModel, BuildContext context, StateSetter setState) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -389,15 +410,14 @@ Future commentDialog(
     );
   }
 
-  Widget _isReview(
-      TextEditingController reviewEditingController, BuildContext context) {
+  Widget _isReview(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         _widgetAvatar(),
-        _review(reviewEditingController),
+        _review(),
         Container(
             margin: EdgeInsets.only(top: 16.0),
             height: 1.0,
@@ -423,7 +443,7 @@ Future commentDialog(
           ),
         ),
         Container(height: 1.0, color: Colors.grey),
-        GestureDetector(
+        InkWell(
           onTap: () async {
             if (reviewEditingController.text.trim().length > 3) {
               await ConfigApp.fbCloudStorage.writeCommentRatingHotels(
@@ -471,41 +491,13 @@ Future commentDialog(
                   : isRating == 1
                       ? _confirm(historyModel, context, setState)
                       : isRating == 2
-                          ? _isReview(reviewEditingController, context)
+                          ? _isReview(context)
                           : _isRated(historyModel, context, setState),
               // : _isRating(reviewEditingController, context),
             );
           }),
         ));
       });
-}
-
-Widget _review(TextEditingController reviewEditingController) {
-  return Container(
-    padding: EdgeInsets.only(left: 4.0, right: 4.0),
-    child: TextField(
-        style: StyleText.subhead16Black,
-        keyboardType: TextInputType.text,
-        onTap: () {},
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(16.0),
-            enabledBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: AppColor.colorClipPath2, width: 1.0),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1, color: AppColor.colorClipPath),
-            ),
-            disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1, color: AppColor.colorClipPath2),
-            ),
-            hintText: "Write review...",
-            hintStyle: StyleText.subhead16GreenMixBlue,
-            alignLabelWithHint: true,
-            labelStyle: StyleText.subhead16GreenMixBlue),
-        maxLines: 6,
-        controller: reviewEditingController),
-  );
 }
 
 Widget _widgetAvatar() {

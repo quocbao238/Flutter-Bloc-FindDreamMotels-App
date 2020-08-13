@@ -171,7 +171,7 @@ class CloudStorageService {
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {
-        if (f.documentID == historyModel.motelBooking.documentId) {
+        if (f.documentID == historyModel.timeBooking) {
           rateModel = RateModel.fromJson(f.data);
         }
       });
@@ -190,7 +190,7 @@ class CloudStorageService {
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {
-        if (f.documentID == historyModel.motelBooking.documentId) {
+        if (f.documentID == historyModel.timeBooking) {
           ratingApp = f.data['rating'].toDouble();
         }
       });
@@ -212,7 +212,7 @@ class CloudStorageService {
         .collection(historyModel.motelBooking.districtId.toString())
         .document(historyModel.motelBooking.documentId)
         .collection(AppSetting.userComment)
-        .document(historyModel.motelBooking.documentId)
+        .document(historyModel.timeBooking)
         .setData(rateModel.toJson())
         .then((value) => isSucess = true);
     return isSucess;
@@ -227,7 +227,7 @@ class CloudStorageService {
         .collection(historyModel.motelBooking.districtId.toString())
         .document(historyModel.motelBooking.documentId)
         .collection(AppSetting.userComment)
-        .document(historyModel.motelBooking.documentId)
+        .document(historyModel.timeBooking)
         .updateData({'comment': comment}).then((value) => sucess = true);
     return sucess;
   }
