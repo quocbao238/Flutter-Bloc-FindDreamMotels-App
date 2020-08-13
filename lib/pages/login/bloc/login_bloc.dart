@@ -61,6 +61,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             message: "An error occurred, please try again later");
       }
     } else if (event is FacebookOnClickEvent) {
+      yield LoginLoadingState();
+
       try {
         var user = await ConfigApp.firebaseAuth.loginWithFB();
         if (user != null) {
