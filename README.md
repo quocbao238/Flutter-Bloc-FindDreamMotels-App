@@ -84,6 +84,11 @@
 
 <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/34.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/35.png" width="220"/> <img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/36.png" width="220"/> 
 
+- Reviews Hotels
+
+<img src="https://raw.githubusercontent.com/quocbao238/Finding-Hotels-Motels-Accommodation/master/screenshot/37.png" width="220"/>
+
+
 
 
 
