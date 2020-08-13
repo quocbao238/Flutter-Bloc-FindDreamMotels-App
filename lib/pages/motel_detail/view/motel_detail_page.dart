@@ -170,7 +170,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
     );
   }
 
-  ListView _listRating() {
+  Widget _listRating() {
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
