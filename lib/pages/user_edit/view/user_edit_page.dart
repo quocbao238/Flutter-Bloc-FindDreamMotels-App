@@ -2,7 +2,7 @@ import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart' as app;
 import 'package:findingmotels/models/userInfo_model.dart';
 import 'package:findingmotels/pages/user_edit/bloc/user_edit_bloc.dart';
-import 'package:findingmotels/pages/widgets/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/pages/widgets/clip_path_custom/appClipPath.dart';
 import 'package:findingmotels/pages/widgets/customcatch_image/customcatch_image.dart';
 import 'package:findingmotels/pages/widgets/loadingWidget/loading_widget.dart';
 import 'package:flutter/material.dart';

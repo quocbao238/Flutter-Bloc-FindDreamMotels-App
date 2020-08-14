@@ -7,7 +7,7 @@ import 'package:findingmotels/pages/district/view/district_page.dart';
 import 'package:findingmotels/pages/home/bloc/home_bloc.dart';
 import 'package:findingmotels/pages/motel_detail/view/motel_detail_page.dart';
 import 'package:findingmotels/pages/new_motel/view/new_motel_screen.dart';
-import 'package:findingmotels/pages/widgets/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/pages/widgets/clip_path_custom/appClipPath.dart';
 import 'package:findingmotels/pages/widgets/empty/empty_widget.dart';
 import 'package:findingmotels/pages/widgets/home_item_motel.dart';
 import 'package:findingmotels/pages/widgets/loadingWidget/loading_widget.dart';

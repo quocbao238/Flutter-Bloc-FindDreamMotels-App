@@ -2,7 +2,7 @@ import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/models/history_model.dart';
 import 'package:findingmotels/pages/history_detail/view/history_detail_screen.dart';
 import 'package:findingmotels/pages/notifycation/bloc/notify_bloc.dart';
-import 'package:findingmotels/pages/widgets/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/pages/widgets/clip_path_custom/appClipPath.dart';
 import 'package:findingmotels/pages/widgets/empty/empty_widget.dart';
 import 'package:findingmotels/pages/widgets/loadingWidget/loading_widget.dart';
 import 'package:findingmotels/pages/widgets/notify_item.dart';

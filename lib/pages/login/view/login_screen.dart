@@ -5,8 +5,9 @@ import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/login/bloc/login_bloc.dart';
 import 'package:findingmotels/pages/register/view/register_screen.dart';
 import 'package:findingmotels/pages/widgets/Animation/fadedAnimation.dart';
-import 'package:findingmotels/pages/widgets/clip_path_custom/loginClipPath.dart';
+import 'package:findingmotels/pages/widgets/clip_path_custom/appClipPath.dart';
 import 'package:findingmotels/pages/widgets/loadingWidget/loading_widget.dart';
+import 'package:findingmotels/validator/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController controllerPhone;
   String code = "+84";
   bool isEmail = true;
+  String errorPhone = "";
 
   @override
   void initState() {
@@ -37,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
+    controllerPhone.dispose();
     controllerEmail.dispose();
     controllerPassword.dispose();
     super.dispose();
@@ -67,11 +70,16 @@ class _LoginPageState extends State<LoginPage> {
         Scaffold(
           key: loginGlobalKey,
           backgroundColor: AppColor.backgroundColor,
-          body: Stack(
-            children: <Widget>[
-              _background(Size.getHeight),
-              _pageView(Size.getHeight, Size.getWidth),
-            ],
+          body: SingleChildScrollView(
+            child: Container(
+              height: Size.getHeight,
+              child: Stack(
+                children: <Widget>[
+                  _background(Size.getHeight),
+                  _pageView(Size.getHeight, Size.getWidth),
+                ],
+              ),
+            ),
           ),
         ),
         state is LoginLoadingState
@@ -85,73 +93,81 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _pageView(double height, double width) => Positioned.fill(
           child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: SingleChildScrollView(
-          child: Container(
-            height: Size.getHeight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                FadeAnimation(0.1, _image(height)),
-                FadeAnimation(0.2, _btnGoogleFacebook(height, width)),
-                FadeAnimation(0.3, _titleLogin()),
-                FadeAnimation(0.4,
-                    isEmail ? _titleEmail(width) : _titlePhoneNumber(width)),
-                FadeAnimation(
-                    0.5, isEmail ? _tffmail(width) : _titlePhoneNumber2(width)),
-                FadeAnimation(0.6, isEmail ? _titlepaw(width) : _countryCode()),
-                FadeAnimation(0.7, isEmail ? _tffpaw(width) : SizedBox()),
-                FadeAnimation(
-                    0.8, isEmail ? _forgotpaw(width, height) : SizedBox()),
-                Spacer(),
-                FadeAnimation(0.9, _btnlogin(height, width)),
-                FadeAnimation(
-                    1,
-                    isEmail
-                        ? _btnsignup(height)
-                        : Container(
-                            margin: EdgeInsets.only(
-                                top: height * 0.02, bottom: height * 0.02))),
-              ],
-            ),
-          ),
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            FadeAnimation(0.1, _image(height)),
+            FadeAnimation(0.2, _btnGoogleFacebook(height, width)),
+            FadeAnimation(0.3, _titleLogin()),
+            FadeAnimation(
+                0.4, isEmail ? _titleEmail(width) : _titlePhoneNumber(width)),
+            FadeAnimation(
+                0.5, isEmail ? _tffmail(width) : _titlePhoneNumber2(width)),
+            FadeAnimation(0.6, isEmail ? _titlepaw(width) : _countryCode()),
+            FadeAnimation(0.7, isEmail ? _tffpaw(width) : SizedBox()),
+            FadeAnimation(
+                0.8, isEmail ? _forgotpaw(width, height) : SizedBox()),
+            Spacer(),
+            FadeAnimation(0.9, _btnlogin(height, width)),
+            FadeAnimation(
+                1,
+                isEmail
+                    ? _btnsignup(height)
+                    : Container(margin: EdgeInsets.only(bottom: 16.0))),
+          ],
         ),
       ));
 
   Widget _countryCode() => Container(
         margin: EdgeInsets.only(
             top: 16.0, left: Size.getWidth * 0.04, right: Size.getWidth * 0.04),
+        height: 40.0,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            CountryCodePicker(
-              onChanged: (callBack) {
-                code = callBack.code;
-              },
-              favorite: ['+84', 'vi'],
-              initialSelection: '+84',
-              showCountryOnly: false,
-              showOnlyCountryWhenClosed: false,
-              alignLeft: false,
+            Container(
+              // color: Colors.red,
+              child: CountryCodePicker(
+                onChanged: (callBack) {
+                  code = callBack.code;
+                },
+                flagWidth: 40.0,
+                favorite: ['+84', 'vi'],
+                initialSelection: '+84',
+                showCountryOnly: false,
+                showOnlyCountryWhenClosed: false,
+                alignLeft: false,
+              ),
             ),
             SizedBox(width: 4.0),
             Expanded(
-                child: TextFormField(
-              controller: controllerPassword,
-              decoration: InputDecoration(
-                  fillColor: AppColor.colorClipPath,
-                  hintText: 'Mobile number',
-                  labelText: 'Mobile number',
-                  focusColor: AppColor.colorClipPath,
-                  labelStyle: StyleText.subhead16GreenMixBlue
-                      .copyWith(color: AppColor.colorClipPath)),
-              keyboardType: TextInputType.phone,
-              style: new TextStyle(
-                fontSize: 16.0 * Size.scaleTxt,
-                fontFamily: "Poppins",
+                child: Container(
+              // color: Colors.blue,
+              child: TextFormField(
+                controller: controllerPhone,
+                onChanged: (v) {
+                  // print(code + controllerPhone.text);
+                  // // setState(() {
+                  // errorPhone = Valid.isPhoneNumber(controllerPhone.text)
+                  //     ? ""
+                  //     : "Not valid phone number!";
+                  // print(errorPhone);
+                  // // });
+                },
+                decoration: InputDecoration(
+                    fillColor: AppColor.colorClipPath,
+                    hintText: 'Mobile number',
+                    helperText: 'Mobile number',
+                    focusColor: AppColor.colorClipPath,
+                    labelStyle: StyleText.subhead16GreenMixBlue
+                        .copyWith(color: AppColor.colorClipPath)),
+                keyboardType: TextInputType.phone,
+                style: new TextStyle(
+                  fontSize: 16.0 * Size.scaleTxt,
+                  fontFamily: "Poppins",
+                ),
               ),
             ))
           ],
@@ -183,24 +199,6 @@ class _LoginPageState extends State<LoginPage> {
               style: StyleText.subhead18Grey400
                   .copyWith(fontWeight: FontWeight.w600)),
         ),
-      );
-
-  Widget _image(double height) => Container(
-        color: Colors.transparent,
-        height: height * 0.35,
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: (Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            SizedBox(height: height * 0.06),
-            Expanded(
-              child: SvgPicture.asset(
-                imageUrl,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
-        )),
       );
 
   Widget _titleLogin() => Container(
@@ -417,7 +415,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _btnsignup(double height) => InkWell(
         child: Container(
-          margin: EdgeInsets.only(top: height * 0.02, bottom: height * 0.02),
+          margin: EdgeInsets.only(top: 16.0, bottom: 16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -438,8 +436,18 @@ class _LoginPageState extends State<LoginPage> {
         },
       );
 
+  Widget _image(double height) => Container(
+        height: height * 0.32,
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: SvgPicture.asset(
+          imageUrl,
+          fit: BoxFit.fill,
+        ),
+      );
+
   Widget _btnGoogleFacebook(double height, double width) => Container(
-        margin: EdgeInsets.only(top: height * 0.08 + Size.statusBar / 2),
+        // margin: EdgeInsets.only(top: height * 0.08 + Size.statusBar / 2),
+        margin: EdgeInsets.only(top: height * 0.020),
         height: height * 0.06,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
