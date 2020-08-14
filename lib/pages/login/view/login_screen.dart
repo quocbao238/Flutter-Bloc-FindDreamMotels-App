@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
@@ -22,11 +23,15 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey loginGlobalKey = GlobalKey();
   TextEditingController controllerEmail;
   TextEditingController controllerPassword;
+  TextEditingController controllerPhone;
+  String code = "+84";
+  bool isEmail = true;
 
   @override
   void initState() {
     controllerEmail = TextEditingController();
     controllerPassword = TextEditingController();
+    controllerPhone = TextEditingController();
     super.initState();
   }
 
@@ -93,19 +98,92 @@ class _LoginPageState extends State<LoginPage> {
                 FadeAnimation(0.1, _image(height)),
                 FadeAnimation(0.2, _btnGoogleFacebook(height, width)),
                 FadeAnimation(0.3, _titleLogin()),
-                FadeAnimation(0.4, _titleEmail(width)),
-                FadeAnimation(0.5, _tffmail(width)),
-                FadeAnimation(0.6, _titlepaw(width)),
-                FadeAnimation(0.7, _tffpaw(width)),
-                FadeAnimation(0.8, _forgotpaw(width, height)),
+                FadeAnimation(0.4,
+                    isEmail ? _titleEmail(width) : _titlePhoneNumber(width)),
+                FadeAnimation(
+                    0.5, isEmail ? _tffmail(width) : _titlePhoneNumber2(width)),
+                FadeAnimation(0.6, isEmail ? _titlepaw(width) : _countryCode()),
+                FadeAnimation(0.7, isEmail ? _tffpaw(width) : SizedBox()),
+                FadeAnimation(
+                    0.8, isEmail ? _forgotpaw(width, height) : SizedBox()),
                 Spacer(),
                 FadeAnimation(0.9, _btnlogin(height, width)),
-                FadeAnimation(1, _btnsignup(height)),
+                FadeAnimation(
+                    1,
+                    isEmail
+                        ? _btnsignup(height)
+                        : Container(
+                            margin: EdgeInsets.only(
+                                top: height * 0.02, bottom: height * 0.02))),
               ],
             ),
           ),
         ),
       ));
+
+  Widget _countryCode() => Container(
+        margin: EdgeInsets.only(
+            top: 16.0, left: Size.getWidth * 0.04, right: Size.getWidth * 0.04),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            CountryCodePicker(
+              onChanged: (callBack) {
+                code = callBack.code;
+              },
+              favorite: ['+84', 'vi'],
+              initialSelection: '+84',
+              showCountryOnly: false,
+              showOnlyCountryWhenClosed: false,
+              alignLeft: false,
+            ),
+            SizedBox(width: 4.0),
+            Expanded(
+                child: TextFormField(
+              controller: controllerPassword,
+              decoration: InputDecoration(
+                  fillColor: AppColor.colorClipPath,
+                  hintText: 'Mobile number',
+                  labelText: 'Mobile number',
+                  focusColor: AppColor.colorClipPath,
+                  labelStyle: StyleText.subhead16GreenMixBlue
+                      .copyWith(color: AppColor.colorClipPath)),
+              keyboardType: TextInputType.phone,
+              style: new TextStyle(
+                fontSize: 16.0 * Size.scaleTxt,
+                fontFamily: "Poppins",
+              ),
+            ))
+          ],
+        ),
+      );
+
+  Widget _titlePhoneNumber(double width) => Container(
+        padding: EdgeInsets.symmetric(vertical: 4.0),
+        child: Container(
+          margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+          width: width,
+          child: Text("Enter your mobile nubmer",
+              textAlign: TextAlign.start,
+              style: StyleText.header24Black.copyWith(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1,
+                  color: Colors.black87)),
+        ),
+      );
+
+  Widget _titlePhoneNumber2(double width) => Container(
+        padding: EdgeInsets.only(top: 4.0, right: width * 0.2),
+        child: Container(
+          margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+          width: width,
+          child: Text(
+              "Please confirm your country code and enter your mobile number",
+              textAlign: TextAlign.start,
+              style: StyleText.subhead18Grey400
+                  .copyWith(fontWeight: FontWeight.w600)),
+        ),
+      );
 
   Widget _image(double height) => Container(
         color: Colors.transparent,
@@ -126,10 +204,52 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   Widget _titleLogin() => Container(
-        margin: EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8.0, left: 8.0),
-        child: Center(
-          child: Text("Or login with email and phone number",
-              style: StyleText.content14Black400),
+        margin: EdgeInsets.only(right: 8.0, left: 8.0),
+        height: 40.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            InkWell(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () {
+                setState(() => isEmail = true);
+              },
+              child: Container(
+                padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
+                child: Row(
+                  children: <Widget>[
+                    Text("Login with ", style: StyleText.content14Black400),
+                    Text("Email",
+                        style: StyleText.content14Black400.copyWith(
+                            color: isEmail
+                                ? AppColor.alerBtnColor
+                                : Colors.black)),
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () {
+                setState(() => isEmail = false);
+              },
+              child: Container(
+                padding: EdgeInsets.fromLTRB(0, 8, 8, 8),
+                child: Row(
+                  children: <Widget>[
+                    Text(" or ", style: StyleText.content14Black400),
+                    Text("Phone Number",
+                        style: StyleText.content14Black400.copyWith(
+                            color: !isEmail
+                                ? AppColor.alerBtnColor
+                                : Colors.black)),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       );
 
@@ -138,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
           margin: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
           width: width,
-          child: Text("Email/PhoneNumber",
+          child: Text("Email",
               textAlign: TextAlign.start, style: StyleText.content14Black400),
         ),
       );
@@ -273,18 +393,24 @@ class _LoginPageState extends State<LoginPage> {
   Widget _btnlogin(double height, double width) => InkWell(
         onTap: () {
           FocusScope.of(context).unfocus();
-          BlocProvider.of<LoginBloc>(loginGlobalKey.currentContext).add(
-              LoginButtonPressedEvent(
-                  email: controllerEmail.text.trim(),
-                  password: controllerPassword.text.trim()));
+          isEmail
+              ? BlocProvider.of<LoginBloc>(loginGlobalKey.currentContext).add(
+                  LoginButtonPressedEvent(
+                      email: controllerEmail.text.trim(),
+                      password: controllerPassword.text.trim()))
+              : BlocProvider.of<LoginBloc>(loginGlobalKey.currentContext)
+                  .add(ContinuePhoneEvent(controllerPhone.text.trim()));
         },
         child: Container(
-          height: height * 0.065,
-          width: width * 0.65,
+          height: height * 0.08,
+          width: isEmail ? width * 0.65 : width * 0.9,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30), color: Colors.red),
+              borderRadius: BorderRadius.circular(isEmail ? 30 : 5),
+              color: Colors.red),
           child: Center(
-            child: Text("Login".toUpperCase(), style: StyleText.header20White),
+            child: Text(isEmail ? "Login" : "Continue".toUpperCase(),
+                style: StyleText.header20Whitew500
+                    .copyWith(color: Colors.white70)),
           ),
         ),
       );
@@ -326,7 +452,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 width: width * 0.30,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(isEmail ? 30 : 5),
                     color: Colors.white),
                 child: Center(
                   child: Container(
@@ -346,7 +472,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 width: width * 0.30,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(isEmail ? 30 : 5),
                     color: Colors.white),
                 child: Center(
                   child: Container(

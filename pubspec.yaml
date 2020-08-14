@@ -79,6 +79,9 @@ dependencies:
   flutter_facebook_login: 1.2.0
 
 
+  #country code
+  country_code_picker: 1.4.0
+
 
 
   #Animation

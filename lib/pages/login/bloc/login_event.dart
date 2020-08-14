@@ -18,6 +18,11 @@ class FacebookOnClickEvent extends LoginEvent {}
 
 class GotoSignUpPageEvent extends LoginEvent {}
 
+class ContinuePhoneEvent extends LoginEvent {
+  final String phone;
+  ContinuePhoneEvent(this.phone);
+}
+
 class HideShowPasswordEvent extends LoginEvent {
   final bool isHide;
   HideShowPasswordEvent({this.isHide});

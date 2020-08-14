@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:country_code_picker/country_localizations.dart';
 import 'package:findingmotels/blocs/auth_bloc/auth_bloc_bloc.dart';
 import 'package:findingmotels/config_app/configApp.dart';
 import 'package:findingmotels/config_app/setting.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:intl/intl.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,13 +32,11 @@ Future<void> main() async {
       animationDuration: Duration(milliseconds: 100),
       duration: Duration(seconds: 1),
       child: MaterialApp(
-        // localizationsDelegates: const [
-        //   location_picker.S.delegate,
-        // ],
-        // supportedLocales: const <Locale>[
-        //   Locale('en', ''),
-        //   Locale('ar', ''),
-        // ],
+        supportedLocales: [
+          Locale('en'), // American English
+          Locale('vi'),
+        ],
+        localizationsDelegates: [CountryLocalizations.delegate],
         debugShowCheckedModeBanner: false,
         title: 'Find Dream Hotel',
         theme: ThemeData(primarySwatch: Colors.blue),
