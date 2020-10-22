@@ -342,7 +342,7 @@ class _HistoryDetailPageState extends State<HistoryDetailPage> {
                           borderRadius: BorderRadius.circular(15.0),
                           child: CachedNetworkImage(
                             imageUrl: widget.historyModel.motelBooking
-                                .imageMotel[1].imageUrl,
+                                .imageMotel[0].imageUrl,
                             fit: BoxFit.fill,
                             placeholder: (context, url) =>
                                 Center(child: SpinKitFadingCircle(

@@ -65,7 +65,7 @@ Future commentDialog(
               height: 120.0,
               width: 120.0,
               child: CachedNetworkImage(
-                  imageUrl: historyModel.motelBooking.imageMotel[1].imageUrl,
+                  imageUrl: historyModel.motelBooking.imageMotel[0].imageUrl,
                   fit: BoxFit.cover,
                   placeholder: (context, url) =>
                       Center(child: SpinKitFadingCircle(
@@ -207,7 +207,7 @@ Future commentDialog(
               height: 120.0,
               width: 120.0,
               child: CachedNetworkImage(
-                  imageUrl: historyModel.motelBooking.imageMotel[1].imageUrl,
+                  imageUrl: historyModel.motelBooking.imageMotel[0].imageUrl,
                   fit: BoxFit.cover,
                   placeholder: (context, url) =>
                       Center(child: SpinKitFadingCircle(
@@ -329,7 +329,7 @@ Future commentDialog(
               height: 160.0,
               width: 160.0,
               child: CachedNetworkImage(
-                  imageUrl: historyModel.motelBooking.imageMotel[1].imageUrl,
+                  imageUrl: historyModel.motelBooking.imageMotel[0].imageUrl,
                   fit: BoxFit.cover,
                   placeholder: (context, url) =>
                       Center(child: SpinKitFadingCircle(

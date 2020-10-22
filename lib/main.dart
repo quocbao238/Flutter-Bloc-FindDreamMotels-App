@@ -6,6 +6,7 @@ import 'package:findingmotels/config_app/setting.dart';
 import 'package:findingmotels/config_app/sizeScreen.dart';
 import 'package:findingmotels/pages/drawer/view/drawer_page.dart';
 import 'package:findingmotels/pages/intro/view/intro_screen.dart';
+import 'package:findingmotels/services/firebase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,7 @@ import 'package:oktoast/oktoast.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // FirebaseService.setupFirebase();
+  FirebaseService.setupFirebase();
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 

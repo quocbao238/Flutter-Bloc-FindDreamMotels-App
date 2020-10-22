@@ -201,7 +201,7 @@ class _MotelDetailPageState extends State<MotelDetailPage> {
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(90.0),
                               child: ImageCacheNetwork(
-                                  url: listRating[index].avatar))),
+                                  url: listRating[index]?.avatar??""))),
                       SizedBox(width: 4.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
