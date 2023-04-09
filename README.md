@@ -1,4 +1,12 @@
 # Find Dream Hotels 
+
+"Find Dream Hotels" is a Flutter app designed to help users find hotels and places to stay in Ho Chi Minh City, as well as assist hotel management in managing their properties. The app features a comprehensive hotel search system, integrated with Google Maps, that allows users to search for hotels and accommodations by name, area, or type of accommodation. Users can also filter their search results by price range, star rating, and other amenities.
+
+The app includes a user authentication system that enables users to sign in and register using their Google accounts. Users can then make bookings and view their booking history, while hotel managers can view new posts and new posts by district, update their profile, and manage their bookings. The booking system also includes push notifications to hotel managers when a booking is made.
+
+The app includes a rating and review system that allows users to rate and review hotels after check-in. This provides a convenient way for users to give feedback to hotel managers and help future travelers make informed decisions.
+
+
 - Find Dream Hotels help user find Hotels & places to stay in Ho Chi Minh City
 - Find Dream Hotels help managetment of Hotels
 ### Feature
